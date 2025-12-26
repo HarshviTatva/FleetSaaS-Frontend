@@ -1,0 +1,11 @@
+<div class="m-20 table-container">
+    <div class="d-flex flex-end">
+        <app-button label="Add Driver" [color]="buttonColor" [type]="buttonType" (click)="addEditDriver(0)"
+            [icon]="'add'"></app-button>
+    </div>
+    <div class="table-container">
+        <app-dynamic-table [data]="drivers()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+            (edit)="addEditDriver($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
+            (sortChange)="onSort($event)"></app-dynamic-table>
+    </div>
+</div>

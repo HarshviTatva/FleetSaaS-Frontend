@@ -1,0 +1,37 @@
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px 0;
+  border-bottom: 3px solid palevioletred;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #c2185b; 
+}
+
+.close-btn {
+  color: #b71c1c; 
+}
+
+mat-dialog-content {
+  padding: 16px 24px;
+}
+
+.dialog-footer {
+  display: flex !important;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px 16px;
+  flex-wrap: nowrap;
+}
+
+
+/* Dialog container */
+::ng-deep .mat-mdc-dialog-container {
+  border-radius: 16px;
+}

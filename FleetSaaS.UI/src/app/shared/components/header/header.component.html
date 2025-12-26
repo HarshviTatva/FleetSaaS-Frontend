@@ -1,0 +1,42 @@
+<mat-toolbar class="header-toolbar">
+  
+   <div class="left-section">
+    <button
+      mat-icon-button
+      class="menu-btn"
+      (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="page-title">{{ pageTitle() }}</span>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="profile-btn">
+  <button mat-button [matMenuTriggerFor]="profileMenu">
+    <span class="profile-content">
+      <img
+        src="../../../../assets/images/default-user-profile.png"
+        alt="Profile"
+        class="profile-img"
+      />
+      <span class="username">{{ userName }}</span>
+    </span>
+  </button>
+</div>
+
+  <mat-menu #profileMenu="matMenu" xPosition="before">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

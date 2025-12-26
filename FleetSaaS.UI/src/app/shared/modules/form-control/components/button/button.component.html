@@ -1,0 +1,9 @@
+<button
+  mat-raised-button
+  [color]="color"
+  [type]="type"
+  [disabled]="disabled"
+  class="common-btn"
+  [ngStyle]="buttonStyle()">
+ <mat-icon>{{icon()}}</mat-icon> {{ label }}
+</button>

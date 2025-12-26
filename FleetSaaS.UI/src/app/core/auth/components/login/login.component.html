@@ -1,0 +1,28 @@
+<div class="login-page">
+    <mat-card class="login-card">
+        <div class="left-panel">
+            <h1>FleetSaaS</h1>
+            <!-- <img src="../../../../../assets/images/login.png" alt="login-icon" /> -->
+            <p>to use all features of the application</p>
+        </div>
+        <div class="right-panel">
+            <h2>Login account</h2>
+
+            <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                <app-input [config]="emailInputConfig" [control]="emailControl"></app-input>
+                <app-error [control]="emailControl" [customMessageList]="emailValidationMessages"></app-error>
+
+                <app-input [config]="passwordInputConfig" [control]="passwordControl"
+                    (emitClickEvent)="onPasswordToggle()"></app-input>
+                <app-error [control]="passwordControl" [customMessageList]="passwordValidationMessages"></app-error>
+                <!-- <mat-checkbox class="remember-me" formControlName="rememberMe">Remember me!</mat-checkbox> -->
+                <app-button label="Login" [color]="buttonColor" type="submit" [disabled]="loginForm.invalid">
+                </app-button>
+                <p class="login-link">
+                    Didn't have an account?
+                    <a routerLink="/signup" class="primary-link">Create an account</a>
+                </p>
+            </form>
+        </div>
+    </mat-card>
+</div>

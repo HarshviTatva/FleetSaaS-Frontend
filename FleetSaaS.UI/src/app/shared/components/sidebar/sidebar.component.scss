@@ -1,0 +1,141 @@
+.sidebar-inner {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg,
+      #cd5279,
+      #a5313e);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menu {
+  list-style: none;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.menu li {
+  margin: 4px 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 22px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 15px;
+  border-left: 4px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.nav-link img,
+.nav-link .material-symbols-outlined {
+  font-size: 20px;
+  width: 20px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-left: 4px solid #ffffff;
+}
+/* Expansion container */
+.menu-expansion {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header click row */
+.expansion-header {
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+/* Expand arrow */
+.expand-icon {
+  margin-left: auto;
+  font-size: 20px;
+  transition: transform 0.25s ease;
+}
+
+.expand-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Submenu */
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.submenu.open {
+  max-height: 200px;
+}
+
+/* Sub links */
+.sub-link {
+  display: block;
+  padding: 10px 22px 10px 56px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.sub-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.sub-link.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.sidebar-inner.closed .nav-link {
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.sidebar-inner.closed .link-text,
+.sidebar-inner.closed .title-logo,
+.sidebar-inner.closed .expand-icon {
+  display: none;
+}
+
+.sidebar-inner {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg, #cd5279, #a5313e);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar-inner.closed {
+  width: 72px;
+}
+

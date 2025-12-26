@@ -1,0 +1,94 @@
+<div class="signup-page">
+  <mat-card class="signup-card">
+    <div class="left-panel">
+      <h1>FleetSaaS</h1>
+      <p>to use all features of the application</p>
+
+      <!-- <div class="icon-circle">
+        <mat-icon>check</mat-icon>
+      </div> -->
+    </div>
+    <div class="right-panel">
+      <h2>Signup</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="submit()" class="signup-form">
+
+        <!-- Company Details -->
+        <div class="form-row">
+          <div class="form-group">
+            <app-input [config]="companyNameConfig" [control]="companyNameControl" appAllowAlphabetOnly>
+            </app-input>
+            <app-error [control]="companyNameControl" [customMessageList]="companyNameValidationMessages" [showErrorSpacing]="companyNameConfig.showErrorSpacing">
+            </app-error>
+          </div>
+          <div class="form-group">
+            <app-input [config]="emailInputConfig" [control]="emailControl">
+            </app-input>
+            <app-error [control]="emailControl" [customMessageList]="emailValidationMessages" [showErrorSpacing]="emailInputConfig.showErrorSpacing">
+            </app-error>
+          </div>
+        </div>
+
+        <!-- Owner Details -->
+        <div class="form-row">
+          <div class="form-group">
+            <app-input [config]="ownerNameConfig" [control]="ownerNameControl" appAllowAlphabetOnly>
+            </app-input>
+            <app-error [control]="ownerNameControl" [customMessageList]="ownerNameValidationMessages" [showErrorSpacing]="ownerNameConfig.showErrorSpacing" >
+            </app-error>
+          </div>
+          <div class="form-group">
+            <app-input [config]="ownerEmailInputConfig" [control]="ownerEmailControl">
+            </app-input>
+            <app-error [control]="ownerEmailControl" [customMessageList]="ownerEmailValidationMessages" [showErrorSpacing]="ownerEmailInputConfig.showErrorSpacing">
+            </app-error>
+          </div>
+        </div>
+
+        <!-- Contact -->
+         <div class="form-row">
+        <div class="form-group">
+          <app-input [config]="phoneNumberInputConfig" [control]="phoneNumberControl" appAllowNumberOnly>
+          </app-input>
+          <app-error [control]="phoneNumberControl" [customMessageList]="phoneNumberValidationMessages" [showErrorSpacing]="phoneNumberInputConfig.showErrorSpacing" >
+          </app-error>
+        </div>
+          <div class="form-group">
+           <app-input [config]="ownerPhoneNumberInputConfig" [control]="ownerphoneNumberControl" appAllowNumberOnly>
+          </app-input>
+          <app-error [control]="ownerphoneNumberControl" [customMessageList]="ownerPhoneNumberValidationMessages" [showErrorSpacing]="ownerPhoneNumberInputConfig.showErrorSpacing">
+          </app-error>
+          </div>
+        </div>
+    
+
+        <!-- Password -->
+        <div class="form-row">
+          <div class="form-group">
+            <app-input [config]="passwordInputConfig" [control]="passwordControl" (emitClickEvent)="onPasswordToggle()">
+            </app-input>
+            <app-error [control]="passwordControl" [customMessageList]="passwordValidationMessages" [showErrorSpacing]="passwordInputConfig.showErrorSpacing">
+            </app-error>
+          </div>
+          <div class="form-group">
+            <app-input [config]="confirmPasswordInputConfig" [control]="confirmPasswordControl"
+              (emitClickEvent)="onConfirmPasswordToggle()">
+            </app-input>
+            <app-error [control]="confirmPasswordControl" [customMessageList]="confirmPasswordValidationMessages" [showErrorSpacing]="confirmPasswordInputConfig.showErrorSpacing">
+            </app-error>
+          </div>
+        </div>
+        <!-- Submit -->
+        <app-button label="Sign up" [color]="buttonColor" type="submit" [disabled]="signupForm.invalid">
+        </app-button>
+
+        <!-- Login Link -->
+        <p class="login-link">
+          Already have an account?
+          <a routerLink="/login" class="primary-link">Log in</a>
+        </p>
+
+      </form>
+
+    </div>
+  </mat-card>
+</div>

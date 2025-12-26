@@ -1,0 +1,7 @@
+@if (control && control.invalid && (control.touched || control.dirty)) {
+<mat-error [ngClass]="{
+      error: showErrorSpacing
+    }">
+  {{ validationService.getValidationMessage(control.errors, customMessageList) }}
+</mat-error>
+}

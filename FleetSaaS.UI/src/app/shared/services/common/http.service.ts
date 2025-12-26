@@ -1,0 +1,63 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { catchError, Observable, retry, throwError } from 'rxjs';
+import { environment } from '../../../../environment/environment';
+import { RequestOptions, ErrorResponse } from '../../../interfaces/common.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HttpService {
+  http = inject(HttpClient);
+  private readonly apiBaseUrl = environment.apiUrl;
+  
+  constructor() { }
+
+  get<T>(path: string, options?: RequestOptions): Observable<T> {
+    const url = this.apiBaseUrl + path;
+    const handledOptions = this.handleRequestOptions(options);
+
+    return this.http.get<T>(url, handledOptions).pipe(
+      retry(2),
+      catchError(this.handleError));
+  }
+
+  post<T>(path: string, body: any, options?: RequestOptions): Observable<T> {
+    const url = this.apiBaseUrl + path;
+    const handledOptions = this.handleRequestOptions(options);
+
+    return this.http.post<T>(url, body, handledOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  put<T>(path: string, body: any, options?: RequestOptions): Observable<T> {
+    const url = this.apiBaseUrl + path;
+    const handledOptions = this.handleRequestOptions(options);
+
+    return this.http.put<T>(url, body, handledOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  delete<T>(path: string, options?: RequestOptions): Observable<T> {
+    const url = this.apiBaseUrl + path;
+    const handledOptions = this.handleRequestOptions(options);
+
+    return this.http.delete<T>(url, handledOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  //#region Private Methods
+  private handleRequestOptions(options?: RequestOptions): RequestOptions {
+    return options!;
+  }
+
+
+  // http service level error handler
+  private handleError(errResponse: ErrorResponse) {
+    return throwError(() => errResponse);
+  }
+  //#endregion
+}

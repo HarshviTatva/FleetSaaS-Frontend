@@ -1,0 +1,14 @@
+<div class="app-shell">
+
+  <aside class="sidebar" [class.closed]="!isSidebarOpen()">
+    <app-sidebar [sidebarOpen]="isSidebarOpen"></app-sidebar>
+  </aside>
+
+  <section class="main-area">
+    <app-header [sidebarOpen]="isSidebarOpen"></app-header>
+
+    <main class="page-content" [class.sidebar-closed]="!isSidebarOpen()">
+      <router-outlet></router-outlet>
+    </main>
+  </section>
+</div>

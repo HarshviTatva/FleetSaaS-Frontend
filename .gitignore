@@ -1,0 +1,51 @@
+# =========================
+# Node dependencies
+# =========================
+node_modules/
+
+# =========================
+# Build output
+# =========================
+dist/
+out-tsc/
+
+# =========================
+# Angular cache
+# =========================
+.angular/
+.cache/
+
+# =========================
+# Logs
+# =========================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+.claude/
+.cursor/
+.github/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment files
+# =========================
+src/environments/environment.local.ts
+src/environments/environment.dev.ts
+
+# =========================
+# Misc
+# =========================
+coverage/

@@ -1,0 +1,11 @@
+<div class="m-20">
+    <div class="d-flex flex-end">
+        <app-button label="Add User" [color]="buttonColor" [type]="buttonType" (click)="addEditUser(0)"
+            [icon]="'add'"></app-button>
+    </div>
+    <div class="driver-content">
+        <app-dynamic-table [data]="users()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+            (edit)="onEdit($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
+            (sortChange)="onSort($event)"></app-dynamic-table>
+    </div>
+</div>

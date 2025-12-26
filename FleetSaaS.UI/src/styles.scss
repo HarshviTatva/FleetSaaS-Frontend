@@ -1,0 +1,110 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((color: (primary: mat.$rose-palette,
+        tertiary: mat.$red-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  overflow: hidden;
+  margin: 0;
+}
+
+h1 {
+  font: var(--mat-sys-headline-medium);
+}
+
+p {
+  font: var(--mat-sys-body-medium);
+}
+
+.mat-mdc-snackbar-surface {
+  --mdc-snackbar-container-color: mat.get-color-from-palette($mat-red, 600) !important;
+}
+
+.primary-link {
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.primary-link:hover {
+  text-decoration: underline;
+}
+
+.login-link {
+  margin-top: 16px;
+  text-align: center;
+  font: var(--mat-sys-body-medium);
+}
+
+.font-color{
+  color:  var(--mat-sys-on-primary) !important;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    text-decoration: none;
+    position: relative;
+    border-radius: 6px;
+
+    .link-text {
+      color: rgba(white, 0.8);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      display: block;
+      padding-left: 10px;
+      transform-origin: center;
+    //   transition: $ease-transition;
+    }
+}
+
+.material-symbols-outlined{
+  color: white;
+}
+
+.m-20{
+  margin: 20px;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.flex-end{
+  justify-content: flex-end;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.w-100{
+  width: 100%;
+}

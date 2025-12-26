@@ -1,0 +1,60 @@
+<form [formGroup]="driverForm" (ngSubmit)="submit()" id="dialogForm">
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="driverNameConfig" [control]="driverNameControl" appAllowAlphabetOnly>
+            </app-input>
+            <app-error [control]="driverNameControl" [customMessageList]="driverNameValidationMessages"
+                [showErrorSpacing]="driverNameConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="emailInputConfig" [control]="emailControl">
+            </app-input>
+            <app-error [control]="emailControl" [customMessageList]="emailValidationMessages"
+                [showErrorSpacing]="emailInputConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="phoneNumberInputConfig" [control]="phoneNumberControl" appAllowNumberOnly>
+            </app-input>
+            <app-error [control]="phoneNumberControl" [customMessageList]="phoneNumberValidationMessages"
+                [showErrorSpacing]="phoneNumberInputConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="licenseNumberInputConfig" [control]="licenseNumberControl" appAllowNumberOnly>
+            </app-input>
+            <app-error [control]="licenseNumberControl" [customMessageList]="licenseNumberValidationMessages"
+                [showErrorSpacing]="licenseNumberInputConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            
+            <mat-form-field appearance="outline" class="w-100" style="height:58px;">
+                <mat-label>License Expiry Date</mat-label>
+                <input matInput [matDatepicker]="picker" [formControl]="licenseExpiryDateControl" placeholder="MM/DD/YYYY" [min]="minLicenseExpiryDate()" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <app-error [control]="licenseExpiryDateControl" [customMessageList]="licenseExpiryDateValidationMessages">
+            </app-error>
+        </div>
+    </div>
+    <div class="mat-checkbox d-flex">
+        <div class="form-group">
+            <mat-checkbox  formControlName="isAvailable">Is Available?</mat-checkbox> 
+        </div>
+        <div class="form-group">
+            <mat-checkbox  formControlName="isActive">Is Active?</mat-checkbox> 
+        </div>
+    </div>
+</form>
