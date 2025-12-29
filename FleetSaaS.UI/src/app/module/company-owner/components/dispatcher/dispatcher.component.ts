@@ -5,12 +5,12 @@ import { ButtonComponent } from '../../../../shared/modules/form-control/compone
 import { DynamicTableComponent } from '../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component';
 import { ButtonColor, ButtonType } from '../../../../shared/modules/form-control/common-type/buttontype';
 import { DialogService } from '../../../../shared/services/dialog.service';
-import { primaryColor } from '../../../../shared/utils/constant.static';
+import { addLabel, editLabel, primaryColor } from '../../../../shared/utils/constant.static';
 import { DispactherTableColumns } from '../../configs/driver.config';
 import { AddEditDriverComponent } from '../driver/add-edit-driver/add-edit-driver.component';
 import { Dispatcher, DispatcherResponse } from '../../interfaces/dispatcher.interface';
 import { PagedRequest } from '../../../../shared/modules/form-control/interface/pagination.interface';
-import { SuccessResponse } from '../../../../interfaces/common.interface';
+import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { DispatcherService } from '../../../services/dispatcher.service';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { AddEditDispatcherComponent } from './add-edit-dispatcher/add-edit-dispatcher.component';
@@ -48,7 +48,6 @@ export class DispatcherComponent {
     };
       this.dispatcherService.getAllDispatchers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DispatcherResponse>) => {
-        this.snackbarService.success(response.messages[0]);
         response.data.dispatcherList = response.data.dispatcherList.map(data => ({
         ...data,
         isAct: data.isActive ? 'Yes' : 'No'
@@ -63,17 +62,9 @@ export class DispatcherComponent {
   }
 
   addEditDispatcher(value: any) {
-    var label;
-    if(value==0){
-      label = 'Add';
-    }
-    else{
-      label = 'Edit'
-    }
-     this.dialogService.open(label + ' Dispatcher', AddEditDispatcherComponent, value, true).subscribe(
-      (data => {
+     this.dialogService.open((value==0?addLabel:editLabel)  + ' Dispatcher', AddEditDispatcherComponent, value, true).subscribe(
+      ((data:boolean) => {
         if (data) {
-          debugger
           this.getAllDispatchers();
         }
       })

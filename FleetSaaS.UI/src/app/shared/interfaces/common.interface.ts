@@ -17,6 +17,8 @@ export interface ApiResponse<T> {
 export interface ErrorResponse {
   status: number;
   errors: string[];
+  messages:string[];
+  metadata:any;
 }
 
 export interface SuccessResponse<T> {
@@ -24,4 +26,11 @@ export interface SuccessResponse<T> {
   additionalInfo: any;
   messages: string[];
   result:boolean;
+}
+
+export interface MenuItem {
+  label: string;
+  icon?: string;
+  route?: string;
+  children?: MenuItem[];
 }

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { DriverService } from '../../../../services/driver.service';
-import { SuccessResponse } from '../../../../../interfaces/common.interface';
+import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
 
 @Component({

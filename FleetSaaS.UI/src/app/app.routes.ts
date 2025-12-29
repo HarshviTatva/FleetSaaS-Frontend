@@ -52,6 +52,7 @@ const dashboardRoutes: Routes = [
       },
       {
         path: ROUTE_PATH.paths.drivers,
+        // canActivate:[],
         loadComponent: () =>
           import('./module/company-owner/components/driver/driver.component')
             .then(m => m.DriverComponent),
@@ -64,13 +65,13 @@ const dashboardRoutes: Routes = [
             .then(m => m.DispatcherComponent),
              data: { title: 'Dispatchers' }
       },
-      // {
-      //   path: ROUTE_PATH.paths.dispatchers,
-      //   loadComponent: () =>
-      //     import('./module/company-owner/components/vehicle/vehicle.component')
-      //       .then(m => m.DispatcherComponent),
-      //        data: { title: 'Vehicles' }
-      // }
+      {
+         path: ROUTE_PATH.vehicles.getVehicles,
+        loadComponent: () =>
+          import('./module/vehicle/components/vehicle/vehicle.component')
+            .then(m => m.VehicleComponent),
+             data: { title: 'Vehicles' }
+      }
     ]
   }
 ];

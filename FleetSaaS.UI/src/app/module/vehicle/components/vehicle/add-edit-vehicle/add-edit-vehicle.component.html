@@ -1,0 +1,67 @@
+<form [formGroup]="vehicleForm" (ngSubmit)="submit()" id="dialogForm">
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="makeConfig" [control]="makeControl">
+            </app-input>
+            <app-error [control]="makeControl"
+                [showErrorSpacing]="makeConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="modelConfig" [control]="modelControl">
+            </app-input>
+            <app-error [control]="modelControl"
+                [showErrorSpacing]="modelConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="vinConfig" [control]="vinControl">
+            </app-input>
+            <app-error [control]="vinControl" [customMessageList]="vinValidationMessages"
+                [showErrorSpacing]="vinConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="yearConfig" [control]="yearControl" appAllowNumberOnly>
+            </app-input>
+            <app-error [control]="yearControl"
+                [showErrorSpacing]="yearConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="licensePlateInputConfig" [control]="licensePlateControl">
+            </app-input>
+            <app-error [control]="licensePlateControl" [customMessageList]="licensePlateValidationMessages"
+                [showErrorSpacing]="licensePlateInputConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+
+            <mat-form-field appearance="outline" class="w-100" style="height:58px;">
+                <mat-label>Insurance Expiry Date</mat-label>
+                <input matInput [matDatepicker]="picker" [formControl]="insuranceExpiryDateControl"
+                    placeholder="MM/DD/YYYY" [min]="minLicenseExpiryDate()" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <app-error [control]="insuranceExpiryDateControl">
+            </app-error>
+        </div>
+    </div>
+    <div class="mat-checkbox">
+        <div class="form-group">
+            <mat-checkbox formControlName="isActive">Is Active?</mat-checkbox>
+        </div>
+    </div>
+</form>

@@ -1,6 +1,6 @@
 import { inject, Injectable, Type } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../modules/form-control/components/dialog/dialog.component';
+import { DialogComponent } from '../modules/common-modal/dialog/dialog.component';
 
 @Injectable({
   providedIn: 'root',

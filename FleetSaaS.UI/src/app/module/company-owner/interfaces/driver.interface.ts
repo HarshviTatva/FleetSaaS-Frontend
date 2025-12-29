@@ -6,12 +6,12 @@ export interface DriverResponse {
 
 export interface Driver{
     Id:string;
-    UserId:string;
-    UserName:string;
-    Email:string;
-    PhoneNumber:string;
-    LicenseNumber:string;
-    LicenseExpiryDate:Date;
+    userId:string;
+    userName:string;
+    email:string;
+    phoneNumber:string;
+    licenseNumber:string;
+    licenseExpiryDate:string;
     isAvailable?:boolean;
     isActive?:boolean;
     isAvail?:string;

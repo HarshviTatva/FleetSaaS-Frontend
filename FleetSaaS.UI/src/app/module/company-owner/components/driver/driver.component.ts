@@ -1,21 +1,20 @@
 import { Component, OnInit, inject, input, signal } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
 import { MaterialModule } from "../../../../shared/material/material.module";
 import { ButtonColor, ButtonType } from "../../../../shared/modules/form-control/common-type/buttontype";
 import { ButtonComponent } from "../../../../shared/modules/form-control/components/button/button.component";
 import { DynamicTableComponent } from "../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component";
 import { DialogService } from "../../../../shared/services/dialog.service";
-import { primaryColor } from "../../../../shared/utils/constant.static";
+import { addLabel, editLabel, primaryColor } from "../../../../shared/utils/constant.static";
 import { DriverTableColumns } from "../../configs/driver.config";
 import { AddEditDriverComponent } from "./add-edit-driver/add-edit-driver.component";
 import { DriverService } from "../../../services/driver.service";
-import { SuccessResponse } from "../../../../interfaces/common.interface";
+import { SuccessResponse } from "../../../../shared/interfaces/common.interface";
 import { Driver, DriverResponse } from "../../interfaces/driver.interface";
 import { SnackbarService } from "../../../../shared/services/snackbar-service";
 import { DeleteDriverComponent } from "./delete-driver/delete-driver.component";
 import { PagedRequest } from "../../../../shared/modules/form-control/interface/pagination.interface";
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-driver',
   imports: [MaterialModule, ReactiveFormsModule, ButtonComponent, DynamicTableComponent],
@@ -27,6 +26,7 @@ export class DriverComponent implements OnInit {
   private readonly driverService = inject(DriverService);
   private readonly dialogService = inject(DialogService);
   private readonly snackBarService = inject(SnackbarService);
+  private readonly datePipe = inject(DatePipe);
 
   drivers = signal<Driver[]>([]);
   columns = DriverTableColumns;
@@ -48,11 +48,12 @@ export class DriverComponent implements OnInit {
     };
       this.driverService.getAllDrivers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DriverResponse>) => {
-        this.snackBarService.success(response.messages[0]);
+        // this.snackBarService.success(response.messages[0]);
         response.data.driversList = response.data.driversList.map(data => ({
         ...data,
         isAct: data.isActive ? 'Yes' : 'No',
-        isAvail: data.isAvailable ? 'Yes' : 'No'
+        isAvail: data.isAvailable ? 'Yes' : 'No',
+        licenseExpiryDateString:this.datePipe.transform(data.licenseExpiryDate,'dd-MMM-yyyy') ?? '-'
       }));
         this.drivers.set(response.data.driversList ?? []);
       },
@@ -64,17 +65,9 @@ export class DriverComponent implements OnInit {
   }
 
   addEditDriver(value: any) {
-    var label;
-    if (value.id == null) {
-      label = 'Add';
-    }
-    else {
-      label = 'Edit'
-    }
-    this.dialogService.open(label + ' Driver', AddEditDriverComponent, value, true).subscribe(
+    this.dialogService.open((value==0?addLabel:editLabel)  + ' Driver', AddEditDriverComponent, value, true).subscribe(
       (data => {
         if (data) {
-          debugger
           this.getAllDrivers();
         }
       })

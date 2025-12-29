@@ -16,5 +16,10 @@ export const apiEndPoints = {
     addEditUser:'Dispatcher/dispatcher',
     deleteUser:'Dispatcher',
     getAll:'Dispatcher/dispatchers'
+  },
+  vehicle:{
+    addEditVehicle:'Vehicle/vehicle',
+    deleteVehicle:'vehicle',
+    getAll:'Vehicle/vehicles'
   }
 }

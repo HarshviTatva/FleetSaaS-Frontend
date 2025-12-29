@@ -41,19 +41,14 @@ export class TokenService {
     localStorage.setItem(this.accessTokenKey, loginResponse.accessToken);
   }
 
-  logout() {
-    const role = this.getUserRoleFromToken();
-    if (role) {
+  logout(): void {
+    if (this.getUserRoleFromToken()) {
       localStorage.removeItem(this.accessTokenKey);
-      if (role === UserRole.CompanyOwner) {
-        this.snackbarService.success(success.logout);
-        this.router.navigate([ROUTE_PATH.auth.login]);
-      }
-    }
-    else {
-      this.router.navigate([ROUTE_PATH.auth.login]);
+      this.snackbarService.success(success.logout);
+       this.router.navigate([ROUTE_PATH.auth.login]);
     }
   }
+
 
   isTokenExpired(): boolean {
     const expiry = this.getDecodedToken()?.exp;
@@ -75,9 +70,9 @@ export class TokenService {
     const decoded = this.getDecodedToken();
 
     if (!decoded?.RoleId) return null;
-    
+
     let role = decoded.RoleId;
-    
+
     if (!isNaN(role)) {
       return Number(role) as UserRole;
     }
@@ -96,11 +91,11 @@ export class TokenService {
     return `${this.getDecodedToken()?.Username}`.trim();
   }
 
-  getCompanyId() : string{
+  getCompanyId(): string {
     return `${this.getDecodedToken()?.CompanyId}`;
   }
 
-  getUserId() : string{
-     return `${this.getDecodedToken()?.UserId}`;
+  getUserId(): string {
+    return `${this.getDecodedToken()?.UserId}`;
   }
 }

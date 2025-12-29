@@ -1,8 +1,8 @@
 export enum UserRole {
     Admin = 1,
     CompanyOwner = 2,
-    Driver = 3,
-    Dispatcher = 4
+    Dispatcher = 3,
+    Driver = 4
 }
 
 export enum TripStatus {

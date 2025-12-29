@@ -23,22 +23,22 @@ export class ValidationService {
     }
     switch (errorKeys[0]) {
       case 'required':
-        return 'This field is required';
+        return 'This field is required.';
 
       case 'minlength':
-        return `Minimum length is ${formErrors['minlength'].requiredLength} characters`;
+        return `Minimum length is ${formErrors['minlength'].requiredLength} characters.`;
 
       case 'maxlength':
-        return `Maximum length is ${formErrors['maxlength'].requiredLength} characters`;
+        return `Maximum length is ${formErrors['maxlength'].requiredLength} characters.`;
 
       case 'pattern':
-        return 'Invalid format';
+        return 'Invalid format!';
 
       case 'whitespace':
-        return 'White space is not allowed';
+        return 'White space is not allowed.';
 
       case 'specialChars':
-        return 'Only special characters are not allowed';
+        return 'Only special characters are not allowed.';
 
       case 'strongPassword':
         return 'Password must include an uppercase, a lowercase, a digit, and a special character.';
@@ -58,13 +58,13 @@ export class ValidationService {
         return 'Multiple file not allowed. Please select only one file.';
 
       case 'maxLimit':
-        return `Max allowed duration is: ${formErrors['maxLimit']}`;
+        return `Max allowed duration is: ${formErrors['maxLimit']}.`;
 
       case 'min':
-        return `Value must be greater than or equal to ${formErrors['min'].min}`;
+        return `Value must be greater than or equal to ${formErrors['min'].min}.`;
 
       default:
-        return 'Invalid input';
+        return 'Invalid input!';
     }
   }
 

@@ -7,16 +7,15 @@ import { ErrorComponent } from "../../../../../shared/modules/form-control/compo
 import { InputComponent, InputConfig } from "../../../../../shared/modules/form-control/components/input/input.component";
 import { SnackbarService } from "../../../../../shared/services/snackbar-service";
 import { ValidationMessages } from "../../../../../shared/services/validation.service";
-import { licenseNumberRegex } from "../../../../../shared/utils/constant.static";
+import { fields, licenseNumberRegex } from "../../../../../shared/utils/constant.static";
 import { errors } from "../../../../../shared/utils/messages/error.static";
 import { DriverService } from "../../../../services/driver.service";
-import { ErrorResponse, SuccessResponse } from "../../../../../interfaces/common.interface";
+import { ErrorResponse, SuccessResponse } from "../../../../../shared/interfaces/common.interface";
 import { Driver } from "../../../interfaces/driver.interface";
-import { TokenService } from "../../../../../core/auth/services/token.service";
 
 @Component({
   selector: 'app-add-edit-driver',
-  imports: [MaterialModule, InputComponent, ErrorComponent,CommonModule],
+  imports: [MaterialModule, InputComponent, ErrorComponent, CommonModule],
   templateUrl: './add-edit-driver.component.html',
   styleUrl: './add-edit-driver.component.scss',
 })
@@ -28,24 +27,24 @@ export class AddEditDriverComponent {
   private readonly dialogRef = inject(MatDialogRef<any>);
 
   driverForm!: FormGroup;
-  driverData! : Driver;
+  driverData!: Driver;
   minLicenseExpiryDate = signal<Date>(this.calculateMinDate());
 
   constructor() {
     this.driverForm = this.formBuilder.group({
-      id:[null],
+      id: [null],
       userName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
-      licenseNumber : ['',[Validators.required,Validators.pattern(licenseNumberRegex)]],
-      licenseExpiryDate :['',[Validators.required]],
-      userId:[null],
-      isAvailable:[false],
-      isActive:[false]
+      licenseNumber: ['', [Validators.required, Validators.pattern(licenseNumberRegex)]],
+      licenseExpiryDate: ['', [Validators.required]],
+      userId: [null],
+      isAvailable: [false],
+      isActive: [false]
     });
   }
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.driverForm.patchValue(this.dialogRef.componentInstance.data.data);
   }
 
@@ -81,7 +80,7 @@ export class AddEditDriverComponent {
     max: 13
   }
 
-   licenseNumberInputConfig: InputConfig = {
+  licenseNumberInputConfig: InputConfig = {
     key: 'licenseNumber',
     label: 'License Number',
     type: 'text',
@@ -100,8 +99,7 @@ export class AddEditDriverComponent {
   emailValidationMessages: ValidationMessages = {
     required: errors.email.required,
     email: errors.email.emailFormat,
-    userEmailExists:errors.email.userEmailExists,
-    licenseExists:errors.licenseNumber.licenseExists
+    userEmailExists: errors.email.userEmailExists
   }
 
   phoneNumberValidationMessages: ValidationMessages = {
@@ -110,12 +108,13 @@ export class AddEditDriverComponent {
     maxLength: errors.phoneNumber.maxLength
   };
 
-   licenseNumberValidationMessages: ValidationMessages = {
+  licenseNumberValidationMessages: ValidationMessages = {
     required: errors.licenseNumber.required,
-    pattern: errors.licenseNumber.pattern
+    pattern: errors.licenseNumber.pattern,
+    licenseExists: errors.licenseNumber.licenseExists
   };
 
-    licenseExpiryDateValidationMessages: ValidationMessages = {
+  licenseExpiryDateValidationMessages: ValidationMessages = {
     required: errors.licenseDate.required
   };
 
@@ -136,7 +135,7 @@ export class AddEditDriverComponent {
     return this.driverForm.get('licenseNumber') as FormControl;
   }
 
-   get licenseExpiryDateControl() {
+  get licenseExpiryDateControl() {
     return this.driverForm.get('licenseExpiryDate') as FormControl;
   }
 
@@ -150,10 +149,10 @@ export class AddEditDriverComponent {
   }
 
   submit() {
-    if (this.driverForm.invalid){
+    if (this.driverForm.invalid) {
       this.snackBarService.error(errors.fillCorrectForm.correctDetails);
     }
-    else{
+    else {
       var value = this.driverForm.getRawValue();
       var driverRequest = {
         ...value,
@@ -162,14 +161,21 @@ export class AddEditDriverComponent {
           : null
       };
       this.driverService.addEditDriverUser(driverRequest).subscribe({
-          next: (response:SuccessResponse<null>) => {
-              this.snackBarService.success(response.messages[0]);
-              this.dialogRef.close(true);
-            },
-            error: (error:ErrorResponse) => {
-              this.emailControl.setErrors({userEmailExists:error.errors[0]});
-              this.licenseNumberControl.setErrors({licenseExists:error.errors[0]});
-            }
+        next: (response: SuccessResponse<null>) => {
+          this.dialogRef.close(true);
+          this.snackBarService.success(response.messages[0]);
+        },
+        error: (error: ErrorResponse) => {
+          if (error.metadata.field == fields.email) {
+            this.emailControl.setErrors({ userEmailExists: error.messages[0] });
+          }
+          else if (error.metadata.field == fields.licenseNumber) {
+            this.licenseNumberControl.setErrors({ licenseExists: error.messages[0] });
+          }
+          else {
+            this.snackBarService.error(error.messages[0]);
+          }
+        }
       });
     }
   }

@@ -7,9 +7,11 @@ import { errorHandlerInterceptor } from './core/interceptor/error-handler.interc
 import { authTokenInterceptor } from './core/interceptor/authToken.interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { loaderInterceptor } from './core/interceptor/loader.interceptor';
+import { DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    DatePipe,
     provideNativeDateAdapter(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),

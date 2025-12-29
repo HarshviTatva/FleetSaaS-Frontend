@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpService } from '../../shared/services/common/http.service';
 import { Observable } from 'rxjs';
 import { apiEndPoints } from '../../../environment/environment';
-import { SuccessResponse } from '../../interfaces/common.interface';
+import { SuccessResponse } from '../../shared/interfaces/common.interface';
 import { UserRequest } from '../company-owner/interfaces/user-account.interface';
 import { DriverResponse } from '../company-owner/interfaces/driver.interface';
 import { PagedRequest } from '../../shared/modules/form-control/interface/pagination.interface';

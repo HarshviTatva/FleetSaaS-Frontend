@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ErrorComponent } from '../../../../../shared/modules/form-control/components/error/error.component';
 import { MaterialModule } from '../../../../../shared/material/material.module';
 import { DispatcherService } from '../../../../services/dispatcher.service';
-import { SuccessResponse, ErrorResponse } from '../../../../../interfaces/common.interface';
+import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
 
 @Component({
   selector: 'app-add-edit-dispatcher',

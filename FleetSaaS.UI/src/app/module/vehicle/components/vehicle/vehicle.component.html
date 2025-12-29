@@ -1,0 +1,11 @@
+<div class="m-20 table-container">
+    <div class="d-flex flex-end">
+        <app-button label="Add Vehicle" [color]="buttonColor" [type]="buttonType" (click)="addEditVehicle(0)"
+            [icon]="'add'"></app-button>
+    </div>
+    <div class="table-container">
+        <app-dynamic-table [data]="vehicles()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+            (edit)="addEditVehicle($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
+            (sortChange)="onSort($event)"></app-dynamic-table>
+    </div>
+</div>

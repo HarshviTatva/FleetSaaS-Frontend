@@ -14,7 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { AuthService } from '../../services/auth.service';
 import { LoginResponse } from '../../../interface/login.response';
-import { SuccessResponse } from '../../../../interfaces/common.interface';
+import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { primaryColor } from '../../../../shared/utils/constant.static';
 import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
 import { TokenService } from '../../services/token.service';

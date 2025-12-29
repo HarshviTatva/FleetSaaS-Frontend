@@ -17,7 +17,7 @@ import { AllowAlphabetOnlyDirective } from '../../../../shared/directives/allow-
 import { Router, RouterModule } from '@angular/router';
 import { AllowNumberOnlyDirective } from '../../../../shared/directives/allow-number-only.directive';
 import { AuthService } from '../../services/auth.service';
-import { SuccessResponse } from '../../../../interfaces/common.interface';
+import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { primaryColor } from '../../../../shared/utils/constant.static';
 import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';

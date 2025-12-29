@@ -1,23 +1,24 @@
 import { Component, inject } from '@angular/core';
-import { DispatcherService } from '../../../../services/dispatcher.service';
+import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
+import { VehicleService } from '../../../../services/vehicle.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
-import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
 
 @Component({
-  selector: 'app-delete-dispatcher',
+  selector: 'app-delete-vehicle',
   imports: [ButtonComponent],
-  templateUrl: './delete-dispatcher.component.html',
-  styleUrl: './delete-dispatcher.component.scss',
+  templateUrl: './delete-vehicle.component.html',
+  styleUrl: './delete-vehicle.component.scss',
 })
-export class DeleteDispatcherComponent {
- private readonly dispatcherService = inject(DispatcherService);
+
+export class DeleteVehicleComponent {
+  private readonly vehicleService = inject(VehicleService);
   private readonly snackBarService = inject(SnackbarService);
   private readonly dialogRef = inject(MatDialogRef<any>);
 
   delete(){
-    this.dispatcherService.deleteDispatcher(this.dialogRef.componentInstance.data.data.id).subscribe((response:SuccessResponse<boolean>)=>{
+    this.vehicleService.deleteVehicle(this.dialogRef.componentInstance.data.data.id).subscribe((response:SuccessResponse<boolean>)=>{
       if(response.result){
         this.snackBarService.success(response.messages[0]);
          this.dialogRef.close(true);

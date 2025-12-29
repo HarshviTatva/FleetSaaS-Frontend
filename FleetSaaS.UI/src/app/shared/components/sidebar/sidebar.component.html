@@ -1,74 +1,48 @@
 <div class="sidebar-inner" [class.closed]="!sidebarOpen()?.()">
+
   <div class="sidebar-header">
     <span class="title-logo">FleetSaaS</span>
   </div>
 
   <ul class="menu">
 
-    <!-- Home -->
-    <li>
-      <a
-        routerLink="/dashboard"
-        class="nav-link"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        <img src="../../../../assets/images/ic-dashboard.svg" />
-        <span class="link-text">Home</span>
-      </a>
-    </li>
+    <li *ngFor="let item of menuItems">
 
-    <!-- Vehicles -->
-    <li>
-      <a routerLink="/vehicles" class="nav-link" routerLinkActive="active">
-        <span class="material-symbols-outlined">delivery_truck_speed</span>
-        <span class="link-text">Vehicles</span>
+      <!-- Single menu -->
+      <a *ngIf="!item.children"
+         [routerLink]="item.route"
+         class="nav-link"
+         routerLinkActive="active">
+        <span class="material-symbols-outlined">{{ item.icon }}</span>
+        <span class="link-text">{{ item.label }}</span>
       </a>
-    </li>
 
-    <!-- Trips -->
-    <li>
-      <a routerLink="/home/trips" class="nav-link" routerLinkActive="active">
-        <span class="material-symbols-outlined">travel_luggage_and_bags</span>
-        <span class="link-text">Trips</span>
-      </a>
-    </li>
+      <!-- Expansion menu -->
+      <div *ngIf="item.children" class="menu-expansion">
 
-    <!-- Reports -->
-    <li>
-      <a routerLink="/reports" class="nav-link" routerLinkActive="active">
-        <span class="material-symbols-outlined">analytics</span>
-        <span class="link-text">Reports</span>
-      </a>
-    </li>
+        <div class="nav-link expansion-header"
+             (click)="toggle(item.label)">
+          <span class="material-symbols-outlined">{{ item.icon }}</span>
+          <span class="link-text">{{ item.label }}</span>
 
-    <li class="menu-expansion">
-      <div class="nav-link expansion-header" (click)="toggleAccounts()">
-        <span class="material-symbols-outlined">manage_accounts</span>
-        <span class="link-text">Accounts</span>
-        <span class="expand-icon material-symbols-outlined" [class.open]="accountsOpen()">expand_more</span>
+          <span class="material-symbols-outlined expand-icon"
+                [class.open]="openMenu() === item.label">
+            expand_more
+          </span>
+        </div>
+
+        <ul class="submenu"
+            [class.open]="openMenu() === item.label">
+          <li *ngFor="let child of item.children">
+            <a [routerLink]="child.route"
+               class="sub-link"
+               routerLinkActive="active">
+              {{ child.label }}
+            </a>
+          </li>
+        </ul>
+
       </div>
-
-      <ul class="submenu" [class.open]="accountsOpen()">
-        <li>
-          <a
-            routerLink="/layout/drivers"
-            class="sub-link"
-            routerLinkActive="active">
-            Drivers
-          </a>
-        </li>
-
-        <li>
-          <a
-            routerLink="/layout/dispatchers"
-            class="sub-link"
-            routerLinkActive="active">
-            Dispatchers
-          </a>
-        </li>
-      </ul>
-
     </li>
-
   </ul>
 </div>

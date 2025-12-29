@@ -12,5 +12,8 @@ export const ROUTE_PATH = {
     },
     userAccounts:{
         manage:'user-management'
+    },
+    vehicles:{
+        getVehicles:'vehicles'
     }
 }
