@@ -4,6 +4,7 @@
   [type]="type"
   [disabled]="disabled"
   class="common-btn"
-  [ngStyle]="buttonStyle()">
- <mat-icon>{{icon()}}</mat-icon> {{ label }}
+  [ngStyle]="buttonStyle()"
+  [matTooltip]="tooltipText()">
+ <mat-icon *ngIf="icon()">{{icon()}}</mat-icon> {{ label }}
 </button>

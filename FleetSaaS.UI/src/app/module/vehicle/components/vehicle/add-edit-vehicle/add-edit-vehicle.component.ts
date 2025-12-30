@@ -1,14 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { DialogService } from '../../../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { VehicleService } from '../../../../services/vehicle.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { fields, licenseNumberRegex, licensePlateRegex, vinRegex } from '../../../../../shared/utils/constant.static';
+import { fields, licensePlateRegex, vinRegex } from '../../../../../shared/utils/constant.static';
 import { InputComponent, InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
 import { ValidationMessages } from '../../../../../shared/services/validation.service';
 import { errors } from '../../../../../shared/utils/messages/error.static';
 import { MaterialModule } from '../../../../../shared/material/material.module';
-import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
 import { ErrorComponent } from '../../../../../shared/modules/form-control/components/error/error.component';
 import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
 import { MatDialogRef } from '@angular/material/dialog';

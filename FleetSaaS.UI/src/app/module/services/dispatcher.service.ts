@@ -30,9 +30,9 @@ export class DispatcherService {
     }
 
     deleteDispatcher(id:string):Observable<SuccessResponse<boolean>>{
-      return this.httpService.delete<SuccessResponse<boolean>>(
+      return this.httpService.patch<SuccessResponse<boolean>>(
         apiEndPoints.dispatcher.deleteUser+'/'+id,
-
+        null
       );
     }
 }

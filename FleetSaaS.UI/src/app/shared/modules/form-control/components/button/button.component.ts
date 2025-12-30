@@ -20,6 +20,7 @@ export class ButtonComponent {
 
   icon = input<string>('');
   width = input<string>('100%');
+  tooltipText = input<string>('');
 
   buttonStyle = computed(()=>({
     width : this.width()

@@ -22,6 +22,7 @@ export class DynamicTableComponent<T> implements AfterViewInit{
 
   edit = output<T>();
   delete = output<T>();
+  assignVehicle = output<T>();
   pageChange = output<PageEvent>();
   sortChange = output<Sort>();
 

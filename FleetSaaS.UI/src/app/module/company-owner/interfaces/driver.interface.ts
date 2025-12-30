@@ -5,7 +5,7 @@ export interface DriverResponse {
 }
 
 export interface Driver{
-    Id:string;
+    id:string;
     userId:string;
     userName:string;
     email:string;
@@ -16,4 +16,13 @@ export interface Driver{
     isActive?:boolean;
     isAvail?:string;
     isAct?:string;
+    isVehicleAssigned?:boolean;
+    vehicleAssignmentId?:string;
+    vehicleName?:string;
+}
+
+export interface VehicleAssignmentRequest{
+    id?:string;
+    vehicleId:string;
+    driverId:string;
 }

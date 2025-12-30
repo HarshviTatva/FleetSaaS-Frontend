@@ -9,5 +9,9 @@ export const VehicleTableColumns:TableColumn<Vehicle>[] = [
     {key:'insuranceExpiryDateString',label:'Insurance Expiry',sortable:true},
     {key:'licensePlate',label:'License Plate',sortable:true},
     {key:'isAct',label:'Is Active?',sortable:true},
-    {key:'actions',label:'Actions'}
+    {
+        key: 'actions', label: 'Actions',
+        canEdit: (row: Vehicle) => true,
+        canDelete: (row: Vehicle) => true
+    }
 ];

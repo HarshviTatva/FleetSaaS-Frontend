@@ -37,7 +37,8 @@
             <a [routerLink]="child.route"
                class="sub-link"
                routerLinkActive="active">
-              {{ child.label }}
+               <span class="material-symbols-outlined sub-icon">{{ child.icon }}</span>
+              <span>{{ child.label }}</span>
             </a>
           </li>
         </ul>

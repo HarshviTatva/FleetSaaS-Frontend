@@ -1,7 +1,7 @@
 <div class="m-20 table-container">
     <div class="d-flex flex-end">
         <app-button label="Add Vehicle" [color]="buttonColor" [type]="buttonType" (click)="addEditVehicle(0)"
-            [icon]="'add'"></app-button>
+            [icon]="'add'" [tooltipText]="'Add'"></app-button>
     </div>
     <div class="table-container">
         <app-dynamic-table [data]="vehicles()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"

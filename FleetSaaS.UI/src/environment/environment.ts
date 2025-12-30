@@ -20,6 +20,10 @@ export const apiEndPoints = {
   vehicle:{
     addEditVehicle:'Vehicle/vehicle',
     deleteVehicle:'vehicle',
-    getAll:'Vehicle/vehicles'
+    getAll:'Vehicle/vehicles',
+    vehicleList:'Vehicle/all-vehicles',
+    assignVehicle:'Vehicle/vehicle-assignment',
+    reAssignVehicle:'Vehicle/vehicle-assignments',
+    unAssignVehicle:'Vehicle/vehicle-unassign'
   }
 }

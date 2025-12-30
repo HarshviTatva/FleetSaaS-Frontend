@@ -78,6 +78,10 @@ p {
   color: white;
 }
 
+.mt-10{
+  margin-top: 10px;
+}
+
 .m-20{
   margin: 20px;
 }
@@ -107,4 +111,8 @@ p {
 
 .w-100{
   width: 100%;
+}
+
+.dropdown-w-100{
+    width: 100% !important;
 }

@@ -32,8 +32,8 @@ export const SIDEBAR_MENU: Record<number, MenuItem[]> = {
       label: 'Accounts',
       icon: 'manage_accounts',
       children: [
-        { label: 'Drivers', route: '/layout/drivers' },
-        { label: 'Dispatchers', route: '/layout/dispatchers' }
+        { label: 'Drivers', route: '/layout/drivers',icon:'group' },
+        { label: 'Dispatchers', route: '/layout/dispatchers',icon:'group' }
       ]
     },
   ]

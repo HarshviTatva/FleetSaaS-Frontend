@@ -39,6 +39,15 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+  
+  patch<T>(path: string, body: any, options?: RequestOptions): Observable<T> {
+    const url = this.apiBaseUrl + path;
+    const handledOptions = this.handleRequestOptions(options);
+
+    return this.http.patch<T>(url, body, handledOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   delete<T>(path: string, options?: RequestOptions): Observable<T> {
     const url = this.apiBaseUrl + path;

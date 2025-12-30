@@ -5,7 +5,7 @@ import { ButtonColor, ButtonType } from "../../../../shared/modules/form-control
 import { ButtonComponent } from "../../../../shared/modules/form-control/components/button/button.component";
 import { DynamicTableComponent } from "../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component";
 import { DialogService } from "../../../../shared/services/dialog.service";
-import { addLabel, editLabel, primaryColor } from "../../../../shared/utils/constant.static";
+import { addLabel, assignLabel, editLabel, primaryColor, reAssignLabel } from "../../../../shared/utils/constant.static";
 import { DriverTableColumns } from "../../configs/driver.config";
 import { AddEditDriverComponent } from "./add-edit-driver/add-edit-driver.component";
 import { DriverService } from "../../../services/driver.service";
@@ -15,6 +15,7 @@ import { SnackbarService } from "../../../../shared/services/snackbar-service";
 import { DeleteDriverComponent } from "./delete-driver/delete-driver.component";
 import { PagedRequest } from "../../../../shared/modules/form-control/interface/pagination.interface";
 import { DatePipe } from '@angular/common';
+import { AssignVehicleToDriverComponent } from "./assign-vehicle-to-driver/assign-vehicle-to-driver.component";
 @Component({
   selector: 'app-driver',
   imports: [MaterialModule, ReactiveFormsModule, ButtonComponent, DynamicTableComponent],
@@ -48,7 +49,6 @@ export class DriverComponent implements OnInit {
     };
       this.driverService.getAllDrivers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DriverResponse>) => {
-        // this.snackBarService.success(response.messages[0]);
         response.data.driversList = response.data.driversList.map(data => ({
         ...data,
         isAct: data.isActive ? 'Yes' : 'No',
@@ -98,5 +98,21 @@ export class DriverComponent implements OnInit {
 
   onSort(event: any) {
     // console.log(event);
+  }
+
+  onAssignVehicle(driver:Driver){
+     this.dialogService
+      .open(
+        ((driver.isVehicleAssigned)?reAssignLabel:assignLabel) +
+        ' Vehicle',
+        AssignVehicleToDriverComponent,
+        driver,
+        false
+      )
+      .subscribe((result) => {
+        if (result === true) {
+          this.getAllDrivers();
+        }
+      });
   }
 }

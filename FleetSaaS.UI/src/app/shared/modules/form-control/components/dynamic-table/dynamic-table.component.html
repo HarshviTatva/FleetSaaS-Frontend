@@ -9,11 +9,14 @@
                 {{ row[column.key] }}
             </ng-container>
             <ng-container *ngIf="column.key === 'actions'">
-                <button mat-icon-button color="primary" (click)="edit.emit(row)">
+                <button mat-icon-button *ngIf="column.canEdit?.(row)" color="primary" (click)="edit.emit(row)" matTooltip="Edit"  >
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" (click)="delete.emit(row)">
+                <button mat-icon-button *ngIf="column.canDelete?.(row)" color="warn" (click)="delete.emit(row)" matTooltip="Delete"  >
                     <mat-icon>delete</mat-icon>
+                </button>
+                  <button mat-icon-button *ngIf="column.canAssignVehicle?.(row)" color="warn" (click)="assignVehicle.emit(row)" matTooltip="Assign Vehicle"  >
+                    <mat-icon>directions_car</mat-icon>
                 </button>
             </ng-container>
         </td>

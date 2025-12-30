@@ -6,6 +6,9 @@ export const licensePlateRegex ='^[A-Z]{2}[0-9]{1,2}[A-Z]{1,3}[0-9]{4}$';
 export const vinRegex = '^[A-HJ-NPR-Z0-9]{17}$';
 export const editLabel = 'Update';
 export const addLabel = 'Add';
+export const assignLabel = 'Assign ';
+export const reAssignLabel = 'Re-Assign ';
+export const unAssignLabel = 'Un-Assign ';
 export const fields = {
     email: 'email',
     licenseNumber: "licenseNumber",

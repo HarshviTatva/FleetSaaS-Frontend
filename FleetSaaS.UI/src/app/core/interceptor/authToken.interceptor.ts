@@ -25,9 +25,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       if (error.status === HttpStatusCode.Unauthorized) {
         tokenService.logout();
-      }
-      else{
-        // Use a custom error message so errorHandlerInterceptor can detect it
+          // Use a custom error message so errorHandlerInterceptor can detect it
         const sessionExpiredError = new HttpErrorResponse({
           error: {
             messages: [errors.session.expired],
@@ -36,7 +34,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (
 
         return throwError(() => sessionExpiredError);
       }
-
+      
       return throwError(() => error);
     }),
   );
