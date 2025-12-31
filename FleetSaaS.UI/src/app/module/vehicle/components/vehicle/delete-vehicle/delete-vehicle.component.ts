@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
 import { VehicleService } from '../../../../services/vehicle.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-delete-vehicle',
-  imports: [ButtonComponent],
+  imports: [SharedModule],
   templateUrl: './delete-vehicle.component.html',
   styleUrl: './delete-vehicle.component.scss',
 })

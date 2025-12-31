@@ -45,7 +45,7 @@ export class TokenService {
     if (this.getUserRoleFromToken()) {
       localStorage.removeItem(this.accessTokenKey);
       this.snackbarService.success(success.logout);
-       this.router.navigate([ROUTE_PATH.auth.login]);
+       this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
     }
   }
 

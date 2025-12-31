@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
-import { ROUTE_PATH } from './shared/utils/route-path.static';
+import { LAYOUT, ROUTE_PATH } from './shared/utils/route-path.static';
 import { authGuard } from './core/guards/auth.guard';
 
 const authRoutes: Routes = [
   {
     path: '',
-    redirectTo: ROUTE_PATH.auth.login,
+    redirectTo: ROUTE_PATH.AUTH.LOGIN,
     pathMatch: 'full'
   },
 
   // Login
   {
-    path: ROUTE_PATH.auth.login,
+    path: ROUTE_PATH.AUTH.LOGIN,
     loadComponent: () =>
       import('./core/auth/components/login/login.component')
         .then(m => m.LoginComponent),
@@ -19,7 +19,7 @@ const authRoutes: Routes = [
 
   // Signup
   {
-    path: ROUTE_PATH.auth.signup,
+    path: ROUTE_PATH.AUTH.SIGNUP,
     loadComponent: () =>
       import('./core/auth/components/signup/signup.component')
         .then(m => m.SignupComponent),
@@ -34,9 +34,9 @@ const authRoutes: Routes = [
   },
 ];
 
-const dashboardRoutes: Routes = [
+const menuRoutes: Routes = [
   {
-    path: ROUTE_PATH.layout.commonlayout,
+    path: LAYOUT,
     canActivate: [authGuard],
     loadComponent: () =>
       import('./module/layout/layout.component')
@@ -44,33 +44,63 @@ const dashboardRoutes: Routes = [
      data: { title: 'Dashboard' },
 
     children: [
+       // dashboards
       {
-        path: ROUTE_PATH.userAccounts.manage,
+        path: ROUTE_PATH.DASHBOARD.DRIVER_DASHBOARD,
+        loadComponent: () =>
+          import('./module/dashboards/components/driver-dashboard/driver-dashboard.component')
+            .then(m => m.DriverDashboardComponent),
+        data: { title: 'Dashboard' }
+      },
+      {
+        path: ROUTE_PATH.DASHBOARD.DISPATCHER_DASHBOARD,
+        loadComponent: () =>
+          import('./module/dashboards/components/dispatcher-dashboard/dispatcher-dashboard.component')
+            .then(m => m.DispatcherDashboardComponent),
+        data: { title: 'Dashboard' }
+      },
+      {
+        path: ROUTE_PATH.DASHBOARD.COMPANY_OWNER_DASHBOARD,
+        loadComponent: () =>
+          import('./module/dashboards/components/company-owner-dashboard/company-owner-dashboard.component')
+            .then(m => m.CompanyOwnerDashboardComponent),
+        data: { title: 'Dashboard' }
+      },
+
+      //other components
+      {
+        path: ROUTE_PATH.USER_ACCOUNT_MANAGE,
         loadComponent: () =>
           import('./module/user-account-manage/user-account-manage.component')
             .then(m => m.UserAccountManageComponent),
       },
       {
-        path: ROUTE_PATH.paths.drivers,
-        // canActivate:[],
+        path: ROUTE_PATH.DRIVERS,
         loadComponent: () =>
           import('./module/company-owner/components/driver/driver.component')
             .then(m => m.DriverComponent),
              data: { title: 'Drivers' }
       },
       {
-        path: ROUTE_PATH.paths.dispatchers,
+        path: ROUTE_PATH.DISPATCHERS,
         loadComponent: () =>
           import('./module/company-owner/components/dispatcher/dispatcher.component')
             .then(m => m.DispatcherComponent),
              data: { title: 'Dispatchers' }
       },
       {
-         path: ROUTE_PATH.vehicles.getVehicles,
+         path: ROUTE_PATH.VEHICLES,
         loadComponent: () =>
           import('./module/vehicle/components/vehicle/vehicle.component')
             .then(m => m.VehicleComponent),
              data: { title: 'Vehicles' }
+      },
+      {
+         path: ROUTE_PATH.TRIPS,
+        loadComponent: () =>
+          import('./module/trip/components/trip/trip.component')
+            .then(m => m.TripComponent),
+             data: { title: 'Trips' }
       }
     ]
   }
@@ -78,8 +108,8 @@ const dashboardRoutes: Routes = [
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: ROUTE_PATH.auth.login, pathMatch: 'full' },
+  { path: '', redirectTo: ROUTE_PATH.AUTH.LOGIN, pathMatch: 'full' },
   ...authRoutes, // auth routes
-  ...dashboardRoutes,
-  { path: '**', redirectTo: ROUTE_PATH.auth.login }, // fallback route
+  ...menuRoutes,
+  { path: '**', redirectTo: ROUTE_PATH.AUTH.LOGIN }, // fallback route
 ];

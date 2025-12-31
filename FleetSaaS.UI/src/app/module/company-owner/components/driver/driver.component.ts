@@ -1,9 +1,7 @@
 import { Component, OnInit, inject, input, signal } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../../../../shared/material/material.module";
 import { ButtonColor, ButtonType } from "../../../../shared/modules/form-control/common-type/buttontype";
-import { ButtonComponent } from "../../../../shared/modules/form-control/components/button/button.component";
-import { DynamicTableComponent } from "../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component";
 import { DialogService } from "../../../../shared/services/dialog.service";
 import { addLabel, assignLabel, editLabel, primaryColor, reAssignLabel } from "../../../../shared/utils/constant.static";
 import { DriverTableColumns } from "../../configs/driver.config";
@@ -16,9 +14,12 @@ import { DeleteDriverComponent } from "./delete-driver/delete-driver.component";
 import { PagedRequest } from "../../../../shared/modules/form-control/interface/pagination.interface";
 import { DatePipe } from '@angular/common';
 import { AssignVehicleToDriverComponent } from "./assign-vehicle-to-driver/assign-vehicle-to-driver.component";
+import { InputConfig } from "../../../../shared/modules/form-control/components/input/input.component";
+import { debounceTime, distinctUntilChanged } from "rxjs";
+import { SharedModule } from "../../../../shared/modules/shared.module";
 @Component({
   selector: 'app-driver',
-  imports: [MaterialModule, ReactiveFormsModule, ButtonComponent, DynamicTableComponent],
+  imports: [MaterialModule, ReactiveFormsModule, SharedModule],
   templateUrl: './driver.component.html',
   styleUrl: './driver.component.scss',
 })
@@ -38,23 +39,44 @@ export class DriverComponent implements OnInit {
   pageSize = signal(10);
   totalCount = signal(0);
 
+  searchControl = new FormControl('');
+  sortBy = signal<string>('userName');
+  sortDirection = signal<'asc' | 'desc'>('desc');
+
+  searchConfig: InputConfig = {
+    key: 'search',
+    label: 'Search',
+    type: 'text',
+    placeholder: 'Enter Search'
+  }
+
   ngOnInit(): void {
     this.getAllDrivers();
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => {
+        this.pageNumber.set(0);
+        this.getAllDrivers();
+      });
   }
 
   getAllDrivers() {
     var pagedRequest: PagedRequest = {
-    pageNumber: this.pageNumber(),
-    pageSize: this.pageSize(),
+      pageNumber: this.pageNumber(),
+      pageSize: this.pageSize(),
+      search: this.searchControl.value?.trim() || '',
+      sortBy: this.sortBy(),
+      sortDirection: this.sortDirection()
     };
-      this.driverService.getAllDrivers(pagedRequest).subscribe({
+    this.driverService.getAllDrivers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DriverResponse>) => {
         response.data.driversList = response.data.driversList.map(data => ({
-        ...data,
-        isAct: data.isActive ? 'Yes' : 'No',
-        isAvail: data.isAvailable ? 'Yes' : 'No',
-        licenseExpiryDateString:this.datePipe.transform(data.licenseExpiryDate,'dd-MMM-yyyy') ?? '-'
-      }));
+          ...data,
+          isAct: data.isActive ? 'Yes' : 'No',
+          isAvail: data.isAvailable ? 'Yes' : 'No',
+          licenseExpiryDateString: this.datePipe.transform(data.licenseExpiryDate, 'dd-MMM-yyyy') ?? '-'
+        }));
         this.drivers.set(response.data.driversList ?? []);
       },
       error: (error) => {
@@ -65,7 +87,7 @@ export class DriverComponent implements OnInit {
   }
 
   addEditDriver(value: any) {
-    this.dialogService.open((value==0?addLabel:editLabel)  + ' Driver', AddEditDriverComponent, value, true).subscribe(
+    this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Driver', AddEditDriverComponent, value, true).subscribe(
       (data => {
         if (data) {
           this.getAllDrivers();
@@ -97,13 +119,15 @@ export class DriverComponent implements OnInit {
   }
 
   onSort(event: any) {
-    // console.log(event);
+    this.sortBy.set(event.sortBy);
+    this.sortDirection.set(event.direction);
+    this.getAllDrivers();
   }
 
-  onAssignVehicle(driver:Driver){
-     this.dialogService
+  onAssignVehicle(driver: Driver) {
+    this.dialogService
       .open(
-        ((driver.isVehicleAssigned)?reAssignLabel:assignLabel) +
+        ((driver.isVehicleAssigned) ? reAssignLabel : assignLabel) +
         ' Vehicle',
         AssignVehicleToDriverComponent,
         driver,

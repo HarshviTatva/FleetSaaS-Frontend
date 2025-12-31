@@ -6,10 +6,10 @@ export interface DispatcherResponse {
 
 export interface Dispatcher{
     Id:string;
-    UserId:string;
-    UserName:string;
-    Email:string;
-    PhoneNumber:string;
+    userId:string;
+    userName:string;
+    email:string;
+    phoneNumber:string;
     isActive?:boolean;
     isAct?:string;
 }

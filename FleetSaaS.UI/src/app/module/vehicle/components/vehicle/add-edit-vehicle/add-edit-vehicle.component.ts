@@ -3,18 +3,18 @@ import { SnackbarService } from '../../../../../shared/services/snackbar-service
 import { VehicleService } from '../../../../services/vehicle.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { fields, licensePlateRegex, vinRegex } from '../../../../../shared/utils/constant.static';
-import { InputComponent, InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
+import { InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
 import { ValidationMessages } from '../../../../../shared/services/validation.service';
 import { errors } from '../../../../../shared/utils/messages/error.static';
 import { MaterialModule } from '../../../../../shared/material/material.module';
-import { ErrorComponent } from '../../../../../shared/modules/form-control/components/error/error.component';
 import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Vehicle } from '../../../interface/vehicle.interface';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-add-edit-vehicle',
-  imports: [MaterialModule, ErrorComponent, InputComponent],
+  imports: [MaterialModule, SharedModule],
   templateUrl: './add-edit-vehicle.component.html',
   styleUrl: './add-edit-vehicle.component.scss',
 })
@@ -32,12 +32,12 @@ export class AddEditVehicleComponent implements OnInit {
   constructor() {
     this.vehicleForm = this.formBuilder.group({
       id: [null],
-      make: ['', [Validators.required,Validators.maxLength(15)]],
-      model: ['', [Validators.required,Validators.maxLength(15)]],
-      vin: ['', [Validators.required,Validators.pattern(vinRegex)]],
-      licensePlate: ['', [Validators.required,Validators.pattern(licensePlateRegex)]],
+      make: ['', [Validators.required, Validators.maxLength(15)]],
+      model: ['', [Validators.required, Validators.maxLength(15)]],
+      vin: ['', [Validators.required, Validators.pattern(vinRegex)]],
+      licensePlate: ['', [Validators.required, Validators.pattern(licensePlateRegex)]],
       insuranceExpiryDate: ['', [Validators.required]],
-      year: [0, [Validators.required,Validators.maxLength(4)]],
+      year: [0, [Validators.required, Validators.maxLength(4)]],
       isActive: [false]
     });
   }
@@ -145,10 +145,13 @@ export class AddEditVehicleComponent implements OnInit {
     else {
       var value = this.vehicleForm.getRawValue();
 
-      var insuranceExpiryDate = value.insuranceExpiryDate
-        ? `${value.insuranceExpiryDate.getFullYear()}-${String(value.insuranceExpiryDate.getMonth() + 1).padStart(2, '0')}-${String(value.insuranceExpiryDate.getDate()).padStart(2, '0')}`
-        : null;
+      let insuranceExpiryDate: string | null = null;
 
+      if (value.insuranceExpiryDate) {
+        const date = new Date(value.insuranceExpiryDate);
+        insuranceExpiryDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      }
+      
       var vehicleRequest = {
         ...value,
         insuranceExpiryDate: insuranceExpiryDate
@@ -166,7 +169,7 @@ export class AddEditVehicleComponent implements OnInit {
           else if (error.metadata.field == fields.licensePlate) {
             this.licensePlateControl.setErrors({ exists: error.messages[0] });
           }
-          else{
+          else {
             this.snackBarService.error(error.messages[0]);
           }
         }

@@ -1,0 +1,28 @@
+<form [formGroup]="tripForm" (ngSubmit)="submit()" id="dialogForm">
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="originConfig" [control]="originControl"></app-input>
+            <app-error [control]="originControl" [showErrorSpacing]="originConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <app-input [config]="destinationConfig" [control]="destinationControl">
+            </app-input>
+            <app-error [control]="destinationControl" [showErrorSpacing]="destinationConfig.showErrorSpacing">
+            </app-error>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput rows="4" formControlName="description" placeholder="Enter description"
+                    maxlength="500">
+                 </textarea>
+            </mat-form-field>
+            <app-error [control]="descriptionControl"></app-error>
+        </div>
+    </div>
+</form>

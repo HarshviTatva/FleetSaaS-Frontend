@@ -1,0 +1,17 @@
+<div class="m-20 table-container">
+    <div class="d-flex justify-content-space-between p-10">
+        <div>
+            <app-input [config]="searchConfig" [control]="searchControl" appAllowAlphabetOnly>
+            </app-input>
+        </div>
+        <div>
+           <app-button label="Add Trip" [color]="buttonColor" [type]="buttonType" (click)="addEditTrip(0)"
+            [icon]="'add'" [tooltipText]="'Add'"></app-button>
+        </div>
+    </div>
+    <div class="table-container">
+        <app-dynamic-table [data]="trips()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+            (edit)="addEditTrip($event)" (delete)="onCancel($event)" (pageChange)="onPage($event)"
+            (sortChange)="onSort($event)"></app-dynamic-table>
+    </div>
+</div>

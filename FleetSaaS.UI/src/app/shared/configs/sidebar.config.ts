@@ -1,40 +1,41 @@
 import { MenuItem } from "../interfaces/common.interface";
+import { DRIVER_TRIPS_MENU, TRIPS_MENU, VEHICLES_MENU, DRIVERS_MENU } from "../utils/constant.static";
 import { UserRole } from "../utils/enums/common.enum";
+import { ROUTE_PATH } from "../utils/route-path.static";
 
-export const SIDEBAR_MENU: Record<number, MenuItem[]> = {
+export const SIDEBAR_MENU: Record<UserRole, MenuItem[]> = {
 
   [UserRole.Driver]: [
-    { label: 'Home', icon: 'dashboard', route: '/dashboard' },
-    {
-      label: 'Trips',
-      icon: 'travel_luggage_and_bags',
-      children: [
-        { label: 'Assigned Trips', route: '/layout/trips/assigned' },
-        { label: 'Trip History', route: '/layout/trips/history' }
-      ]
-    },
-    { label: 'My Vehicles', icon: 'delivery_truck_speed', route: '/layout/my-vehicles' },
+    { label: 'Home', icon: 'dashboard', route: ROUTE_PATH.DRIVER_DASHBOARD },
+    DRIVER_TRIPS_MENU
   ],
 
-   [UserRole.Dispatcher]: [
-    { label: 'Home', icon: 'dashboard', route: '/dashboard' },
-    { label: 'Trips', icon: 'travel_luggage_and_bags', route: '/layout/trips' },
-    { label: 'Vehicles', icon: 'delivery_truck_speed' , route: '/layout/vehicles' },
-    { label: 'Drivers', icon: 'group', route: '/layout/drivers' },
+  [UserRole.Dispatcher]: [
+    { label: 'Home', icon: 'dashboard', route: ROUTE_PATH.DISPATCHER_DASHBOARD },
+    TRIPS_MENU,
+    VEHICLES_MENU,
+    DRIVERS_MENU
   ],
 
   [UserRole.CompanyOwner]: [
-    { label: 'Home', icon: 'dashboard', route: '/dashboard' },
-    { label: 'Trips', icon: 'travel_luggage_and_bags', route: '/layout/trips' },
-    { label: 'Vehicles', icon: 'delivery_truck_speed', route: '/layout/vehicles' },
-    { label: 'Reports', icon: 'analytics', route: '/reports' },
+    { label: 'Home', icon: 'dashboard', route: ROUTE_PATH.COMPANY_OWNER_DASHBOARD },
+    TRIPS_MENU,
+    VEHICLES_MENU,
+    {
+      label: 'Reports',
+      icon: 'analytics',
+      route: '/reports'
+    },
     {
       label: 'Accounts',
       icon: 'manage_accounts',
       children: [
-        { label: 'Drivers', route: '/layout/drivers',icon:'group' },
-        { label: 'Dispatchers', route: '/layout/dispatchers',icon:'group' }
+        { label: 'Drivers', icon: 'group', route: ROUTE_PATH.DRIVERS },
+        { label: 'Dispatchers', icon: 'group', route: ROUTE_PATH.DISPATCHERS }
       ]
-    },
-  ]
+    }
+  ],
+
+  [UserRole.Admin]:[]
+
 };

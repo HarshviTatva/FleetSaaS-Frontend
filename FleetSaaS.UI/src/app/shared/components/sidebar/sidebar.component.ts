@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, input, Input, OnInit, Output, signal, Signal } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, inject, input, OnInit, signal, Signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../material/material.module';
 import { MenuItem } from '../../interfaces/common.interface';
 import { TokenService } from '../../../core/auth/services/token.service';
 import { SIDEBAR_MENU } from '../../configs/sidebar.config';
-import { UserRole } from '../../utils/enums/common.enum';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MatIconModule, RouterModule, CommonModule, MaterialModule],
+  imports: [RouterModule, CommonModule, MaterialModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   standalone: true

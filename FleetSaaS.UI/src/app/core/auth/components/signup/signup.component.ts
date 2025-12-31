@@ -21,17 +21,16 @@ import { SuccessResponse } from '../../../../shared/interfaces/common.interface'
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { primaryColor } from '../../../../shared/utils/constant.static';
 import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
+import { SharedModule } from '../../../../shared/modules/shared.module';
+import { MaterialModule } from '../../../../shared/material/material.module';
 
 @Component({
   selector: 'app-signup',
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatIconModule,
-    ButtonComponent,
-    InputComponent,
-    ErrorComponent,
+    MaterialModule,
+    SharedModule,
     RouterModule,
     AllowAlphabetOnlyDirective,
     AllowNumberOnlyDirective
@@ -260,7 +259,7 @@ export class SignupComponent {
     if (!this.signupForm.invalid) {
       this.authService.signUpCompanyUser(this.signupForm.value).subscribe((response: SuccessResponse<null>) => {
         this.snackBarService.success(response.messages[0]);
-        this.router.navigate([ROUTE_PATH.auth.login]);
+        this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
       })
     }
     else {

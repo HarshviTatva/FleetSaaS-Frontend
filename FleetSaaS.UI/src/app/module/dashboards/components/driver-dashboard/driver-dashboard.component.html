@@ -1,0 +1,47 @@
+<div class="vehicle-card" >
+
+  <div class="card-header">
+    <span class="title">Assigned Vehicle</span>
+  </div>
+
+  <div class="card-body">
+
+    <div class="vehicle-info">
+      <div class="info-item">
+        <span>Make: {{ vehicleDetails()?.make }} </span>
+      </div>
+    </div>
+
+     <div class="vehicle-info">
+      <div class="info-item">
+        <span>Model: {{ vehicleDetails()?.model }} </span>
+      </div>
+    </div>
+
+     <div class="vehicle-info">
+      <div class="info-item">
+        <span>Year: {{ vehicleDetails()?.year }} </span>
+      </div>
+    </div>
+
+     <div class="vehicle-info">
+      <div class="info-item">
+        <span>Vehicle Identification Number: {{ vehicleDetails()?.vin }} </span>
+      </div>
+    </div>
+
+     <div class="vehicle-info">
+      <div class="info-item">
+        <span>Insurance Expiry Date: {{ vehicleDetails()?.insuranceExpiryDate | date:'dd-MM-yyyy' }} </span>
+      </div>
+    </div>
+
+     <div class="vehicle-info">
+      <div class="info-item">
+        <span>LicensePlate: {{ vehicleDetails()?.licensePlate }} </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

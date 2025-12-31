@@ -25,5 +25,13 @@ export const apiEndPoints = {
     assignVehicle:'Vehicle/vehicle-assignment',
     reAssignVehicle:'Vehicle/vehicle-assignments',
     unAssignVehicle:'Vehicle/vehicle-unassign'
+  },
+  trip:{
+    addEditTrip:'Trip/trip',
+    cancelTrip:'trip',
+    getAll:'Trip/trips'
+  },
+  dashboard:{
+    assignedVehicle:'Driver/assigned-vehicle'
   }
 }

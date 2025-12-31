@@ -1,19 +1,28 @@
+export const LAYOUT = 'layout';
+
 export const ROUTE_PATH = {
-    auth:{
-        login : 'login',
-        signup:'signup'
+    AUTH:{
+        LOGIN : 'login',
+        SIGNUP:'signup'
     },
-    layout:{
-        commonlayout:'layout',
+    PATHS:{
+        DRIVERS:'drivers',
+        DISPATCHERS:'dispatchers'
     },
-    paths:{
-        drivers:'drivers',
-        dispatchers:'dispatchers'
+    USER_ACCOUNT_MANAGE:'user-management',
+    DASHBOARD:{
+        DRIVER_DASHBOARD:'driver-dashboard',
+        DISPATCHER_DASHBOARD:'dispatcher-dashboard',
+        COMPANY_OWNER_DASHBOARD:'company-owner-dashboard'
     },
-    userAccounts:{
-        manage:'user-management'
-    },
-    vehicles:{
-        getVehicles:'vehicles'
-    }
+  DRIVER_DASHBOARD: `${LAYOUT}/driver-dashboard`,
+  DISPATCHER_DASHBOARD: `${LAYOUT}/dispatcher-dashboard`,
+  COMPANY_OWNER_DASHBOARD: `${LAYOUT}/company-owner-dashboard`,
+  TRIPS: `${LAYOUT}/trips`,
+  VEHICLES: `${LAYOUT}/vehicles`,
+  DRIVERS: `${LAYOUT}/drivers`,
+  DISPATCHERS: `${LAYOUT}/dispatchers`,
+  ASSIGNED_TRIPS: `${LAYOUT}/trips/assigned`,
+  TRIP_HISTORY: `${LAYOUT}/trips/history`,
 }
+

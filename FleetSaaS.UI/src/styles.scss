@@ -3,6 +3,7 @@
 html {
   @include mat.theme((color: (primary: mat.$rose-palette,
         tertiary: mat.$red-palette,
+         error: mat.$red-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -86,8 +87,16 @@ p {
   margin: 20px;
 }
 
+.p-10{
+  padding: 10px;
+}
+
 .d-flex{
   display: flex;
+}
+
+.justify-content-space-between{
+  justify-content: space-between;
 }
 
 .flex-end{

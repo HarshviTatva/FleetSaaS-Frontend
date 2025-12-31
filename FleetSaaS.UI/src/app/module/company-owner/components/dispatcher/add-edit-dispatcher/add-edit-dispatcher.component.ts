@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { InputComponent, InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
+import { InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { ValidationMessages } from '../../../../../shared/services/validation.service';
 import { errors } from '../../../../../shared/utils/messages/error.static';
 import { CommonModule } from '@angular/common';
-import { ErrorComponent } from '../../../../../shared/modules/form-control/components/error/error.component';
 import { MaterialModule } from '../../../../../shared/material/material.module';
 import { DispatcherService } from '../../../../services/dispatcher.service';
 import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-add-edit-dispatcher',
-  imports: [MaterialModule,InputComponent, ErrorComponent,CommonModule],
+  imports: [MaterialModule,SharedModule,CommonModule],
   templateUrl: './add-edit-dispatcher.component.html',
   styleUrl: './add-edit-dispatcher.component.scss',
 })

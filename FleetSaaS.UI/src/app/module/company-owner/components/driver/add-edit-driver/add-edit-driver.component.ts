@@ -1,10 +1,9 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, input, signal } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MaterialModule } from "../../../../../shared/material/material.module";
-import { ErrorComponent } from "../../../../../shared/modules/form-control/components/error/error.component";
-import { InputComponent, InputConfig } from "../../../../../shared/modules/form-control/components/input/input.component";
+import { InputConfig } from "../../../../../shared/modules/form-control/components/input/input.component";
 import { SnackbarService } from "../../../../../shared/services/snackbar-service";
 import { ValidationMessages } from "../../../../../shared/services/validation.service";
 import { fields, licenseNumberRegex } from "../../../../../shared/utils/constant.static";
@@ -12,10 +11,11 @@ import { errors } from "../../../../../shared/utils/messages/error.static";
 import { DriverService } from "../../../../services/driver.service";
 import { ErrorResponse, SuccessResponse } from "../../../../../shared/interfaces/common.interface";
 import { Driver } from "../../../interfaces/driver.interface";
+import { SharedModule } from "../../../../../shared/modules/shared.module";
 
 @Component({
   selector: 'app-add-edit-driver',
-  imports: [MaterialModule, InputComponent, ErrorComponent, CommonModule],
+  imports: [MaterialModule, SharedModule, CommonModule],
   templateUrl: './add-edit-driver.component.html',
   styleUrl: './add-edit-driver.component.scss',
 })

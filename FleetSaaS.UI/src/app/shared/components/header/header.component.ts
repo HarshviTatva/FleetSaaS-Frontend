@@ -7,15 +7,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { TokenService } from '../../../core/auth/services/token.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { MaterialModule } from '../../material/material.module';
 @Component({
   selector: 'app-header',
   imports: 
   [
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatDividerModule
+    MaterialModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

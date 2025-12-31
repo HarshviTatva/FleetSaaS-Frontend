@@ -1,13 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { DriverService } from '../../../../services/driver.service';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
-import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-delete-driver',
-  imports: [ButtonComponent],
+  imports: [SharedModule],
   templateUrl: './delete-driver.component.html',
   styleUrl: './delete-driver.component.scss',
 })

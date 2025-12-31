@@ -10,14 +10,13 @@ export interface VehicleRequest{
     userId?:string;
 }
 
-
 export interface VehicleResponse{
     vehicles:Vehicle[];
     companyId:number;
 }
 
 export interface Vehicle {
-    Id:string;
+    id:string;
     make:string;
     model:string;
     year:number;

@@ -3,11 +3,11 @@ import { DispatcherService } from '../../../../services/dispatcher.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
-import { ButtonComponent } from '../../../../../shared/modules/form-control/components/button/button.component';
+import { SharedModule } from '../../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-delete-dispatcher',
-  imports: [ButtonComponent],
+  imports: [SharedModule],
   templateUrl: './delete-dispatcher.component.html',
   styleUrl: './delete-dispatcher.component.scss',
 })

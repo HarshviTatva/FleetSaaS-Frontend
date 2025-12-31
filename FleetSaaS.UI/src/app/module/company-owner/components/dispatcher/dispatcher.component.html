@@ -1,8 +1,15 @@
 <div class="m-20">
-    <div class="d-flex flex-end">
-        <app-button label="Add Dispatcher" [color]="buttonColor" [type]="buttonType" (click)="addEditDispatcher(0)"
-            [icon]="'add'" [tooltipText]="'Add'"></app-button>
+    <div class="d-flex justify-content-space-between p-10">
+        <div>
+            <app-input [config]="searchConfig" [control]="searchControl" appAllowAlphabetOnly>
+            </app-input>
+        </div>
+        <div>
+            <app-button label="Add Dispatcher" [color]="buttonColor" [type]="buttonType" (click)="addEditDispatcher(0)"
+                [icon]="'add'" [tooltipText]="'Add'"></app-button>
+        </div>
     </div>
+
     <div class="dispatcher-content">
         <app-dynamic-table [data]="dispatchers()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
             (edit)="addEditDispatcher($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"

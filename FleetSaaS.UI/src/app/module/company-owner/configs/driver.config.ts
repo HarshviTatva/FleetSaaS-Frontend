@@ -23,7 +23,7 @@ export const DispactherTableColumns: TableColumn<any>[] = [
     { key: 'userName', label: 'UserName', sortable: true },
     { key: 'email', label: 'Email', sortable: true },
     { key: 'phoneNumber', label: 'Phone Number', sortable: true },
-    { key: 'isActive', label: 'IsActive?', sortable: true },
+    { key: 'isAct', label: 'IsActive?', sortable: true },
     {
         key: 'actions', label: 'Actions',
         canEdit: (row: Dispatcher) => true,

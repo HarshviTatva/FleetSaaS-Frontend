@@ -19,16 +19,15 @@ import { primaryColor } from '../../../../shared/utils/constant.static';
 import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
 import { TokenService } from '../../services/token.service';
 import { MaterialModule } from '../../../../shared/material/material.module';
+import { UserRole } from '../../../../shared/utils/enums/common.enum';
+import { SharedModule } from '../../../../shared/modules/shared.module';
 
 @Component({
   selector: 'app-login',
   imports: [
     MaterialModule,
-    ButtonComponent,
-    InputComponent,
-    ErrorComponent,
-    RouterModule,
-    MatCheckboxModule
+    SharedModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -89,8 +88,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.tokenService.getAccessToken()!==null){
-      this.router.navigate([ROUTE_PATH.layout.commonlayout]);
-    }
+    this.navigateRoutes();    
+  }
   }
 
    onPasswordToggle() {
@@ -112,9 +111,29 @@ export class LoginComponent implements OnInit {
         if(response.result){
           this.snackbarService.success(response.messages[0]);
           this.tokenService.saveTokens(response.data);
-          this.router.navigate([ROUTE_PATH.layout.commonlayout]);
+          this.navigateRoutes();
         }
       });
     }
+  }
+
+  navigateRoutes(){
+    const role = this.tokenService.getUserRoleFromToken();
+    switch (role) {
+      case UserRole.Driver:
+        this.router.navigate([ROUTE_PATH.DRIVER_DASHBOARD]);
+        break;
+
+      case UserRole.Dispatcher:
+        this.router.navigate([ROUTE_PATH.DISPATCHER_DASHBOARD]);
+        break;
+
+      case UserRole.CompanyOwner:
+        this.router.navigate([ROUTE_PATH.COMPANY_OWNER_DASHBOARD]);
+        break;
+
+      default:
+        this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
+  }
   }
 }

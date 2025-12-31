@@ -30,6 +30,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AsyncPipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AsyncPipe,
     MatDialogModule,
     MatExpansionModule,
-    MatNativeDateModule 
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatDividerModule
   ],
   exports: [
     MatInputModule,
@@ -99,7 +103,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatStepperModule,
     AsyncPipe,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatToolbarModule,
+    MatDividerModule
   ],
 })
 export class MaterialModule { }

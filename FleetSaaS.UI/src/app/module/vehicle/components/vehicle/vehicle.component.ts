@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MaterialModule } from '../../../../shared/material/material.module';
-import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { Vehicle, VehicleResponse } from '../../interface/vehicle.interface';
@@ -12,18 +11,23 @@ import { VehicleService } from '../../../services/vehicle.service';
 import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { AddEditVehicleComponent } from './add-edit-vehicle/add-edit-vehicle.component';
 import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
-import { DynamicTableComponent } from '../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component';
 import { DatePipe } from '@angular/common';
+import { InputComponent, InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { SharedModule } from '../../../../shared/modules/shared.module';
+import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
+import { DynamicTableComponent } from '../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component';
 
 @Component({
   selector: 'app-vehicle',
-  imports: [MaterialModule,ButtonComponent,DynamicTableComponent],
+  imports: [MaterialModule,SharedModule],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
 })
 
-export class VehicleComponent implements OnInit{
-
+export class VehicleComponent implements OnInit {
+  
   private readonly dialogService = inject(DialogService);
   private readonly snackBarService = inject(SnackbarService);
   private readonly vehicleService = inject(VehicleService);
@@ -39,22 +43,43 @@ export class VehicleComponent implements OnInit{
   pageSize = signal(10);
   totalCount = signal(0);
 
-  ngOnInit(): void {
-    this.getAllVehicles();
+  searchControl = new FormControl('');
+  sortBy = signal<string>('make');
+  sortDirection = signal<'asc' | 'desc'>('desc');
+
+  searchConfig: InputConfig = {
+    key: 'search',
+    label: 'Search',
+    type: 'text',
+    placeholder: 'Enter Search'
   }
 
-  getAllVehicles(){
-  var pagedRequest: PagedRequest = {
-    pageNumber: this.pageNumber(),
-    pageSize: this.pageSize(),
+  ngOnInit(): void {
+    this.getAllVehicles();
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => {
+        this.pageNumber.set(0);
+        this.getAllVehicles();
+      });
+  }
+
+  getAllVehicles() {
+    var pagedRequest: PagedRequest = {
+      pageNumber: this.pageNumber(),
+      pageSize: this.pageSize(),
+      search: this.searchControl.value?.trim() || '',
+      sortBy: this.sortBy(),
+      sortDirection: this.sortDirection()
     };
-      this.vehicleService.getAllVehicles(pagedRequest).subscribe({
+    this.vehicleService.getAllVehicles(pagedRequest).subscribe({
       next: (response: SuccessResponse<VehicleResponse>) => {
         response.data.vehicles = response.data.vehicles.map(data => ({
-        ...data,
-        isAct: data.isActive ? 'Yes' : 'No',
-        insuranceExpiryDateString:this.datePipe.transform(data.insuranceExpiryDate,'dd-MMM-yyyy') ?? '--'
-      }));
+          ...data,
+          isAct: data.isActive ? 'Yes' : 'No',
+          insuranceExpiryDateString: this.datePipe.transform(data.insuranceExpiryDate, 'dd-MMM-yyyy') ?? '--'
+        }));
         this.vehicles.set(response.data.vehicles ?? []);
       },
       error: (error) => {
@@ -64,40 +89,42 @@ export class VehicleComponent implements OnInit{
     });
   }
 
-    addEditVehicle(value: any) {
-      this.dialogService.open((value==0?addLabel:editLabel) + ' Vehicle', AddEditVehicleComponent, value, true).subscribe(
-        ((data:boolean) => {
-          if (data) {
-            this.getAllVehicles();
-          }
-        })
-      );
-  
-    }
-  
-    onDelete(vehicle: any) {
-      this.dialogService
-        .open(
-          'Delete Vehicle',
-          DeleteVehicleComponent,
-          vehicle,
-          false
-        )
-        .subscribe((result) => {
-          if (result === true) {
-            this.getAllVehicles();
-          }
-        });
-    }
-  
-    onPage(event: any) {
-      this.pageNumber.set(event.pageIndex + 1);
-      this.pageSize.set(event.pageSize);
-      this.getAllVehicles();
-    }
-  
-    onSort(event: any) {
-      // console.log(event);
-    }
+  addEditVehicle(value: any) {
+    this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Vehicle', AddEditVehicleComponent, value, true).subscribe(
+      ((data: boolean) => {
+        if (data) {
+          this.getAllVehicles();
+        }
+      })
+    );
+
+  }
+
+  onDelete(vehicle: any) {
+    this.dialogService
+      .open(
+        'Delete Vehicle',
+        DeleteVehicleComponent,
+        vehicle,
+        false
+      )
+      .subscribe((result) => {
+        if (result === true) {
+          this.getAllVehicles();
+        }
+      });
+  }
+
+  onPage(event: any) {
+    this.pageNumber.set(event.pageIndex + 1);
+    this.pageSize.set(event.pageSize);
+    this.getAllVehicles();
+  }
+
+  onSort(event: any) {
+    this.sortBy.set(event.sortBy);
+    this.sortDirection.set(event.direction);
+    this.getAllVehicles();
+  }
 
 }
