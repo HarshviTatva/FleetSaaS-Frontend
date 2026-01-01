@@ -15,5 +15,8 @@
     [max]="config.max"
     [min]="config.min"
   />
-  <mat-icon *ngIf="config.icon" matSuffix (click)="onIconClick($event)">{{ config.icon }}</mat-icon>
+  @if(config.icon)
+  {
+    <mat-icon  matSuffix (click)="onIconClick($event)">{{ config.icon }}</mat-icon>
+  }
 </mat-form-field>

@@ -3,9 +3,8 @@ import { HttpService } from '../../shared/services/common/http.service';
 import { PagedRequest } from '../../shared/modules/form-control/interface/pagination.interface';
 import { TripRequest, TripResponse } from '../trip/interface/trip.interface';
 import { Observable } from 'rxjs';
-import { apiEndPoints } from '../../../environment/environment';
 import { SuccessResponse } from '../../shared/interfaces/common.interface';
-import { VehicleResponse } from '../vehicle/interface/vehicle.interface';
+import { apiEndPoints } from '../../shared/utils/api-endpoints.constant';
 
 @Injectable({
   providedIn: 'root',

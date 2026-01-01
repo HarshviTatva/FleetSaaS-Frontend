@@ -1,31 +1,114 @@
 <div class="table-container mat-elevation-z2">
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z2">
-    <ng-container *ngFor="let column of columns()" [matColumnDef]="column.key">
-        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.key" [disabled]="!column.sortable">
-            {{ column.label }}
-        </th>
-        <td mat-cell *matCellDef="let row">
-            <ng-container *ngIf="column.key !== 'actions'">
-                {{ row[column.key] }}
-            </ng-container>
-            <ng-container *ngIf="column.key === 'actions'">
-                <button mat-icon-button *ngIf="column.canEdit?.(row)" color="primary" (click)="edit.emit(row)" matTooltip="Edit"  >
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button *ngIf="column.canDelete?.(row)" color="warn" (click)="delete.emit(row)" matTooltip="Delete"  >
-                    <mat-icon>delete</mat-icon>
-                </button>
-                  <button mat-icon-button *ngIf="column.canAssignVehicle?.(row)" color="warn" (click)="assignVehicle.emit(row)" matTooltip="Assign Vehicle"  >
-                    <mat-icon>directions_car</mat-icon>
-                </button>
-            </ng-container>
-        </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
-</table>
 
-<mat-paginator [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions()" showFirstLastButtons
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    (matSortChange)="onSortChange($event)"
+    class="mat-elevation-z2">
+
+    @for (column of columns(); track column.key) {
+
+      <ng-container [matColumnDef]="column.key">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          [mat-sort-header]="column.key"
+          [disabled]="!column.sortable">
+          {{ column.label }}
+        </th>
+
+        <td mat-cell *matCellDef="let row">
+
+          @switch (column.key) {
+
+            @case ('actions') {
+
+              @if (column.canEdit?.(row)) {
+                <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Edit"
+                  (click)="edit.emit(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+
+              @if (column.canDelete?.(row)) {
+                <button
+                  mat-icon-button
+                  color="warn"
+                  matTooltip="Delete"
+                  (click)="delete.emit(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              }
+
+              @if (column.canAssignVehicle?.(row)) {
+                <button
+                  mat-icon-button
+                  color="warn"
+                  matTooltip="Assign Vehicle"
+                  (click)="assignVehicle.emit(row)">
+                  <mat-icon>directions_car</mat-icon>
+                </button>
+              }
+
+            }
+
+            @default {
+
+              @if (column.isLabel) {
+                <button
+                  mat-button
+                  class="status-btn"
+                  [ngClass]="getStatusClass(row[column.key])">
+                  {{ row[column.key] }}
+                </button>
+              }
+              @else {
+                <span
+                  [ngClass]="{ 'table-text': column.key === 'description' }"
+                  [matTooltip]="column.key === 'description' ? row[column.key] : ''"
+                  matTooltipPosition="above">
+                  {{ row[column.key] }}
+                </span>
+              }
+
+            }
+
+          }
+
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns()">
+    </tr>
+
+    <!-- @if (dataSource.data.length === 0) {
+      <tr>
+        <td
+          class="mat-cell text-center"
+          [attr.colspan]="displayedColumns().length">
+          No records found
+        </td>
+      </tr>
+    } -->
+
+  </table>
+
+  <!-- PAGINATOR -->
+  <mat-paginator
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="pageSizeOptions()"
+    showFirstLastButtons
     (page)="onPageChange($event)">
-</mat-paginator>
+  </mat-paginator>
+
 </div>

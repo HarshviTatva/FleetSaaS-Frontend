@@ -3,7 +3,7 @@ import { DropdownOption } from '../../../../../shared/modules/form-control/inter
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../../../shared/material/material.module';
 import { VehicleService } from '../../../../services/vehicle.service';
-import { ErrorResponse, SuccessResponse } from '../../../../../shared/interfaces/common.interface';
+import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Driver, VehicleAssignmentRequest } from '../../../interfaces/driver.interface';
@@ -53,15 +53,14 @@ export class AssignVehicleToDriverComponent implements OnInit {
       next: (response: SuccessResponse<DropdownOption[]>) => {
         this.vehicleList.set(response.data ?? []);
       },
-      error: (error: ErrorResponse) => {
-        this.snackBarService.error(error.messages[0]);
+      error: () => {
         this.vehicleList.set([]);
       }
     });
   }
 
   assignVehicle(id: string | undefined) {
-    var vehicleAssignmentRequest: VehicleAssignmentRequest = {
+    const vehicleAssignmentRequest: VehicleAssignmentRequest = {
       driverId: this.driverData()?.id ?? '',
       vehicleId: this.assignForm.value.vehicleId,
       id: this.assignForm.value.id 
@@ -73,9 +72,6 @@ export class AssignVehicleToDriverComponent implements OnInit {
         next: (response: SuccessResponse<string>) => {
           this.snackBarService.success(response.messages[0]);
           this.dialogRef.close(true);
-        },
-        error: (error: ErrorResponse) => {
-          this.snackBarService.error(error.messages[0]);
         }
       });
     }
@@ -85,9 +81,6 @@ export class AssignVehicleToDriverComponent implements OnInit {
         next: (response: SuccessResponse<string>) => {
           this.snackBarService.success(response.messages[0]);
           this.dialogRef.close(true);
-        },
-        error: (error: ErrorResponse) => {
-          this.snackBarService.error(error.messages[0]);
         }
       });
     }
@@ -98,9 +91,6 @@ export class AssignVehicleToDriverComponent implements OnInit {
         next: (response: SuccessResponse<string>) => {
           this.snackBarService.success(response.messages[0]);
           this.dialogRef.close(true);
-        },
-        error: (error: ErrorResponse) => {
-          this.snackBarService.error(error.messages[0]);
         }
       });
   }

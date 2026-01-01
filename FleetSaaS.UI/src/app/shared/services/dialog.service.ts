@@ -5,7 +5,9 @@ import { DialogComponent } from '../modules/common-modal/dialog/dialog.component
 @Injectable({
   providedIn: 'root',
 })
+
 export class DialogService {
+
   private readonly dialog = inject(MatDialog);
 
   open(title: string, component: Type<any>,data?:any,showFooter?:boolean) {

@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpService } from '../../../shared/services/common/http.service';
 import { SuccessResponse } from '../../../shared/interfaces/common.interface';
 import { CompanyUserRegisterRequest, LoginRequest } from '../../interface/auth.interface';
-import { apiEndPoints } from '../../../../environment/environment';
 import { LoginResponse } from '../../interface/login.response';
+import { apiEndPoints } from '../../../shared/utils/api-endpoints.constant';
 
 @Injectable({
   providedIn: 'root'

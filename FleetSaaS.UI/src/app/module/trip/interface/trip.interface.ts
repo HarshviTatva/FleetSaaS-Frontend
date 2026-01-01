@@ -13,11 +13,14 @@ export interface Trip {
     description:string;
     status:TripStatus;
     statusName:string;
+    scheduledAt:string;
+    scheduledAtString:string;
 }
 
 export interface TripRequest{
     id?:string;
     origin:string;
     destination:string;
-    description:string;
+    description?:string;
+    scheduledAt?:string;
 }

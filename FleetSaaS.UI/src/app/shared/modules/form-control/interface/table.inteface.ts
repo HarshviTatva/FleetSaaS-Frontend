@@ -5,4 +5,5 @@ export interface TableColumn<T = any> {
   canEdit?: (row: T) => boolean;
   canDelete?: (row: T) => boolean;
   canAssignVehicle?:(row:T)=>boolean;
+  isLabel?:boolean;
 }

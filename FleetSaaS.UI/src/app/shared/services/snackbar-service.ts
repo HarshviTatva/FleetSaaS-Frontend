@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { snackBarDuration } from '../utils/constant.static';
 
@@ -7,7 +7,7 @@ import { snackBarDuration } from '../utils/constant.static';
 })
 
 export class SnackbarService {
-  constructor(public _snackBar: MatSnackBar) {}
+  private readonly _snackBar = inject(MatSnackBar);
 
   success(message: string) {
     this._snackBar.open(message, 'X', {

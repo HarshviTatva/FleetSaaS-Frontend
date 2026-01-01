@@ -9,7 +9,6 @@ import { AddEditDriverComponent } from "./add-edit-driver/add-edit-driver.compon
 import { DriverService } from "../../../services/driver.service";
 import { SuccessResponse } from "../../../../shared/interfaces/common.interface";
 import { Driver, DriverResponse } from "../../interfaces/driver.interface";
-import { SnackbarService } from "../../../../shared/services/snackbar-service";
 import { DeleteDriverComponent } from "./delete-driver/delete-driver.component";
 import { PagedRequest } from "../../../../shared/modules/form-control/interface/pagination.interface";
 import { DatePipe } from '@angular/common';
@@ -17,17 +16,18 @@ import { AssignVehicleToDriverComponent } from "./assign-vehicle-to-driver/assig
 import { InputConfig } from "../../../../shared/modules/form-control/components/input/input.component";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { SharedModule } from "../../../../shared/modules/shared.module";
+import { MATERIAL_IMPORTS } from "../../../../shared/utils/material.static";
 @Component({
   selector: 'app-driver',
-  imports: [MaterialModule, ReactiveFormsModule, SharedModule],
+  imports: [...MATERIAL_IMPORTS, ReactiveFormsModule, SharedModule],
   templateUrl: './driver.component.html',
   styleUrl: './driver.component.scss',
+  standalone:true
 })
 
 export class DriverComponent implements OnInit {
   private readonly driverService = inject(DriverService);
   private readonly dialogService = inject(DialogService);
-  private readonly snackBarService = inject(SnackbarService);
   private readonly datePipe = inject(DatePipe);
 
   drivers = signal<Driver[]>([]);
@@ -62,7 +62,7 @@ export class DriverComponent implements OnInit {
   }
 
   getAllDrivers() {
-    var pagedRequest: PagedRequest = {
+    const pagedRequest: PagedRequest = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',
@@ -79,8 +79,7 @@ export class DriverComponent implements OnInit {
         }));
         this.drivers.set(response.data.driversList ?? []);
       },
-      error: (error) => {
-        this.snackBarService.error(error.messages[0]);
+      error: () => {
         this.drivers.set([]);
       }
     });

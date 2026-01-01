@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { DropdownOption } from '../../interface/select.interface';
 import { MaterialModule } from '../../../../material/material.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({

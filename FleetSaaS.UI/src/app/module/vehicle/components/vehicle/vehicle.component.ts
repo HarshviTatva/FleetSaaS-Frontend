@@ -66,7 +66,7 @@ export class VehicleComponent implements OnInit {
   }
 
   getAllVehicles() {
-    var pagedRequest: PagedRequest = {
+    const pagedRequest: PagedRequest = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',

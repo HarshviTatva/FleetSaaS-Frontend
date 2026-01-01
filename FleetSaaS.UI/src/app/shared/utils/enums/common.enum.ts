@@ -23,3 +23,10 @@ export enum AuditAction {
     Assigned = 6,
     Unassigned = 7
 }
+
+export const StatusList = Object.keys(TripStatus)
+  .filter(key => isNaN(Number(key)))
+  .map(key => ({
+    label: key,
+    value: TripStatus[key as keyof typeof TripStatus]
+  }));

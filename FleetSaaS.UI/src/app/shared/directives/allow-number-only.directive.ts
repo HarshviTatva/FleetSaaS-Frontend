@@ -1,10 +1,14 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2, AfterViewInit, inject } from '@angular/core';
 
 @Directive({
   selector: '[appAllowNumberOnly]'
 })
 
-export class AllowNumberOnlyDirective {
+export class AllowNumberOnlyDirective implements AfterViewInit {
+
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+
   @Input() maxLength: number | null = null;
   @Input() allowDecimal = false;
   @Input() minNumber: number | null = null;
@@ -13,13 +17,9 @@ export class AllowNumberOnlyDirective {
 
   private inputElement!: HTMLInputElement;
 
-  constructor(
-    private readonly el: ElementRef,
-    private readonly renderer: Renderer2,
-  ) { }
 
   ngAfterViewInit(): void {
-    const native = this.el.nativeElement;
+    const native = this.elementRef.nativeElement;
     this.inputElement =
       native.tagName.toLowerCase() === 'input' ? native : native.querySelector('input');
   }

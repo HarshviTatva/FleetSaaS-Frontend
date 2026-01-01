@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { ButtonColor, ButtonType } from '../../../../shared/modules/form-control/common-type/buttontype';
@@ -23,7 +23,7 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
   styleUrl: './dispatcher.component.scss',
 })
 
-export class DispatcherComponent {
+export class DispatcherComponent implements OnInit {
   private readonly dialogService = inject(DialogService);
   private readonly dispatcherService = inject(DispatcherService);
   private readonly snackbarService = inject(SnackbarService);
@@ -60,7 +60,7 @@ export class DispatcherComponent {
   }
 
   getAllDispatchers() {
-    var pagedRequest: PagedRequest = {
+    const pagedRequest: PagedRequest = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',
@@ -75,8 +75,7 @@ export class DispatcherComponent {
         }));
         this.dispatchers.set(response.data.dispatcherList ?? []);
       },
-      error: (error) => {
-        this.snackbarService.error(error.messages[0]);
+      error: () => {
         this.dispatchers.set([]);
       }
     });

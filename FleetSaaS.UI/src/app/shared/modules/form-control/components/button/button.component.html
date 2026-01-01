@@ -6,5 +6,8 @@
   class="common-btn"
   [ngStyle]="buttonStyle()"
   [matTooltip]="tooltipText()">
- <mat-icon *ngIf="icon()">{{icon()}}</mat-icon> {{ label }}
+  @if(icon())
+  {
+    <mat-icon>{{icon()}}</mat-icon> {{ label }}
+  }
 </button>

@@ -25,4 +25,24 @@
             <app-error [control]="descriptionControl"></app-error>
         </div>
     </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <mat-form-field class="w-100">
+                <mat-label>Scheduled date</mat-label>
+                <input matInput [matDatepicker]="datepicker" formControlName="scheduledDate" [min]="today()" (dateChange)="updateScheduledAt()">
+                <mat-datepicker #datepicker />
+                <mat-datepicker-toggle [for]="datepicker" matSuffix />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-row m-20">
+        <div class="form-group">
+            <mat-form-field class="w-100">
+                <mat-label>Scheduled time</mat-label>
+                <input matInput [matTimepicker]="timepicker" formControlName="scheduledTime">
+                <mat-timepicker #timepicker />
+                <mat-timepicker-toggle [for]="timepicker" matSuffix />
+            </mat-form-field>
+        </div>
+    </div>
 </form>

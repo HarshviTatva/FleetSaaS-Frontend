@@ -5,7 +5,7 @@ import { SnackbarService } from '../../shared/services/snackbar-service';
 import { errors } from '../../shared/utils/messages/error.static';
 
 export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
-  const snackbarService = inject(SnackbarService);
+ const snackbarService = inject(SnackbarService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {

@@ -1,12 +1,17 @@
 <div class="m-20 table-container">
     <div class="d-flex justify-content-space-between p-10">
-        <div>
-            <app-input [config]="searchConfig" [control]="searchControl" appAllowAlphabetOnly>
-            </app-input>
+        <div class="d-flex g-10">
+            <div>
+                <app-input [config]="searchConfig" [control]="searchControl" appAllowAlphabetOnly></app-input>
+            </div>
+            <div>
+                <app-select [label]="'Select Status'" [dropdownOptions]="statusList()" [control]="statusControl"
+                    [customClass]="'dropdown-w-100'"></app-select>
+            </div>
         </div>
         <div>
-           <app-button label="Add Trip" [color]="buttonColor" [type]="buttonType" (click)="addEditTrip(0)"
-            [icon]="'add'" [tooltipText]="'Add'"></app-button>
+            <app-button label="Add Trip" [color]="buttonColor" [type]="buttonType" (click)="addEditTrip(0)"
+                [icon]="'add'" [tooltipText]="'Add'"></app-button>
         </div>
     </div>
     <div class="table-container">

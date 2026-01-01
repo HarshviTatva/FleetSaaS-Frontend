@@ -6,44 +6,73 @@
 
   <ul class="menu">
 
-    <li *ngFor="let item of menuItems">
+    @for (item of menuItems(); track item.label) {
 
-      <!-- Single menu -->
-      <a *ngIf="!item.children"
-         [routerLink]="item.route"
-         class="nav-link"
-         routerLinkActive="active">
-        <span class="material-symbols-outlined">{{ item.icon }}</span>
-        <span class="link-text">{{ item.label }}</span>
-      </a>
+      <li>
+        <!-- Single menu item -->
+        @if (!item.children) {
+          <a
+            [routerLink]="item.route"
+            class="nav-link"
+            routerLinkActive="active">
 
-      <!-- Expansion menu -->
-      <div *ngIf="item.children" class="menu-expansion">
+            <span class="material-symbols-outlined">
+              {{ item.icon }}
+            </span>
 
-        <div class="nav-link expansion-header"
-             (click)="toggle(item.label)">
-          <span class="material-symbols-outlined">{{ item.icon }}</span>
-          <span class="link-text">{{ item.label }}</span>
+            <span class="link-text">
+              {{ item.label }}
+            </span>
+          </a>
+        }
+        <!-- Expansion menu -->
+        @if (item.children) {
+          <div class="menu-expansion">
 
-          <span class="material-symbols-outlined expand-icon"
+            <div
+              class="nav-link expansion-header"
+              (click)="toggle(item.label)">
+
+              <span class="material-symbols-outlined">
+                {{ item.icon }}
+              </span>
+
+              <span class="link-text">
+                {{ item.label }}
+              </span>
+
+              <span
+                class="material-symbols-outlined expand-icon"
                 [class.open]="openMenu() === item.label">
-            expand_more
-          </span>
-        </div>
+                expand_more
+              </span>
+            </div>
 
-        <ul class="submenu"
-            [class.open]="openMenu() === item.label">
-          <li *ngFor="let child of item.children">
-            <a [routerLink]="child.route"
-               class="sub-link"
-               routerLinkActive="active">
-               <span class="material-symbols-outlined sub-icon">{{ child.icon }}</span>
-              <span>{{ child.label }}</span>
-            </a>
-          </li>
-        </ul>
+            <ul
+              class="submenu"
+              [class.open]="openMenu() === item.label">
 
-      </div>
-    </li>
+              @for (child of item.children; track child.label) {
+                <li>
+                  <a
+                    [routerLink]="child.route"
+                    class="sub-link"
+                    routerLinkActive="active">
+
+                    <span class="material-symbols-outlined sub-icon">
+                      {{ child.icon }}
+                    </span>
+
+                    <span>{{ child.label }}</span>
+                  </a>
+                </li>
+              }
+
+            </ul>
+          </div>
+        }
+
+      </li>
+    }
   </ul>
 </div>

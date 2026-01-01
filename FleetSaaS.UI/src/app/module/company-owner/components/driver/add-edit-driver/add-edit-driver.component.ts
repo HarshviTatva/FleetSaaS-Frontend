@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, signal, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MaterialModule } from "../../../../../shared/material/material.module";
@@ -20,7 +20,7 @@ import { SharedModule } from "../../../../../shared/modules/shared.module";
   styleUrl: './add-edit-driver.component.scss',
 })
 
-export class AddEditDriverComponent {
+export class AddEditDriverComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly driverService = inject(DriverService);
   private readonly snackBarService = inject(SnackbarService);
@@ -39,8 +39,7 @@ export class AddEditDriverComponent {
       licenseNumber: ['', [Validators.required, Validators.pattern(licenseNumberRegex)]],
       licenseExpiryDate: ['', [Validators.required]],
       userId: [null],
-      isAvailable: [false],
-      isActive: [false]
+      isAvailable: [false]
     });
   }
 
@@ -153,8 +152,8 @@ export class AddEditDriverComponent {
       this.snackBarService.error(errors.fillCorrectForm.correctDetails);
     }
     else {
-      var value = this.driverForm.getRawValue();
-      var driverRequest = {
+      const value = this.driverForm.getRawValue();
+      const driverRequest = {
         ...value,
         licenseExpiryDate: value.licenseExpiryDate
           ? new Date(value.licenseExpiryDate).toISOString().split('T')[0]
@@ -171,9 +170,6 @@ export class AddEditDriverComponent {
           }
           else if (error.metadata.field == fields.licenseNumber) {
             this.licenseNumberControl.setErrors({ licenseExists: error.messages[0] });
-          }
-          else {
-            this.snackBarService.error(error.messages[0]);
           }
         }
       });

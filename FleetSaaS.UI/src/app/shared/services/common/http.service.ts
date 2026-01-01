@@ -1,24 +1,23 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environment/environment';
-import { RequestOptions, ErrorResponse } from '../../interfaces/common.interface';
+import { ErrorResponse, RequestOptions } from '../../interfaces/common.interface';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class HttpService {
   http = inject(HttpClient);
   private readonly apiBaseUrl = environment.apiUrl;
-  
-  constructor() { }
+
 
   get<T>(path: string, options?: RequestOptions): Observable<T> {
     const url = this.apiBaseUrl + path;
     const handledOptions = this.handleRequestOptions(options);
 
     return this.http.get<T>(url, handledOptions).pipe(
-      retry(2),
       catchError(this.handleError));
   }
 

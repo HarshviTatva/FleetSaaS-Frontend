@@ -143,7 +143,7 @@ export class AddEditVehicleComponent implements OnInit {
       this.snackBarService.error(errors.fillCorrectForm.correctDetails);
     }
     else {
-      var value = this.vehicleForm.getRawValue();
+      const value = this.vehicleForm.getRawValue();
 
       let insuranceExpiryDate: string | null = null;
 
@@ -152,7 +152,7 @@ export class AddEditVehicleComponent implements OnInit {
         insuranceExpiryDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
       }
       
-      var vehicleRequest = {
+      const vehicleRequest = {
         ...value,
         insuranceExpiryDate: insuranceExpiryDate
       };

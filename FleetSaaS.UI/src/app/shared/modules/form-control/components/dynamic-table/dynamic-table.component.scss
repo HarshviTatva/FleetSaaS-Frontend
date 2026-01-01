@@ -1,3 +1,5 @@
+@use "../../../../../../assets/styles/variable" as *;
+
 table {
   width: 100%;
   overflow: auto;
@@ -16,8 +18,48 @@ th {
   background: #fff;
   border-radius: 10px;
   margin: 10px;
-  /* padding: 12px; */
   overflow: auto;
   border: 1px solid #cd5279;
     box-shadow: 3px 2px #cd5279;
+}
+
+.table-text {
+  display: inline-block;
+  max-width: 120px;      
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.status-btn {
+  height: 28px;
+  min-width: auto;
+  padding: 0 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  pointer-events: none; 
+}
+
+/* Status colors */
+.status-planned {
+  background-color: #e3f2fd;
+  color: $blue;
+}
+
+.status-inprogress {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.status-completed {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background-color: #fdecea;
+  color: #c62828;
 }

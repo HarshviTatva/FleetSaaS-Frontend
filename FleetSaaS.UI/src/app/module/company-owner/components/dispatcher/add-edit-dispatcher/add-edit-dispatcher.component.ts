@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
@@ -18,7 +18,7 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
   styleUrl: './add-edit-dispatcher.component.scss',
 })
 
-export class AddEditDispatcherComponent {
+export class AddEditDispatcherComponent implements OnInit {
 private readonly formBuilder = inject(FormBuilder);
   private readonly dispatcherService = inject(DispatcherService);
   private readonly snackBarService = inject(SnackbarService);
@@ -31,8 +31,7 @@ private readonly formBuilder = inject(FormBuilder);
       userName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
-      userId:[null],
-      isActive:[false]
+      userId:[null]
     });
   }
 
@@ -109,13 +108,8 @@ private readonly formBuilder = inject(FormBuilder);
         next: (response:SuccessResponse<null>) => {
             this.snackBarService.success(response.messages[0]);
             this.dialogRef.close(true);
-          },
-          error: (error:ErrorResponse) => {
-            this.snackBarService.error(error.errors[0]);
           }
       });
     }
-    
-    this.dialogRef.close(this.dispatcherForm.getRawValue());
   }
 }

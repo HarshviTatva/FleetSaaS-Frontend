@@ -31,7 +31,7 @@ export class UserAccountManageComponent {
   buttonType: ButtonType = 'button';
 
   addEditUser(value: number) {
-    var label;
+    let label;
     if(value==0){
       label = 'Add';
     }

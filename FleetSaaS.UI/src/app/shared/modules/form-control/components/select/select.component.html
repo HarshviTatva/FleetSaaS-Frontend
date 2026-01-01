@@ -5,12 +5,14 @@
     (selectionChange)="selectionChangeEvent($event)"
     panelClass="my-select-panel-class"
   >
-    <mat-option
-      *ngFor="let item of dropdownOptions()"
+  @for(item of dropdownOptions(); track item.value){
+   <mat-option
       [value]="item.value"
       [disabled]="item.disabled"
     >
       {{ item.label }}
     </mat-option>
+  }
+ 
   </mat-select>
 </mat-form-field>

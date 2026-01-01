@@ -32,7 +32,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
-
+import {MatTimepickerModule} from '@angular/material/timepicker';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   declarations: [],
@@ -53,7 +54,6 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatSortModule,
     MatRadioModule,
-    // NgxMatTimepickerModule,
     MatCheckboxModule,
     MatSlideToggleModule,
     MatSidenavModule,
@@ -71,7 +71,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatExpansionModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTimepickerModule,
+    CdkTableModule
   ],
   exports: [
     MatInputModule,
@@ -89,7 +91,6 @@ import { MatDividerModule } from '@angular/material/divider';
     MatListModule,
     MatSortModule,
     MatRadioModule,
-    // NgxMatTimepickerModule,
     MatCheckboxModule,
     MatSlideToggleModule,
     MatSidenavModule,
@@ -105,7 +106,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDialogModule,
     MatExpansionModule,
     MatToolbarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTimepickerModule,
+    CdkTableModule
   ],
 })
 export class MaterialModule { }

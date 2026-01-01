@@ -20,10 +20,10 @@ export class SidebarComponent implements OnInit {
 
   sidebarOpen = input<Signal<boolean>>();
   openMenu = signal<string | null>(null);
-  menuItems: MenuItem[] = [];
+  menuItems = signal<MenuItem[]>([]);
 
   ngOnInit(): void {
-    this.menuItems = SIDEBAR_MENU[this.tokenService.getUserRoleFromToken()!];
+    this.menuItems.set(SIDEBAR_MENU[this.tokenService.getUserRoleFromToken()!]);
   }
 
   toggle(label: string): void {

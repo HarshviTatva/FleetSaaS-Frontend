@@ -90,11 +90,20 @@
                 "glob": "**/*",
                 "input": "public",
                 "output": "/public"
-              }
-              ,"src/assets"
+              },
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -102,6 +111,9 @@
     }
   },
   "cli": {
-    "analytics": "786de24f-fc8e-495e-a5d3-8765d9d85d47"
+    "analytics": "786de24f-fc8e-495e-a5d3-8765d9d85d47",
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

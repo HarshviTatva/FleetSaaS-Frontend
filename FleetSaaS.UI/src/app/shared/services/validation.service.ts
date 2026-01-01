@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
-export interface ValidationMessages {
-  [key: string]: string;
-}
+export type ValidationMessages = Record<string, string>;
 
 @Injectable({
   providedIn: 'root',

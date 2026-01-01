@@ -19,5 +19,6 @@ export class ErrorComponent {
   @Input() control: FormControl | null = null;
   @Input() customMessageList: ValidationMessages = {};
   @Input() showErrorSpacing : boolean | undefined = false;
-  validationService = inject(ValidationService);
+  
+  public validationService = inject(ValidationService);
 }

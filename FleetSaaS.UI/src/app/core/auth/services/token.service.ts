@@ -71,7 +71,7 @@ export class TokenService {
 
     if (!decoded?.RoleId) return null;
 
-    let role = decoded.RoleId;
+    const role = decoded.RoleId;
 
     if (!isNaN(role)) {
       return Number(role) as UserRole;
