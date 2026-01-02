@@ -6,14 +6,15 @@ import { SnackbarService } from '../../../../../shared/services/snackbar-service
 import { ValidationMessages } from '../../../../../shared/services/validation.service';
 import { errors } from '../../../../../shared/utils/messages/error.static';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../../shared/material/material.module';
 import { DispatcherService } from '../../../../services/dispatcher.service';
-import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
+import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Dispatcher } from '../../../interfaces/dispatcher.interface';
+import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-add-edit-dispatcher',
-  imports: [MaterialModule,SharedModule,CommonModule],
+  imports: [...MATERIAL_IMPORTS,SharedModule,CommonModule],
   templateUrl: './add-edit-dispatcher.component.html',
   styleUrl: './add-edit-dispatcher.component.scss',
 })
@@ -22,7 +23,7 @@ export class AddEditDispatcherComponent implements OnInit {
 private readonly formBuilder = inject(FormBuilder);
   private readonly dispatcherService = inject(DispatcherService);
   private readonly snackBarService = inject(SnackbarService);
-  private readonly dialogRef = inject(MatDialogRef<any>);
+  private readonly dialogRef = inject(MatDialogRef<Dispatcher>);
   dispatcherForm!: FormGroup;
 
   constructor() {

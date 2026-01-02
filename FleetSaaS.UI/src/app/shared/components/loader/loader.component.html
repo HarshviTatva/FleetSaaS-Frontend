@@ -1,6 +1,9 @@
- <div class="loader-backdrop" *ngIf="loaderService.loading()">
+ @if(loaderService.loading())
+ {
+ <div class="loader-backdrop">
       <mat-progress-spinner
         mode="indeterminate"
         diameter="50">
       </mat-progress-spinner>
     </div>
+  }

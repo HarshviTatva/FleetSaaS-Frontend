@@ -2,6 +2,7 @@ export interface DriverResponse {
     driversList:Driver[];
     companyId:string;
     role:string;
+    totalCount:number;
 }
 
 export interface Driver{
@@ -19,6 +20,7 @@ export interface Driver{
     isVehicleAssigned?:boolean;
     vehicleAssignmentId?:string;
     vehicleName?:string;
+    licenseExpiryDateString?:string;
 }
 
 export interface VehicleAssignmentRequest{

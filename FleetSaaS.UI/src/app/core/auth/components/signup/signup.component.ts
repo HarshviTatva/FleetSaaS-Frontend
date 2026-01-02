@@ -1,35 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
-import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
-import { InputComponent, InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
-import { ErrorComponent } from '../../../../shared/modules/form-control/components/error/error.component';
-import { ValidationMessages } from '../../../../shared/services/validation.service';
-import { errors } from '../../../../shared/utils/messages/error.static';
-import { AllowAlphabetOnlyDirective } from '../../../../shared/directives/allow-alphabet-only.directive';
 import { Router, RouterModule } from '@angular/router';
+import { AllowAlphabetOnlyDirective } from '../../../../shared/directives/allow-alphabet-only.directive';
 import { AllowNumberOnlyDirective } from '../../../../shared/directives/allow-number-only.directive';
-import { AuthService } from '../../services/auth.service';
 import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
-import { primaryColor } from '../../../../shared/utils/constant.static';
-import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
+import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
+import { InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
 import { SharedModule } from '../../../../shared/modules/shared.module';
-import { MaterialModule } from '../../../../shared/material/material.module';
+import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { ValidationMessages } from '../../../../shared/services/validation.service';
+import { primaryColor } from '../../../../shared/utils/constant.static';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
+import { errors } from '../../../../shared/utils/messages/error.static';
+import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule,
+    ...MATERIAL_IMPORTS,
     SharedModule,
     RouterModule,
     AllowAlphabetOnlyDirective,

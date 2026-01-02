@@ -43,7 +43,6 @@ th {
   pointer-events: none; 
 }
 
-/* Status colors */
 .status-planned {
   background-color: #e3f2fd;
   color: $blue;
@@ -56,10 +55,21 @@ th {
 
 .status-completed {
   background-color: #e8f5e9;
-  color: #2e7d32;
+  color: darkgreen;
 }
 
 .status-cancelled {
   background-color: #fdecea;
   color: #c62828;
 }
+
+.status-assigned {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.status-started {
+  background-color: #e8f5e9;  
+  color: #2e7d32;              
+}
+

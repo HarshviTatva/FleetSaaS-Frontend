@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DropdownOption } from '../../../../../shared/modules/form-control/interface/select.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MaterialModule } from '../../../../../shared/material/material.module';
 import { VehicleService } from '../../../../services/vehicle.service';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
@@ -10,10 +9,11 @@ import { Driver, VehicleAssignmentRequest } from '../../../interfaces/driver.int
 import { CommonModule } from '@angular/common';
 import { assignLabel, reAssignLabel } from '../../../../../shared/utils/constant.static';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-assign-vehicle-to-driver',
-  imports: [MaterialModule, CommonModule, SharedModule],
+  imports: [...MATERIAL_IMPORTS, CommonModule, SharedModule],
   templateUrl: './assign-vehicle-to-driver.component.html',
   styleUrl: './assign-vehicle-to-driver.component.scss',
 })

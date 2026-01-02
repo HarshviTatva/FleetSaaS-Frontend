@@ -1,14 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { MaterialModule } from '../../../../shared/material/material.module';
 import { DashboardService } from '../../../services/dashboard.service';
 import { ErrorResponse, SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { Vehicle } from '../../../vehicle/interface/vehicle.interface';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { DatePipe } from '@angular/common';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-driver-dashboard',
-  imports: [MaterialModule,DatePipe],
+  imports: [...MATERIAL_IMPORTS,DatePipe],
   templateUrl: './driver-dashboard.component.html',
   styleUrl: './driver-dashboard.component.scss',
 })

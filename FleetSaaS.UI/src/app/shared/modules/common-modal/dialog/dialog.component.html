@@ -10,7 +10,9 @@
     <ng-container *ngComponentOutlet="data.component"></ng-container>
 </mat-dialog-content>
 
-<mat-dialog-actions class="dialog-footer" *ngIf="data.showFooter">
+@if(data.showFooter)
+{
+<mat-dialog-actions class="dialog-footer">
     <button mat-raised-button color="primary" form="dialogForm" type="submit">
         Save
     </button>
@@ -18,3 +20,4 @@
         Cancel
     </button>
 </mat-dialog-actions>
+}

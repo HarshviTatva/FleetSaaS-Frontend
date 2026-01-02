@@ -9,14 +9,10 @@
                     [customClass]="'dropdown-w-100'"></app-select>
             </div>
         </div>
-        <div>
-            <app-button label="Add Trip" [color]="buttonColor" [type]="buttonType" (click)="addEditTrip(0)"
-                [icon]="'add'" [tooltipText]="'Add'"></app-button>
-        </div>
     </div>
     <div class="table-container">
         <app-dynamic-table [data]="trips()" [length]="totalCount()" [columns]="columns" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
-            (edit)="addEditTrip($event)" (assignVehicle)="onAssignVehicleDriver($event)" (cancel)="onCancel($event)" (pageChange)="onPage($event)"
+          (pageChange)="onPage($event)"
             (sortChange)="onSort($event)"></app-dynamic-table>
     </div>
 </div>

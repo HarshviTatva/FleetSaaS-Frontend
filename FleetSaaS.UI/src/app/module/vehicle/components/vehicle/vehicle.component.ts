@@ -1,27 +1,27 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { MaterialModule } from '../../../../shared/material/material.module';
-import { DialogService } from '../../../../shared/services/dialog.service';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
-import { Vehicle, VehicleResponse } from '../../interface/vehicle.interface';
-import { ButtonColor, ButtonType } from '../../../../shared/modules/form-control/common-type/buttontype';
-import { addLabel, editLabel, primaryColor } from '../../../../shared/utils/constant.static';
-import { VehicleTableColumns } from '../../config/vehicle.config';
-import { PagedRequest } from '../../../../shared/modules/form-control/interface/pagination.interface';
-import { VehicleService } from '../../../services/vehicle.service';
-import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
-import { AddEditVehicleComponent } from './add-edit-vehicle/add-edit-vehicle.component';
-import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
 import { DatePipe } from '@angular/common';
-import { InputComponent, InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
+import { ButtonColor, ButtonType } from '../../../../shared/modules/form-control/common-type/buttontype';
+import { InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
+import { PagedRequest } from '../../../../shared/modules/form-control/interface/pagination.interface';
 import { SharedModule } from '../../../../shared/modules/shared.module';
-import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
-import { DynamicTableComponent } from '../../../../shared/modules/form-control/components/dynamic-table/dynamic-table.component';
+import { DialogService } from '../../../../shared/services/dialog.service';
+import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { addLabel, editLabel, pageSizeOptions, primaryColor } from '../../../../shared/utils/constant.static';
+import { VehicleService } from '../../../services/vehicle.service';
+import { VehicleTableColumns } from '../../config/vehicle.config';
+import { Vehicle, VehicleResponse } from '../../interface/vehicle.interface';
+import { AddEditVehicleComponent } from './add-edit-vehicle/add-edit-vehicle.component';
+import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.component';
+import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-vehicle',
-  imports: [MaterialModule,SharedModule],
+  imports: [...MATERIAL_IMPORTS,SharedModule],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
 })
@@ -42,10 +42,10 @@ export class VehicleComponent implements OnInit {
   pageNumber = signal(1);
   pageSize = signal(10);
   totalCount = signal(0);
-
+  pageSizeOptions = pageSizeOptions;
   searchControl = new FormControl('');
   sortBy = signal<string>('make');
-  sortDirection = signal<'asc' | 'desc'>('desc');
+  sortDirection = signal<'asc' | 'desc'|''>('desc');
 
   searchConfig: InputConfig = {
     key: 'search',
@@ -60,7 +60,7 @@ export class VehicleComponent implements OnInit {
     this.searchControl.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
       .subscribe(() => {
-        this.pageNumber.set(0);
+        this.pageNumber.set(1);
         this.getAllVehicles();
       });
   }
@@ -71,10 +71,11 @@ export class VehicleComponent implements OnInit {
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',
       sortBy: this.sortBy(),
-      sortDirection: this.sortDirection()
+      sortDirection: this.sortDirection()|| 'asc'
     };
     this.vehicleService.getAllVehicles(pagedRequest).subscribe({
       next: (response: SuccessResponse<VehicleResponse>) => {
+        this.totalCount.set(response.data.totalCount);
         response.data.vehicles = response.data.vehicles.map(data => ({
           ...data,
           isAct: data.isActive ? 'Yes' : 'No',
@@ -89,7 +90,7 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  addEditVehicle(value: any) {
+  addEditVehicle(value: Vehicle|number) {
     this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Vehicle', AddEditVehicleComponent, value, true).subscribe(
       ((data: boolean) => {
         if (data) {
@@ -100,7 +101,7 @@ export class VehicleComponent implements OnInit {
 
   }
 
-  onDelete(vehicle: any) {
+  onDelete(vehicle: Vehicle) {
     this.dialogService
       .open(
         'Delete Vehicle',
@@ -115,15 +116,15 @@ export class VehicleComponent implements OnInit {
       });
   }
 
-  onPage(event: any) {
+  onPage(event: PageEvent) {
     this.pageNumber.set(event.pageIndex + 1);
     this.pageSize.set(event.pageSize);
     this.getAllVehicles();
   }
 
-  onSort(event: any) {
-    this.sortBy.set(event.sortBy);
-    this.sortDirection.set(event.direction);
+  onSort(event: Sort) {
+    this.sortBy.set(event.active);
+    this.sortDirection.set(event.direction || 'asc');
     this.getAllVehicles();
   }
 

@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="table-container">
-        <app-dynamic-table [data]="drivers()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+        <app-dynamic-table [data]="drivers()" [length]="totalCount()" [columns]="columns" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
             (edit)="addEditDriver($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
             (sortChange)="onSort($event)" (assignVehicle)="onAssignVehicle($event)"></app-dynamic-table>
     </div>

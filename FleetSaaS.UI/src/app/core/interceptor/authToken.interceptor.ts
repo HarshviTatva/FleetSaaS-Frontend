@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpReq
 import { inject } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
 import { TokenService } from "../auth/services/token.service";
-import { errors } from "../../shared/utils/messages/error.static";
 
 export const authTokenInterceptor: HttpInterceptorFn = (
   httpRequest: HttpRequest<any>,

@@ -1,24 +1,25 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../../../../shared/material/material.module';
 import { ButtonColor, ButtonType } from '../../../../shared/modules/form-control/common-type/buttontype';
 import { DialogService } from '../../../../shared/services/dialog.service';
-import { addLabel, editLabel, primaryColor } from '../../../../shared/utils/constant.static';
+import { addLabel, editLabel, pageSizeOptions, primaryColor } from '../../../../shared/utils/constant.static';
 import { DispactherTableColumns } from '../../configs/driver.config';
 import { Dispatcher, DispatcherResponse } from '../../interfaces/dispatcher.interface';
 import { PagedRequest } from '../../../../shared/modules/form-control/interface/pagination.interface';
 import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { DispatcherService } from '../../../services/dispatcher.service';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { AddEditDispatcherComponent } from './add-edit-dispatcher/add-edit-dispatcher.component';
 import { DeleteDispatcherComponent } from './delete-dispatcher/delete-dispatcher.component';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
+import { Sort } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-dispatcher',
-  imports: [MaterialModule, ReactiveFormsModule, SharedModule],
+  imports: [...MATERIAL_IMPORTS, ReactiveFormsModule, SharedModule],
   templateUrl: './dispatcher.component.html',
   styleUrl: './dispatcher.component.scss',
 })
@@ -26,7 +27,6 @@ import { SharedModule } from '../../../../shared/modules/shared.module';
 export class DispatcherComponent implements OnInit {
   private readonly dialogService = inject(DialogService);
   private readonly dispatcherService = inject(DispatcherService);
-  private readonly snackbarService = inject(SnackbarService);
   dispatchers = signal<Dispatcher[]>([]);
   columns = DispactherTableColumns;
 
@@ -36,7 +36,7 @@ export class DispatcherComponent implements OnInit {
   pageNumber = signal(1);
   pageSize = signal(10);
   totalCount = signal(0);
-  
+  pageSizeOptions = pageSizeOptions;
   searchControl = new FormControl('');
   sortBy = signal<string>('userName');
   sortDirection = signal<'asc' | 'desc'>('desc');
@@ -69,6 +69,7 @@ export class DispatcherComponent implements OnInit {
     };
     this.dispatcherService.getAllDispatchers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DispatcherResponse>) => {
+        this.totalCount.set(response.data.totalCount);
         response.data.dispatcherList = response.data.dispatcherList.map(data => ({
           ...data,
           isAct: data.isActive ? 'Yes' : 'No'
@@ -81,7 +82,7 @@ export class DispatcherComponent implements OnInit {
     });
   }
 
-  addEditDispatcher(value: any) {
+  addEditDispatcher(value: Dispatcher|number) {
     this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Dispatcher', AddEditDispatcherComponent, value, true).subscribe(
       ((data: boolean) => {
         if (data) {
@@ -92,7 +93,7 @@ export class DispatcherComponent implements OnInit {
   }
 
 
-  onDelete(dispatcher: any) {
+  onDelete(dispatcher: Dispatcher) {
     this.dialogService.open('Delete Driver', DeleteDispatcherComponent, dispatcher, false).subscribe((result) => {
       if (result === true) {
         this.getAllDispatchers();
@@ -100,15 +101,15 @@ export class DispatcherComponent implements OnInit {
     });
   }
 
-  onPage(event: any) {
+  onPage(event: PageEvent) {
     this.pageNumber.set(event.pageIndex + 1);
     this.pageSize.set(event.pageSize);
     this.getAllDispatchers();
   }
 
-  onSort(event: any) {
-    this.sortBy.set(event.sortBy);
-    this.sortDirection.set(event.direction);
+  onSort(event: Sort) {
+    this.sortBy.set(event.active);
+    this.sortDirection.set(event.direction || 'asc');
     this.getAllDispatchers();
   }
 

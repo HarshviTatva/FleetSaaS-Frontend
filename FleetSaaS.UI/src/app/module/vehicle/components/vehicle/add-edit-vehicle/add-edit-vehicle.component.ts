@@ -6,15 +6,15 @@ import { fields, licensePlateRegex, vinRegex } from '../../../../../shared/utils
 import { InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
 import { ValidationMessages } from '../../../../../shared/services/validation.service';
 import { errors } from '../../../../../shared/utils/messages/error.static';
-import { MaterialModule } from '../../../../../shared/material/material.module';
 import { SuccessResponse, ErrorResponse } from '../../../../../shared/interfaces/common.interface';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Vehicle } from '../../../interface/vehicle.interface';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-add-edit-vehicle',
-  imports: [MaterialModule, SharedModule],
+  imports: [...MATERIAL_IMPORTS, SharedModule],
   templateUrl: './add-edit-vehicle.component.html',
   styleUrl: './add-edit-vehicle.component.scss',
 })
@@ -160,17 +160,13 @@ export class AddEditVehicleComponent implements OnInit {
         next: (response: SuccessResponse<null>) => {
           this.dialogRef.close(true);
           this.snackBarService.success(response.messages[0]);
-
         },
         error: (error: ErrorResponse) => {
-          if (error.metadata.field == fields.vin) {
+          if (error.metadata['field'] == fields.vin) {
             this.vinControl.setErrors({ vinExists: error.messages[0] });
           }
-          else if (error.metadata.field == fields.licensePlate) {
+          else if (error.metadata['field'] == fields.licensePlate) {
             this.licensePlateControl.setErrors({ exists: error.messages[0] });
-          }
-          else {
-            this.snackBarService.error(error.messages[0]);
           }
         }
       });

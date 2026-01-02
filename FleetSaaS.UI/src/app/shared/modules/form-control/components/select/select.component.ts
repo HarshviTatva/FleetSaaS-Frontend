@@ -2,12 +2,12 @@ import { Component, input, output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { DropdownOption } from '../../interface/select.interface';
-import { MaterialModule } from '../../../../material/material.module';
 import { CommonModule } from '@angular/common';
+import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 
 @Component({
   selector: 'app-select',
-  imports: [MaterialModule,CommonModule],
+  imports: [...MATERIAL_IMPORTS,CommonModule],
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
 })

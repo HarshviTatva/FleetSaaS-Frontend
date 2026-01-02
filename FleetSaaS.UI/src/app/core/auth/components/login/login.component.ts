@@ -1,31 +1,25 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
-import { ErrorComponent } from '../../../../shared/modules/form-control/components/error/error.component';
-import { InputComponent, InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
-import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
-import { errors } from '../../../../shared/utils/messages/error.static';
-import { ValidationMessages } from '../../../../shared/services/validation.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
-import { AuthService } from '../../services/auth.service';
-import { LoginResponse } from '../../../interface/login.response';
 import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
-import { primaryColor } from '../../../../shared/utils/constant.static';
-import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
-import { TokenService } from '../../services/token.service';
-import { MaterialModule } from '../../../../shared/material/material.module';
-import { UserRole } from '../../../../shared/utils/enums/common.enum';
+import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
+import { InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { ValidationMessages } from '../../../../shared/services/validation.service';
+import { primaryColor } from '../../../../shared/utils/constant.static';
+import { UserRole } from '../../../../shared/utils/enums/common.enum';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
+import { errors } from '../../../../shared/utils/messages/error.static';
+import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
+import { LoginResponse } from '../../../interface/login.response';
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-login',
   imports: [
-    MaterialModule,
+    ...MATERIAL_IMPORTS,
     SharedModule,
     RouterModule
   ],

@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Vehicle } from '../../../interface/vehicle.interface';
 
 @Component({
   selector: 'app-delete-vehicle',
@@ -15,7 +16,7 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
 export class DeleteVehicleComponent {
   private readonly vehicleService = inject(VehicleService);
   private readonly snackBarService = inject(SnackbarService);
-  private readonly dialogRef = inject(MatDialogRef<any>);
+  private readonly dialogRef = inject(MatDialogRef<Vehicle>);
 
   delete(){
     this.vehicleService.deleteVehicle(this.dialogRef.componentInstance.data.data.id).subscribe((response:SuccessResponse<boolean>)=>{

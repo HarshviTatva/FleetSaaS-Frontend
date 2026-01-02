@@ -10,7 +10,7 @@ export class DialogService {
 
   private readonly dialog = inject(MatDialog);
 
-  open(title: string, component: Type<any>,data?:any,showFooter?:boolean) {
+  open(title: string, component: Type<any>,data?:object|number,showFooter?:boolean) {
     return this.dialog.open(DialogComponent, {
       width: '450px',
       panelClass: 'red-rose-dialog',

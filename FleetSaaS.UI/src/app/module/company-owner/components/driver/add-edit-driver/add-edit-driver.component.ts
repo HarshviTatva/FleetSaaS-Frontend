@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, inject, signal, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
-import { MaterialModule } from "../../../../../shared/material/material.module";
 import { InputConfig } from "../../../../../shared/modules/form-control/components/input/input.component";
 import { SnackbarService } from "../../../../../shared/services/snackbar-service";
 import { ValidationMessages } from "../../../../../shared/services/validation.service";
@@ -12,10 +11,11 @@ import { DriverService } from "../../../../services/driver.service";
 import { ErrorResponse, SuccessResponse } from "../../../../../shared/interfaces/common.interface";
 import { Driver } from "../../../interfaces/driver.interface";
 import { SharedModule } from "../../../../../shared/modules/shared.module";
+import { MATERIAL_IMPORTS } from "../../../../../shared/utils/material.static";
 
 @Component({
   selector: 'app-add-edit-driver',
-  imports: [MaterialModule, SharedModule, CommonModule],
+  imports: [...MATERIAL_IMPORTS, SharedModule, CommonModule],
   templateUrl: './add-edit-driver.component.html',
   styleUrl: './add-edit-driver.component.scss',
 })
@@ -24,7 +24,7 @@ export class AddEditDriverComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly driverService = inject(DriverService);
   private readonly snackBarService = inject(SnackbarService);
-  private readonly dialogRef = inject(MatDialogRef<any>);
+  private readonly dialogRef = inject(MatDialogRef<Driver>);
 
   driverForm!: FormGroup;
   driverData!: Driver;
@@ -165,10 +165,10 @@ export class AddEditDriverComponent implements OnInit {
           this.snackBarService.success(response.messages[0]);
         },
         error: (error: ErrorResponse) => {
-          if (error.metadata.field == fields.email) {
+          if (error.metadata['field'] == fields.email) {
             this.emailControl.setErrors({ userEmailExists: error.messages[0] });
           }
-          else if (error.metadata.field == fields.licenseNumber) {
+          else if (error.metadata['field'] == fields.licenseNumber) {
             this.licenseNumberControl.setErrors({ licenseExists: error.messages[0] });
           }
         }

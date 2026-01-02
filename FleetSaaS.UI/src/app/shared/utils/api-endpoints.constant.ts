@@ -26,9 +26,15 @@ export const apiEndPoints = {
   trip:{
     addEditTrip:'Trip/trip',
     cancelTrip:'trip',
-    getAll:'Trip/trips'
+    getAll:'Trip/trips',
+    assignDriver:'Trip/assign-driver',
+    unAssignDriver:'Trip/unassign-driver',
+    assignedTrips:'Driver/assigned-trips'
   },
   dashboard:{
     assignedVehicle:'Driver/assigned-vehicle'
+  },
+  common:{
+    vehicleDriverList:'Common/assignedDriverVehicles'
   }
 }

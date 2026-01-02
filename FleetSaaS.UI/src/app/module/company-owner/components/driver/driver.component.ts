@@ -1,9 +1,8 @@
-import { Component, OnInit, inject, input, signal } from "@angular/core";
+import { Component, OnInit, inject, signal } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { MaterialModule } from "../../../../shared/material/material.module";
 import { ButtonColor, ButtonType } from "../../../../shared/modules/form-control/common-type/buttontype";
 import { DialogService } from "../../../../shared/services/dialog.service";
-import { addLabel, assignLabel, editLabel, primaryColor, reAssignLabel } from "../../../../shared/utils/constant.static";
+import { addLabel, assignLabel, editLabel, pageSizeOptions, primaryColor, reAssignLabel } from "../../../../shared/utils/constant.static";
 import { DriverTableColumns } from "../../configs/driver.config";
 import { AddEditDriverComponent } from "./add-edit-driver/add-edit-driver.component";
 import { DriverService } from "../../../services/driver.service";
@@ -17,6 +16,8 @@ import { InputConfig } from "../../../../shared/modules/form-control/components/
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { SharedModule } from "../../../../shared/modules/shared.module";
 import { MATERIAL_IMPORTS } from "../../../../shared/utils/material.static";
+import { PageEvent } from "@angular/material/paginator";
+import { Sort } from "@angular/material/sort";
 @Component({
   selector: 'app-driver',
   imports: [...MATERIAL_IMPORTS, ReactiveFormsModule, SharedModule],
@@ -38,7 +39,7 @@ export class DriverComponent implements OnInit {
   pageNumber = signal(1);
   pageSize = signal(10);
   totalCount = signal(0);
-
+  pageSizeOptions = pageSizeOptions;
   searchControl = new FormControl('');
   sortBy = signal<string>('userName');
   sortDirection = signal<'asc' | 'desc'>('desc');
@@ -71,6 +72,7 @@ export class DriverComponent implements OnInit {
     };
     this.driverService.getAllDrivers(pagedRequest).subscribe({
       next: (response: SuccessResponse<DriverResponse>) => {
+        this.totalCount.set(response.data.totalCount);
         response.data.driversList = response.data.driversList.map(data => ({
           ...data,
           isAct: data.isActive ? 'Yes' : 'No',
@@ -85,7 +87,7 @@ export class DriverComponent implements OnInit {
     });
   }
 
-  addEditDriver(value: any) {
+  addEditDriver(value: Driver|number) {
     this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Driver', AddEditDriverComponent, value, true).subscribe(
       (data => {
         if (data) {
@@ -96,7 +98,7 @@ export class DriverComponent implements OnInit {
 
   }
 
-  onDelete(driver: any) {
+  onDelete(driver: Driver) {
     this.dialogService
       .open(
         'Delete Driver',
@@ -111,15 +113,15 @@ export class DriverComponent implements OnInit {
       });
   }
 
-  onPage(event: any) {
+  onPage(event: PageEvent) {
     this.pageNumber.set(event.pageIndex + 1);
     this.pageSize.set(event.pageSize);
     this.getAllDrivers();
   }
 
-  onSort(event: any) {
-    this.sortBy.set(event.sortBy);
-    this.sortDirection.set(event.direction);
+  onSort(event: Sort) {
+    this.sortBy.set(event.active);
+    this.sortDirection.set(event.direction||'asc');
     this.getAllDrivers();
   }
 

@@ -11,7 +11,7 @@
     </div>
 
     <div class="dispatcher-content">
-        <app-dynamic-table [data]="dispatchers()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
+        <app-dynamic-table [data]="dispatchers()" [length]="totalCount()" [columns]="columns" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
             (edit)="addEditDispatcher($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
             (sortChange)="onSort($event)"></app-dynamic-table>
     </div>

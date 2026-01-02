@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 
 export interface InputConfig {
     value?: string;
@@ -21,7 +20,7 @@ export interface InputConfig {
 
 @Component({
   selector: 'app-input',
-  imports: [MatInputModule, ReactiveFormsModule, CommonModule, MatIconModule],
+  imports: [MATERIAL_IMPORTS, ReactiveFormsModule, CommonModule,],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   standalone:true

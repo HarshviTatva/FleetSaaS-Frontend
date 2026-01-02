@@ -4,6 +4,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar-service
 import { DriverService } from '../../../../services/driver.service';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Driver } from '../../../interfaces/driver.interface';
 
 @Component({
   selector: 'app-delete-driver',
@@ -15,7 +16,7 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
 export class DeleteDriverComponent {
   private readonly driverService = inject(DriverService);
   private readonly snackBarService = inject(SnackbarService);
-  private readonly dialogRef = inject(MatDialogRef<any>);
+  private readonly dialogRef = inject(MatDialogRef<Driver>);
 
   delete(){
     this.driverService.deleteDriver(this.dialogRef.componentInstance.data.data.id).subscribe((response:SuccessResponse<boolean>)=>{

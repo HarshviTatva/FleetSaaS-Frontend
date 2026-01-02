@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '../../shared/services/common/http.service';
 import { PagedRequest } from '../../shared/modules/form-control/interface/pagination.interface';
-import { TripRequest, TripResponse } from '../trip/interface/trip.interface';
+import { TripAssignmentRequest, TripRequest, TripResponse } from '../trip/interface/trip.interface';
 import { Observable } from 'rxjs';
 import { SuccessResponse } from '../../shared/interfaces/common.interface';
 import { apiEndPoints } from '../../shared/utils/api-endpoints.constant';
@@ -24,6 +24,34 @@ export class TripService {
   getAllTrips(pagedRequest: PagedRequest): Observable<SuccessResponse<TripResponse>> {
     return this.httpService.get<SuccessResponse<TripResponse>>(
       apiEndPoints.trip.getAll,
+      { params: pagedRequest as any }
+    );
+  }
+
+  cancelTrip(id: string): Observable<SuccessResponse<boolean>> {
+    return this.httpService.patch<SuccessResponse<boolean>>(
+      apiEndPoints.trip.cancelTrip + '/' + id,
+      null
+    );
+  }
+
+  assignDriverToTrip(assignRequest: TripAssignmentRequest): Observable<SuccessResponse<string>> {
+    return this.httpService.post<SuccessResponse<string>>(
+      apiEndPoints.trip.assignDriver,
+      assignRequest
+    );
+  }
+
+  unAssignDriverToTrip(tripId: string): Observable<SuccessResponse<string>> {
+    return this.httpService.patch<SuccessResponse<string>>(
+      apiEndPoints.trip.unAssignDriver + '/' + tripId,
+      null
+    );
+  }
+
+  getAllAssignedTrips(pagedRequest:PagedRequest): Observable<SuccessResponse<TripResponse>> {
+    return this.httpService.get<SuccessResponse<TripResponse>>(
+      apiEndPoints.trip.assignedTrips,
       { params: pagedRequest as any }
     );
   }

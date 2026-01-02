@@ -2,6 +2,7 @@ export interface DispatcherResponse {
     dispatcherList:Dispatcher[];
     companyId:string;
     role:string;
+    totalCount:number;
 }
 
 export interface Dispatcher{

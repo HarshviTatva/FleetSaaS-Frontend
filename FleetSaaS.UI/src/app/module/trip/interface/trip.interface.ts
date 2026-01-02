@@ -3,6 +3,7 @@ import { TripStatus } from "../../../shared/utils/enums/common.enum";
 export interface TripResponse{
     trips:Trip[];
     companyId:number;
+    totalCount:number;
 }
 
 export interface Trip {
@@ -15,6 +16,8 @@ export interface Trip {
     statusName:string;
     scheduledAt:string;
     scheduledAtString:string;
+    vehicleDriverName?:string;
+    vehicleAssignmentId?:string;
 }
 
 export interface TripRequest{
@@ -23,4 +26,9 @@ export interface TripRequest{
     destination:string;
     description?:string;
     scheduledAt?:string;
+}
+
+export interface TripAssignmentRequest{
+    id?:string;
+    vehicleAssignmentId:string;
 }

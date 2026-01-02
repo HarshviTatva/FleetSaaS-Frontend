@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { Dispatcher } from '../../../interfaces/dispatcher.interface';
 
 @Component({
   selector: 'app-delete-dispatcher',
@@ -14,7 +15,7 @@ import { SharedModule } from '../../../../../shared/modules/shared.module';
 export class DeleteDispatcherComponent {
  private readonly dispatcherService = inject(DispatcherService);
   private readonly snackBarService = inject(SnackbarService);
-  private readonly dialogRef = inject(MatDialogRef<any>);
+  private readonly dialogRef = inject(MatDialogRef<Dispatcher>);
 
   delete(){
     this.dispatcherService.deleteDispatcher(this.dialogRef.componentInstance.data.data.id).subscribe((response:SuccessResponse<boolean>)=>{

@@ -12,6 +12,6 @@ export const VehicleTableColumns:TableColumn<Vehicle>[] = [
     {
         key: 'actions', label: 'Actions',
         canEdit: (row: Vehicle) => true,
-        canDelete: (row: Vehicle) => true
+        canDelete: (row: Vehicle) => row.id?true:false
     }
 ];

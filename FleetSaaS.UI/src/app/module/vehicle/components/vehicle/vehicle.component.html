@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="table-container">
-        <app-dynamic-table [data]="vehicles()" [columns]="columns" [pageSize]="5" [pageSizeOptions]="[5,10,25]"
-            (edit)="addEditVehicle($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"
+        <app-dynamic-table [data]="vehicles()" [length]="totalCount()" [columns]="columns" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions"
+            (edit)="addEditVehicle($event)" (delete)="onDelete($event)" (pageChange)="onPage($event)"  
             (sortChange)="onSort($event)"></app-dynamic-table>
     </div>
 </div>

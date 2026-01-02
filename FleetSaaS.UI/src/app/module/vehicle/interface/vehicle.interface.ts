@@ -13,6 +13,7 @@ export interface VehicleRequest{
 export interface VehicleResponse{
     vehicles:Vehicle[];
     companyId:number;
+    totalCount:number;
 }
 
 export interface Vehicle {

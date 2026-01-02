@@ -1,18 +1,13 @@
-import { Component, EventEmitter, inject, input, OnInit, Output, Signal, signal, WritableSignal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { TokenService } from '../../../core/auth/services/token.service';
+import { Component, inject, input, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
-import { MaterialModule } from '../../material/material.module';
+import { filter } from 'rxjs';
+import { TokenService } from '../../../core/auth/services/token.service';
+import { MATERIAL_IMPORTS } from '../../utils/material.static';
 @Component({
   selector: 'app-header',
   imports: 
   [
-    MaterialModule
+    ...MATERIAL_IMPORTS
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

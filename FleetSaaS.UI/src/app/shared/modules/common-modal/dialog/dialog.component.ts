@@ -1,13 +1,12 @@
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MaterialModule } from '../../../material/material.module';
-
+import { MATERIAL_IMPORTS } from '../../../utils/material.static';
 @Component({
   selector: 'app-dialog',
   imports: 
   [
-    MaterialModule, 
+    ...MATERIAL_IMPORTS, 
     NgComponentOutlet,
     CommonModule
   ],

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LAYOUT, ROUTE_PATH } from './shared/utils/route-path.static';
 import { authGuard } from './core/guards/auth.guard';
+import { UserRole } from './shared/utils/enums/common.enum';
 
 const authRoutes: Routes = [
   {
@@ -41,10 +42,10 @@ const menuRoutes: Routes = [
     loadComponent: () =>
       import('./module/layout/layout.component')
         .then(m => m.LayoutComponent),
-     data: { title: 'Dashboard' },
+    data: { title: 'Dashboard' },
 
     children: [
-       // dashboards
+      // dashboards
       {
         path: ROUTE_PATH.DASHBOARD.DRIVER_DASHBOARD,
         loadComponent: () =>
@@ -79,29 +80,38 @@ const menuRoutes: Routes = [
         loadComponent: () =>
           import('./module/company-owner/components/driver/driver.component')
             .then(m => m.DriverComponent),
-             data: { title: 'Drivers' }
+        data: { title: 'Drivers' }
       },
       {
         path: ROUTE_PATH.DISPATCHERS,
         loadComponent: () =>
           import('./module/company-owner/components/dispatcher/dispatcher.component')
             .then(m => m.DispatcherComponent),
-             data: { title: 'Dispatchers' }
+        data: { title: 'Dispatchers' }
       },
       {
-         path: ROUTE_PATH.VEHICLES,
+        path: ROUTE_PATH.VEHICLES,
         loadComponent: () =>
           import('./module/vehicle/components/vehicle/vehicle.component')
             .then(m => m.VehicleComponent),
-             data: { title: 'Vehicles' }
+        data: { title: 'Vehicles' }
       },
       {
-         path: ROUTE_PATH.TRIPS,
+        path: ROUTE_PATH.TRIPS,
         loadComponent: () =>
           import('./module/trip/components/trip/trip.component')
             .then(m => m.TripComponent),
-             data: { title: 'Trips' }
-      }
+        data: { title: 'Trips' },
+      },
+      {
+          path: ROUTE_PATH.ASSIGNED_TRIPS,
+          // canActivate:[authGuard],
+          loadComponent: () =>
+            import('./module/trip/components/driver-assigned-trips/driver-assigned-trips.component')
+              .then(m => m.DriverAssignedTripsComponent),
+            data: { title: 'Assigned Trips' }
+          }
+
     ]
   }
 ];

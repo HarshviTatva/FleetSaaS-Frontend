@@ -11,19 +11,17 @@ export interface ApiResponse<T> {
   isSuccess: boolean;
   messages: string[];
   data: T;
-  additionalInfo: any;
 }
 
 export interface ErrorResponse {
   status: number;
   errors: string[];
   messages:string[];
-  metadata:any;
+  metadata:Record<string, unknown>;
 }
 
 export interface SuccessResponse<T> {
   data: T;
-  additionalInfo: any;
   messages: string[];
   result:boolean;
 }

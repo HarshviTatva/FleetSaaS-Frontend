@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, Input } from '@angular/core';
-import { MaterialModule } from '../../../../material/material.module';
 import { ButtonColor, ButtonType } from '../../common-type/buttontype';
+import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 
 @Component({
   selector: 'app-button',
-  imports: [MaterialModule, CommonModule],
+  imports: [...MATERIAL_IMPORTS, CommonModule],
   standalone:true,
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',

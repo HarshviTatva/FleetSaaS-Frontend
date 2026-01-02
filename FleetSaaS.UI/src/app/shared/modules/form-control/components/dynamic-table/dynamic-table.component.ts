@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, computed, effect, input, output, viewChild } from '@angular/core';
+import { Component, computed, effect, input, output, viewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,19 +17,20 @@ import { TableColumn } from '../../interface/table.inteface';
   styleUrl: './dynamic-table.component.scss',
 
 })
-export class DynamicTableComponent<T> implements AfterViewInit{
+export class DynamicTableComponent<T>{
 
   data = input<T[] | null>(null);
+  length = input<number>();
   columns = input.required<TableColumn<T>[]>();
   pageSizeOptions = input<number[]>(pageSizeOptions);
-  pageSize = input<number>(10);
+  pageSize = input<number>();
 
   edit = output<T>();
   delete = output<T>();
   assignVehicle = output<T>();
+  cancel = output<T>();
   pageChange = output<PageEvent>();
   sortChange = output<Sort>();
-
   paginator  = viewChild(MatPaginator);
   sort = viewChild(MatSort);
 
@@ -43,11 +44,7 @@ export class DynamicTableComponent<T> implements AfterViewInit{
     effect(() => {
       this.dataSource.data = this.data() ?? [];
     });   
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator();
-    this.dataSource.sort = this.sort();
+  
   }
 
   onSortChange(sort: Sort) {
@@ -55,7 +52,7 @@ export class DynamicTableComponent<T> implements AfterViewInit{
   }
 
   onPageChange(event: PageEvent) {
-    this.pageChange.emit(event);
+    this.pageChange.emit(event);    
   }
 
   getStatusClass(status: string): string {
@@ -63,7 +60,9 @@ export class DynamicTableComponent<T> implements AfterViewInit{
     'Planned': 'status-planned',
     'In Progress': 'status-inprogress',
     'Completed': 'status-completed',
-    'Cancelled': 'status-cancelled'
+    'Cancelled': 'status-cancelled',
+    'Started': 'status-started',
+    'Assigned': 'status-assigned'
   }[status] || '';
 }
 

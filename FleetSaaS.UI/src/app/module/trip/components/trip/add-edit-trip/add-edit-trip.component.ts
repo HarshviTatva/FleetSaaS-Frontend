@@ -3,16 +3,16 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../../shared/interfaces/common.interface';
-import { MaterialModule } from '../../../../../shared/material/material.module';
 import { InputConfig } from '../../../../../shared/modules/form-control/components/input/input.component';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { SnackbarService } from '../../../../../shared/services/snackbar-service';
 import { TripService } from '../../../../services/trip.service';
 import { Trip, TripRequest } from '../../../interface/trip.interface';
+import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
 
 @Component({
   selector: 'app-add-edit-trip',
-  imports: [SharedModule, ReactiveFormsModule, MaterialModule, CommonModule],
+  imports: [SharedModule, ReactiveFormsModule, ...MATERIAL_IMPORTS, CommonModule],
   templateUrl: './add-edit-trip.component.html',
   styleUrl: './add-edit-trip.component.scss',
 })
