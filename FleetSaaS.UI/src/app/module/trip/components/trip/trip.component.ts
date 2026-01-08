@@ -20,18 +20,21 @@ import { Trip, TripResponse } from '../../interface/trip.interface';
 import { AssignVehicleDriverToTripComponent } from '../assign-vehicle-driver-to-trip/assign-vehicle-driver-to-trip.component';
 import { AddEditTripComponent } from './add-edit-trip/add-edit-trip.component';
 import { CancelTripComponent } from './cancel-trip/cancel-trip.component';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-trip',
   imports: [...MATERIAL_IMPORTS, SharedModule],
   templateUrl: './trip.component.html',
   styleUrl: './trip.component.scss',
+  standalone:true
 })
 
 export class TripComponent implements OnInit {
 
   private readonly tripService = inject(TripService);
   private readonly dialogService = inject(DialogService);
+  private readonly commonService = inject(CommonService);
   private readonly datePipe = inject(DatePipe);
 
   trips = signal<Trip[]>([]);
@@ -46,8 +49,9 @@ export class TripComponent implements OnInit {
   pageSizeOptions = pageSizeOptions;
   searchControl = new FormControl('');
   statusControl = new FormControl<number | null>(null);
+  tripDateControl = new FormControl(null);
   statusList = signal<DropdownOption[]>(StatusList);
-  sortBy = signal<string>('origin');
+  sortBy = signal<string>('id');
   sortDirection = signal<'asc' | 'desc'>('desc');
 
   searchConfig: InputConfig = {
@@ -73,16 +77,26 @@ export class TripComponent implements OnInit {
         this.pageNumber.set(1);
         this.getAllTrips();
       });
+
+     this.tripDateControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => {
+        this.pageNumber.set(1);
+        this.getAllTrips();
+      });
   }
 
-  getAllTrips() {
+  getAllTrips(data?:number) {
     const pagedRequest: PagedRequest = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',
       status: this.statusControl.value??0,
       sortBy: this.sortBy(),
-      sortDirection: this.sortDirection()
+      sortDirection: this.sortDirection(),
+       date: this.tripDateControl.value
+        ? this.datePipe.transform(this.tripDateControl.value, 'yyyy-MM-dd')!
+        : null
     };
     
     this.tripService.getAllTrips(pagedRequest).subscribe({
@@ -90,13 +104,14 @@ export class TripComponent implements OnInit {
         this.totalCount.set(response.data.totalCount);
         response.data.trips = response.data.trips.map((data) => ({
           ...data,
+          distanceCovered:data.distanceCovered??0,
           statusName: TripStatus[data.status],
           scheduledAtString: this.datePipe.transform(data.scheduledAt, "dd-MM-yyyy, hh:mm a") ?? "--"
         }));
         this.trips.set(response.data.trips ?? []);
-      },
-      error: () => {
-        this.trips.set([]);
+        if(data && data>0){
+          this.downloadTripCsvFile(pagedRequest);
+        }
       }
     });
   }
@@ -109,7 +124,6 @@ export class TripComponent implements OnInit {
         }
       })
     );
-
   }
 
   onCancel(trip: Trip) {
@@ -154,5 +168,22 @@ export class TripComponent implements OnInit {
     this.getAllTrips();
   }
 
+   downloadTripCsvFile(request:PagedRequest) {
+    this.tripService.downloadTripCsv(request)
+      .subscribe({
+        next: (blob: Blob) => {
+          this.commonService.downloadFile(blob, 'Trip.csv');
+        }
+      });
+  }
+
+  onDownloadReport(tripDetails:Trip){
+    this.tripService.downloadTripDetailedReport(tripDetails.id)
+      .subscribe({
+        next: (blob: Blob) => {
+          this.commonService.downloadFile(blob, `Trip_${tripDetails.name}.pdf`);
+        }
+      });
+  }
 
 }

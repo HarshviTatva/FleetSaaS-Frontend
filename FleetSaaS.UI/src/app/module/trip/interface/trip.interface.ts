@@ -18,6 +18,8 @@ export interface Trip {
     scheduledAtString:string;
     vehicleDriverName?:string;
     vehicleAssignmentId?:string;
+    distanceCovered?:number;
+    scheduleDateFilter?:string|Date;
 }
 
 export interface TripRequest{
@@ -31,4 +33,15 @@ export interface TripRequest{
 export interface TripAssignmentRequest{
     id?:string;
     vehicleAssignmentId:string;
+}
+export interface CancelTripRequest{
+    id:string;
+    cancelReason?:string;
+}
+export interface ChangeTripStatusRequest{
+  id:string;
+  status:number;
+  distanceCovered?:number;
+  startedAt?:string;
+  endedAt?:string;
 }

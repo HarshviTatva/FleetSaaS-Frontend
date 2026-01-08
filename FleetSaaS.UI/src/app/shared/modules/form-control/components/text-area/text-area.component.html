@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>{{ label() }}</mat-label>
+  <textarea
+    matInput
+    [rows]="rows()"
+    [placeholder]="placeholder()"
+    [attr.maxlength]="maxLength()"
+    [formControl]="control()">
+  </textarea>
+</mat-form-field>

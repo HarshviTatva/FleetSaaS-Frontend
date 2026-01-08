@@ -8,7 +8,6 @@ import { InputConfig } from '../../../../shared/modules/form-control/components/
 import { PagedRequest } from '../../../../shared/modules/form-control/interface/pagination.interface';
 import { SharedModule } from '../../../../shared/modules/shared.module';
 import { DialogService } from '../../../../shared/services/dialog.service';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { addLabel, editLabel, pageSizeOptions, primaryColor } from '../../../../shared/utils/constant.static';
 import { VehicleService } from '../../../services/vehicle.service';
 import { VehicleTableColumns } from '../../config/vehicle.config';
@@ -18,19 +17,21 @@ import { DeleteVehicleComponent } from './delete-vehicle/delete-vehicle.componen
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-vehicle',
-  imports: [...MATERIAL_IMPORTS,SharedModule],
+  imports: [...MATERIAL_IMPORTS, SharedModule],
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
+  standalone:true
 })
 
 export class VehicleComponent implements OnInit {
-  
+
   private readonly dialogService = inject(DialogService);
-  private readonly snackBarService = inject(SnackbarService);
   private readonly vehicleService = inject(VehicleService);
+  private readonly commonService = inject(CommonService);
   private readonly datePipe = inject(DatePipe);
 
   vehicles = signal<Vehicle[]>([]);
@@ -44,8 +45,9 @@ export class VehicleComponent implements OnInit {
   totalCount = signal(0);
   pageSizeOptions = pageSizeOptions;
   searchControl = new FormControl('');
+  insuranceExpiryDateControl = new FormControl(null);
   sortBy = signal<string>('make');
-  sortDirection = signal<'asc' | 'desc'|''>('desc');
+  sortDirection = signal<'asc' | 'desc' | ''>('desc');
 
   searchConfig: InputConfig = {
     key: 'search',
@@ -63,15 +65,25 @@ export class VehicleComponent implements OnInit {
         this.pageNumber.set(1);
         this.getAllVehicles();
       });
+
+    this.insuranceExpiryDateControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(() => {
+        this.pageNumber.set(1);
+        this.getAllVehicles();
+      });
   }
 
-  getAllVehicles() {
+  getAllVehicles(data?:number) {
     const pagedRequest: PagedRequest = {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       search: this.searchControl.value?.trim() || '',
       sortBy: this.sortBy(),
-      sortDirection: this.sortDirection()|| 'asc'
+      sortDirection: this.sortDirection() || 'asc',
+      date: this.insuranceExpiryDateControl.value
+        ? this.datePipe.transform(this.insuranceExpiryDateControl.value, 'yyyy-MM-dd')!
+        : null
     };
     this.vehicleService.getAllVehicles(pagedRequest).subscribe({
       next: (response: SuccessResponse<VehicleResponse>) => {
@@ -82,15 +94,14 @@ export class VehicleComponent implements OnInit {
           insuranceExpiryDateString: this.datePipe.transform(data.insuranceExpiryDate, 'dd-MMM-yyyy') ?? '--'
         }));
         this.vehicles.set(response.data.vehicles ?? []);
-      },
-      error: (error) => {
-        this.snackBarService.error(error.messages[0]);
-        this.vehicles.set([]);
+        if(data && data>0){
+          this.downloadVehicleCsvFile(pagedRequest);
+        }
       }
     });
   }
 
-  addEditVehicle(value: Vehicle|number) {
+  addEditVehicle(value: Vehicle | number) {
     this.dialogService.open((value == 0 ? addLabel : editLabel) + ' Vehicle', AddEditVehicleComponent, value, true).subscribe(
       ((data: boolean) => {
         if (data) {
@@ -128,4 +139,12 @@ export class VehicleComponent implements OnInit {
     this.getAllVehicles();
   }
 
+  downloadVehicleCsvFile(request:PagedRequest) {
+    this.vehicleService.downloadVehicleCsv(request)
+      .subscribe({
+        next: (blob: Blob) => {
+          this.commonService.downloadFile(blob, 'Vehicle.csv');
+        }
+      });
+  }
 }

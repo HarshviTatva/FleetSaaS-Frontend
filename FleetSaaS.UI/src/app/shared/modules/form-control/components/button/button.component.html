@@ -1,8 +1,8 @@
 <button
   mat-raised-button
-  [color]="color"
-  [type]="type"
-  [disabled]="disabled"
+  [color]="color()"
+  [type]="type()"
+  [disabled]="disabled()"
   class="common-btn"
   [ngStyle]="buttonStyle()"
   [matTooltip]="tooltipText()">
@@ -10,5 +10,5 @@
   {
     <mat-icon>{{icon()}}</mat-icon> 
   }
-  {{ label }}
+  {{ label() }}
 </button>

@@ -1,0 +1,25 @@
+@if(tripData().statusName === "Assigned"){
+<div>
+    Are you sure to accept this {{tripData().name}}?
+</div>
+}
+@if(tripData().statusName === "Accepted"){
+<div>
+    Are you ready to start the {{ tripData().name }} trip?
+</div>
+}
+@if(tripData().statusName === "Started"){
+<div>
+    <app-input [config]="distanceCoveredConfig" [control]="distanceCoveredControl">
+    </app-input>
+    <app-error [control]="distanceCoveredControl" [showErrorSpacing]="distanceCoveredConfig.showErrorSpacing">
+    </app-error>
+    <!-- <app-time-picker label="Start Time" [control]="startTimeControl"></app-time-picker> -->
+</div>
+}
+<div class="d-flex flex-end mt-20" style="gap:10px;">
+    <app-button type="button" label="Yes" (click)="submit()" [disabled]="isSubmitDisabled()">
+    </app-button>
+    <app-button type="button" label="No" (click)="cancel()">
+    </app-button>
+</div>

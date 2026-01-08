@@ -5,12 +5,15 @@ import { UserRole } from '../../../shared/utils/enums/common.enum';
 import { ROUTE_PATH } from '../../../shared/utils/route-path.static';
 import { SnackbarService } from '../../../shared/services/snackbar-service';
 import { success } from '../../../shared/utils/messages/success.static';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
+
   private readonly snackbarService = inject(SnackbarService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   private readonly prefix = 'APP_';
@@ -20,6 +23,7 @@ export class TokenService {
   }
 
   private readonly accessTokenKey = this.hashKey('access_token');
+  private readonly refreshTokenKey = this.hashKey('refresh_token');
 
   private getDecodedToken(): any | null {
     const token = this.getAccessToken();
@@ -37,18 +41,27 @@ export class TokenService {
     return localStorage.getItem(this.accessTokenKey);
   }
 
+  getRefreshToken(): string | null {
+    return localStorage.getItem(this.refreshTokenKey);
+  }
+
   saveTokens(loginResponse: LoginResponse) {
     localStorage.setItem(this.accessTokenKey, loginResponse.accessToken);
+    localStorage.setItem(this.refreshTokenKey, loginResponse.refreshToken);
   }
 
   logout(): void {
     if (this.getUserRoleFromToken()) {
-      localStorage.removeItem(this.accessTokenKey);
-      this.snackbarService.success(success.logout);
-       this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
+      this.authService.logout().subscribe({
+        next: () => {
+          localStorage.removeItem(this.accessTokenKey);
+          localStorage.removeItem(this.refreshTokenKey);
+          this.snackbarService.success(success.logout);
+          this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
+        }
+      })
     }
   }
-
 
   isTokenExpired(): boolean {
     const expiry = this.getDecodedToken()?.exp;

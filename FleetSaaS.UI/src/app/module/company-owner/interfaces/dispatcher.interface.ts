@@ -6,7 +6,7 @@ export interface DispatcherResponse {
 }
 
 export interface Dispatcher{
-    Id:string;
+    id:string;
     userId:string;
     userName:string;
     email:string;

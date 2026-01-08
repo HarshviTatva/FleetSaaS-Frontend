@@ -16,33 +16,24 @@
     </div>
     <div class="form-row m-20">
         <div class="form-group">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Description</mat-label>
-                <textarea matInput rows="4" formControlName="description" placeholder="Enter description"
-                    maxlength="500">
-                 </textarea>
-            </mat-form-field>
+            <app-text-area [label]="'Description'" [placeholder]="'Enter description'" [rows]="4" [maxLength]="500"
+                [control]="descriptionControl">
+            </app-text-area>
             <app-error [control]="descriptionControl"></app-error>
         </div>
     </div>
     <div class="form-row m-20">
         <div class="form-group">
-            <mat-form-field class="w-100">
-                <mat-label>Scheduled date</mat-label>
-                <input matInput [matDatepicker]="datepicker" formControlName="scheduledDate" [min]="today()" (dateChange)="updateScheduledAt()">
-                <mat-datepicker #datepicker />
-                <mat-datepicker-toggle [for]="datepicker" matSuffix />
-            </mat-form-field>
+            <app-date label="Scheduled date" [control]="scheduledAtControl" [min]="today()"
+                (dateChange)="updateScheduledAt()"></app-date>
         </div>
     </div>
     <div class="form-row m-20">
         <div class="form-group">
-            <mat-form-field class="w-100">
-                <mat-label>Scheduled time</mat-label>
-                <input matInput [matTimepicker]="timepicker" formControlName="scheduledTime">
-                <mat-timepicker #timepicker />
-                <mat-timepicker-toggle [for]="timepicker" matSuffix />
-            </mat-form-field>
+            <app-time-picker label="Scheduled Time" [control]="scheduledTimeControl"
+                [disabled]="!tripForm.get('scheduledDate')?.value">
+            </app-time-picker>
+            <app-error [control]="scheduledTimeControl" [customMessageList]="scheduleTimeValidation"></app-error>
         </div>
     </div>
 </form>

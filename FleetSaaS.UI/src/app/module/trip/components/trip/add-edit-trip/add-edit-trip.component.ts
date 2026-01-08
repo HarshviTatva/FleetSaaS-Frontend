@@ -9,6 +9,8 @@ import { SnackbarService } from '../../../../../shared/services/snackbar-service
 import { TripService } from '../../../../services/trip.service';
 import { Trip, TripRequest } from '../../../interface/trip.interface';
 import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
+import { ValidationMessages } from '../../../../../shared/services/validation.service';
+import { errors } from '../../../../../shared/utils/messages/error.static';
 
 @Component({
   selector: 'app-add-edit-trip',
@@ -59,6 +61,18 @@ export class AddEditTripComponent implements OnInit {
   get descriptionControl() {
     return this.tripForm.get('description') as FormControl;
   }
+
+  get scheduledAtControl() {
+    return this.tripForm.get('scheduledDate') as FormControl;
+  }
+
+  get scheduledTimeControl() {
+    return this.tripForm.get('scheduledTime') as FormControl;
+  }
+
+  scheduleTimeValidation: ValidationMessages = {
+    pastTimeNotAllowed: errors.scheduleTimeValidation.pastTimeNotAllowed
+  };
 
   constructor() {
     this.tripForm = this.formBuilder.group({
@@ -122,6 +136,24 @@ export class AddEditTripComponent implements OnInit {
 
     const date: Date | null = this.tripForm.get('scheduledDate')?.value;
     const time: Date | null = this.tripForm.get('scheduledTime')?.value;
+
+    const now = new Date();
+    const thirtyMinsPlus = new Date(now.getTime() + 30 * 60000);
+
+    const isToday = !!date && date.toDateString() === now.toDateString();
+
+    if (isToday && time) {
+      const selected = new Date(date!);
+      selected.setHours(time.getHours(), time.getMinutes(), 0, 0);
+
+      if (selected < thirtyMinsPlus) {
+        this.tripForm.get('scheduledTime')?.setValue(null);
+        this.tripForm.get('scheduledTime')?.setErrors({
+          pastTimeNotAllowed: true
+        });
+        return;
+      }
+    }
 
     if (!date || !time) {
       this.tripForm.patchValue({ scheduledAt: null }, { emitEvent: false });

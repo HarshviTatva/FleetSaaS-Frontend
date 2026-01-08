@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '../../shared/services/common/http.service';
 import { PagedRequest } from '../../shared/modules/form-control/interface/pagination.interface';
-import { TripAssignmentRequest, TripRequest, TripResponse } from '../trip/interface/trip.interface';
+import { CancelTripRequest, TripAssignmentRequest, TripRequest, TripResponse } from '../trip/interface/trip.interface';
 import { Observable } from 'rxjs';
 import { SuccessResponse } from '../../shared/interfaces/common.interface';
 import { apiEndPoints } from '../../shared/utils/api-endpoints.constant';
@@ -28,10 +28,17 @@ export class TripService {
     );
   }
 
-  cancelTrip(id: string): Observable<SuccessResponse<boolean>> {
+  cancelTrip(cancelTripRequest: CancelTripRequest): Observable<SuccessResponse<boolean>> {
     return this.httpService.patch<SuccessResponse<boolean>>(
-      apiEndPoints.trip.cancelTrip + '/' + id,
-      null
+      apiEndPoints.trip.cancelTrip,
+      cancelTripRequest
+    );
+  }
+
+   changeTripStatus(id: string,status?:number,distanceCovered?:number): Observable<SuccessResponse<boolean>> {
+    return this.httpService.patch<SuccessResponse<boolean>>(
+      apiEndPoints.trip.tripStatus + '/' + id + '/' + status,
+      {distanceCovered}
     );
   }
 
@@ -53,6 +60,19 @@ export class TripService {
     return this.httpService.get<SuccessResponse<TripResponse>>(
       apiEndPoints.trip.assignedTrips,
       { params: pagedRequest as any }
+    );
+  }
+
+   downloadTripCsv(request: PagedRequest) {
+    return this.httpService.download(
+      apiEndPoints.trip.downloadTripCsv,
+      request
+    );
+  }
+
+  downloadTripDetailedReport(tripId:string) {
+    return this.httpService.downloadReport(
+      apiEndPoints.trip.downloadReport+tripId
     );
   }
 }

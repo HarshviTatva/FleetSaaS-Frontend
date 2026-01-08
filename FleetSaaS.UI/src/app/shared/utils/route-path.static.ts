@@ -3,7 +3,9 @@ export const LAYOUT = 'layout';
 export const ROUTE_PATH = {
     AUTH:{
         LOGIN : 'login',
-        SIGNUP:'signup'
+        SIGNUP:'signup',
+        FORGOT_PASSWORD:'forgot-password',
+        RESET_PASSWORD:'reset-password'
     },
     PATHS:{
         DRIVERS:'drivers',
@@ -18,11 +20,16 @@ export const ROUTE_PATH = {
   DRIVER_DASHBOARD: `${LAYOUT}/driver-dashboard`,
   DISPATCHER_DASHBOARD: `${LAYOUT}/dispatcher-dashboard`,
   COMPANY_OWNER_DASHBOARD: `${LAYOUT}/company-owner-dashboard`,
-  TRIPS: `${LAYOUT}/trips`,
-  VEHICLES: `${LAYOUT}/vehicles`,
-  DRIVERS: `${LAYOUT}/drivers`,
-  DISPATCHERS: `${LAYOUT}/dispatchers`,
-  ASSIGNED_TRIPS: `${LAYOUT}/trips/assigned`,
-  TRIP_HISTORY: `${LAYOUT}/trips/history`,
+  TRIPS: `trips`,
+  VEHICLES: `vehicles`,
+  DRIVERS: `drivers`,
+  DISPATCHERS: `dispatchers`,
+  ASSIGNED_TRIPS:`assigned-trips`,
+  TRIP_HISTORY:`trip-history`,
+  LAYOUT_TRIPS: `${LAYOUT}/trips`,
+  LAYOUT_VEHICLES: `${LAYOUT}/vehicles`,
+  LAYOUT_DRIVERS: `${LAYOUT}/drivers`,
+  LAYOUT_ASSIGNED_TRIPS:`${LAYOUT}/assigned-trips`,
+  USER_PROFILE:`user-profile`
 }
 

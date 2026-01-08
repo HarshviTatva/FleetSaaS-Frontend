@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 
@@ -27,12 +27,12 @@ export interface InputConfig {
 })
 
 export class InputComponent {
-  @Input() config!: InputConfig;
-  @Input() control!: FormControl;
-  @Output() emitClickEvent = new EventEmitter<Event>();
-  @Output() inputChangeEvent = new EventEmitter<string>();
-  
-  onIconClick(event: Event) {
+  config = input.required<InputConfig>();
+  control = input.required<FormControl>();
+  emitClickEvent = output<Event>();
+  inputChangeEvent = output<string>();
+
+  onIconClick(event:Event){
     this.emitClickEvent.emit(event);
   }
 

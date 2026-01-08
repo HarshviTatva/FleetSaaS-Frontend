@@ -13,3 +13,9 @@ export interface LoginRequest{
     password:string;
     rememberMe:boolean;
 }
+
+export interface ResetPasswordRequest{
+    email:string;
+    password:string;
+    newPassword:string;
+}

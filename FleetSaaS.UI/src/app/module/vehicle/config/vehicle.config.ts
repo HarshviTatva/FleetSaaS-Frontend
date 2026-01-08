@@ -11,7 +11,7 @@ export const VehicleTableColumns:TableColumn<Vehicle>[] = [
     {key:'isAct',label:'Is Active?',sortable:true},
     {
         key: 'actions', label: 'Actions',
-        canEdit: (row: Vehicle) => true,
+        canEdit: (row: Vehicle) => row.id?true:false,
         canDelete: (row: Vehicle) => row.id?true:false
     }
 ];

@@ -1,1 +1,225 @@
-<p>company-owner-dashboard works!</p>
+<div class="dashboard">
+  <!-- STATS GRID -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-info" (click)="redirectToVehiclePage()">
+          <div class="stat-label">Total Vehicles</div>
+          <div class="stat-value">
+            {{ companyUserData()?.totalVehicleCount }}
+          </div>
+          <div class="stat-detail">
+            <span class="icon">
+              <mat-icon>trending_up</mat-icon>
+            </span>
+            <span>Units On Road → 1000+</span>
+          </div>
+        </div>
+        <div class="stat-icon">
+          <div class="icon-wrapper primary">
+            <mat-icon>directions_car</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE VEHICLES -->
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-info">
+          <div class="stat-label">Active Vehicles</div>
+          <div class="stat-value">
+            {{ companyUserData()?.totalActiveVehicleCount }}
+          </div>
+          <div class="stat-detail">
+            <span class="icon">
+              <mat-icon>bolt</mat-icon>
+            </span>
+            <span>
+              {{ totalFleetPercentage() | number:'1.0-2' }}% of fleet active
+            </span>
+          </div>
+        </div>
+        <div class="stat-icon">
+          <div class="icon-wrapper success">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TRIP STATISTICS -->
+  <h2 class="section-title">
+    <mat-icon>place</mat-icon>
+    Trip Statistics
+  </h2>
+
+  <div class="trip-stats">
+
+    <!-- COMPLETED -->
+    <div class="trip-stat-item completed" (click)="redirectToTripPage()">
+      <div class="trip-stat-header">
+        <h3>Completed</h3>
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="trip-stat-value">
+        {{ companyUserData()?.totalCompletedTrips }}
+      </div>
+      <div class="trip-stat-footer">
+        <mat-icon>calendar_today</mat-icon>
+        <span>This month</span>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="trip-stat-item in-progress" (click)="redirectToTripPage()">
+      <div class="trip-stat-header">
+        <h3>In Progress</h3>
+        <mat-icon>hourglass_top</mat-icon>
+      </div>
+      <div class="trip-stat-value">
+        {{ companyUserData()?.totalOngoingTrips || 0 }}
+      </div>
+      <div class="trip-stat-footer">
+        <mat-icon>bolt</mat-icon>
+        <span>Currently active</span>
+      </div>
+    </div>
+
+    <!-- PLANNED -->
+    <div class="trip-stat-item planned" (click)="redirectToTripPage()">
+      <div class="trip-stat-header">
+        <h3>Planned</h3>
+        <mat-icon>event</mat-icon>
+      </div>
+      <div class="trip-stat-value">
+        {{ companyUserData()?.totalPlannedTrips || 0 }}
+      </div>
+      <div class="trip-stat-footer">
+        <mat-icon>schedule</mat-icon>
+        <span>Upcoming trips</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+
+    <!-- ALERTS SECTION -->
+    <div class="alerts-section">
+      <h2 class="section-title">
+        <mat-icon>warning</mat-icon>
+        Insurance & License Alerts
+      </h2>
+
+      <div class="card">
+        <div class="alerts-container">
+
+          @if (companyUserData()?.licenseExpiryAlerts?.length) {
+
+            @for (alert of companyUserData()!.licenseExpiryAlerts; track alert.reference) {
+
+              <div class="alert-card" [ngClass]="getAlertClass(alert)">
+                <div class="alert-item">
+
+                  <div class="alert-icon">
+                    <mat-icon [color]="alert.isExpired ? 'warn' : ''">
+                      {{ alert.isExpired ? 'block' : 'warning' }}
+                    </mat-icon>
+                  </div>
+
+                  <div class="alert-content">
+                    <div class="alert-title">
+                      {{ getAlertTitle(alert) }}
+                    </div>
+
+                    <div class="alert-description">
+                      {{ getAlertDescription(alert) }}
+                    </div>
+
+                    <div class="alert-meta">
+                      <span class="badge primary">
+                        {{ alert.reference }}
+                      </span>
+
+                      <span
+                        class="badge"
+                        [ngClass]="alert.isExpired ? 'rose' : 'warning'">
+                        {{
+                          alert.isExpired
+                            ? 'Expired'
+                            : getDaysRemaining(alert.expiryDate) + ' days remaining'
+                        }}
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            }
+
+          } @else {
+            <p class="no-alerts">
+              <mat-icon color="primary">check_circle</mat-icon>
+              No license or insurance alerts
+            </p>
+          }
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="activity-section">
+      <h2 class="section-title">
+        <mat-icon>bolt</mat-icon>
+        Recent Activity
+      </h2>
+
+      <div class="card">
+        <div class="activity-feed">
+
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon color="primary">check_circle</mat-icon>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Trip Completed</div>
+              <div class="activity-description">
+                Trip TRP-1023 completed successfully
+              </div>
+              <div class="activity-meta">
+                <mat-icon>schedule</mat-icon>
+                <span>10 minutes ago</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>sync_alt</mat-icon>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Vehicle Reassigned</div>
+              <div class="activity-description">
+                Vehicle GJ-01-ZX-8899 reassigned to another driver
+              </div>
+              <div class="activity-meta">
+                <mat-icon>schedule</mat-icon>
+                <span>1 hour ago</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

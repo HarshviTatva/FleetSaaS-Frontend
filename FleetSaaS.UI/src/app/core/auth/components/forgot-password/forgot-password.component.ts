@@ -1,23 +1,20 @@
-import { Component } from '@angular/core';
-import { FormControl, FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { errors } from '../../../../shared/utils/messages/error.static';
-import { InputComponent, InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
-import { ValidationMessages } from '../../../../shared/services/validation.service';
-import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ButtonComponent } from '../../../../shared/modules/form-control/components/button/button.component';
-import { ErrorComponent } from '../../../../shared/modules/form-control/components/error/error.component';
-import { inject } from '@angular/core/primitives/di';
+import { ButtonColor } from '../../../../shared/modules/form-control/common-type/buttontype';
+import { InputConfig } from '../../../../shared/modules/form-control/components/input/input.component';
+import { SharedModule } from '../../../../shared/modules/shared.module';
+import { ValidationMessages } from '../../../../shared/services/validation.service';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
+import { errors } from '../../../../shared/utils/messages/error.static';
+import { AuthService } from '../../services/auth.service';
+import { ROUTE_PATH } from '../../../../shared/utils/route-path.static';
 
 @Component({
   selector: 'app-forgot-password',
   imports: [
-    MatCardModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    InputComponent,
-    ErrorComponent,
+    ...MATERIAL_IMPORTS,
+    SharedModule,
     RouterModule,
   ],
   templateUrl: './forgot-password.component.html',
@@ -26,9 +23,11 @@ import { inject } from '@angular/core/primitives/di';
 
 export class ForgotPasswordComponent {
   formBuilder = inject(FormBuilder);
+  authService = inject(AuthService);
   router = inject(Router);
   buttonColor: ButtonColor = 'primary';
-  resetPasswordForm!: FormGroup;
+  responseMessage = signal<string>('');
+  forgotPasswordForm!: FormGroup;
 
   emailInputConfig: InputConfig = {
     key: 'email',
@@ -39,86 +38,31 @@ export class ForgotPasswordComponent {
     height: '45px'
   }
 
-  passwordInputConfig: InputConfig = {
-    key: 'password',
-    label: 'Password',
-    type: 'password',
-    icon: 'visibility',
-    placeholder: 'Enter your password',
-    height: '45px'
-  };
-
-  newPasswordInputConfig: InputConfig = {
-    key: 'newPassword',
-    label: 'New Password',
-    type: 'password',
-    icon: 'visibility',
-    placeholder: 'Enter your new password',
-    height: '45px'
-  };
-
-
   emailValidationMessages: ValidationMessages = {
     required: errors.email.required,
     email: errors.email.emailFormat
   }
 
-  passwordValidationMessages: ValidationMessages = {
-    required: errors.password.required,
-  };
-
-  newPasswordValidationMessages: ValidationMessages = {
-    required: errors.confirmPassword.required
-  };
-
   get emailControl() {
-    return this.resetPasswordForm.get('email') as FormControl;
+    return this.forgotPasswordForm.get('email') as FormControl;
   }
-
-  get passwordControl() {
-    return this.resetPasswordForm.get('password') as FormControl;
-  }
-
-  get newPasswordControl() {
-    return this.resetPasswordForm.get('newPassword') as FormControl;
-  }
-
 
   constructor() {
-    this.resetPasswordForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      newPassword: ['', Validators.required,Validators.minLength(8)],
+    this.forgotPasswordForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
-
-  onPasswordToggle() {
-    if (this.passwordInputConfig.type === 'text') {
-      this.passwordInputConfig.type = 'password';
-      this.passwordInputConfig.icon = 'visibility';
-    } else {
-      this.passwordInputConfig.type = 'text';
-      this.passwordInputConfig.icon = 'visibility_off';
-    }
-  }
-
-  onNewPasswordToggle() {
-    if (this.newPasswordInputConfig.type === 'text') {
-      this.newPasswordInputConfig.type = 'password';
-      this.newPasswordInputConfig.icon = 'visibility';
-    } else {
-      this.newPasswordInputConfig.type = 'text';
-      this.newPasswordInputConfig.icon = 'visibility_off';
-    }
-  }
-
   submit() {
-    if (this.resetPasswordForm.invalid) return;
-    console.log(this.resetPasswordForm.value);
+    if (this.forgotPasswordForm.invalid) return;
+    this.authService.forgotPassword(this.forgotPasswordForm.value.email).subscribe({
+        next:(response)=>{
+          this.responseMessage.set(response.messages[0]);
+        }
+    });
   }
 
   onCancel(){
-    this.router.navigate(['/login']);
+    this.router.navigate([ROUTE_PATH.AUTH.LOGIN]);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { ValidationMessages, ValidationService } from '../../../../services/validation.service';
@@ -16,9 +16,9 @@ import { CommonModule } from '@angular/common';
 })
 
 export class ErrorComponent {
-  @Input() control: FormControl | null = null;
-  @Input() customMessageList: ValidationMessages = {};
-  @Input() showErrorSpacing : boolean | undefined = false;
-  
+  control = input<FormControl | null>();
+  customMessageList = input<ValidationMessages>({});
+  showErrorSpacing = input<boolean | undefined>();
+
   public validationService = inject(ValidationService);
 }

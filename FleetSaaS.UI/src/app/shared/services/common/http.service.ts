@@ -38,7 +38,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-  
+
   patch<T>(path: string, body: any, options?: RequestOptions): Observable<T> {
     const url = this.apiBaseUrl + path;
     const handledOptions = this.handleRequestOptions(options);
@@ -53,6 +53,24 @@ export class HttpService {
     const handledOptions = this.handleRequestOptions(options);
 
     return this.http.delete<T>(url, handledOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  download(path: string, body: any, options?: RequestOptions): Observable<Blob> {
+    return this.http.post(this.apiBaseUrl + path, body, {
+      ...options,
+      responseType: 'blob'
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  downloadReport(path: string,  options?: RequestOptions): Observable<Blob> {
+    return this.http.get(this.apiBaseUrl + path, {
+      ...options,
+      responseType: 'blob'
+    }).pipe(
       catchError(this.handleError)
     );
   }

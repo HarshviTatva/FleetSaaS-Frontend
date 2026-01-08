@@ -1,21 +1,28 @@
 <form [formGroup]="assignForm" (ngSubmit)="assignDriverVehicle(tripData()?.id)" id="dialogForm">
     @if(tripData()?.vehicleAssignmentId)
     {
-        <span class="driver-name"><b>Assigned Driver Name :</b>{{tripData()?.vehicleDriverName}} </span>
+    <span class="driver-name"><b>Assigned Driver Name :</b>{{tripData()?.vehicleDriverName}} </span>
     }
     <div class="mt-10">
+        <!-- @if(!isListEmpty()){ -->
         <app-select [label]="'Select Vehicle-Driver'" [dropdownOptions]="driverList()" [control]="driverControl"
             [customClass]="'dropdown-w-100'">
         </app-select>
-          <app-error [control]="driverControl"></app-error>
+        <app-error [control]="driverControl"></app-error>
+        <!-- }
+        @else{ 
+            <span>Please assign new driver a vehicle then assign trip!</span>
+            -->
+        <!-- } -->
     </div>
+
     <div class="d-flex flex-end mt-10" style="gap:10px;">
         <app-button type="button" label="Cancel" (click)="cancel()">
         </app-button>
         @if(tripData()?.vehicleAssignmentId)
         {
-            <app-button type="button" [label]="'Unassign'" (click)="unAssignDriverVehicle()">
-            </app-button>
+        <app-button type="button" [label]="'Unassign'" (click)="unAssignDriverVehicle()">
+        </app-button>
         }
         <app-button type="submit" [label]="btnLabel()" [disabled]="!driverControl.value">
         </app-button>

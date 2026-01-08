@@ -1,5 +1,10 @@
-<div class="delete-driver">
-    Are you sure to cancel this trip?
+<div class="delete-trip">
+   <div> Are you sure to cancel this trip?</div>
+    <app-text-area [label]="'Description'" [placeholder]="'Enter description'" [rows]="4" [maxLength]="100"
+        [control]="cancelReason">
+    </app-text-area>
+    <!-- <app-error [control]="cancelReason">
+    </app-error> -->
 </div>
 <div class="d-flex flex-end mt-10" style="gap:10px;">
     <app-button type="button" label="No" (click)="cancel()">

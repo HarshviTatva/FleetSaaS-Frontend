@@ -1,0 +1,19 @@
+<mat-form-field
+  class="w-100"
+  style="height:58px;"
+  [appearance]="appearance()">
+
+  <mat-label>{{ label() }}</mat-label>
+
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [formControl]="control()"
+    [placeholder]="placeholder()"
+    [disabled]="isDisabled()"
+    [min]="min()" />
+
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+
+</mat-form-field>

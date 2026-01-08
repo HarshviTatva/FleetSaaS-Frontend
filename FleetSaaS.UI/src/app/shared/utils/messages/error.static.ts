@@ -35,6 +35,9 @@ export const errors = {
     required: 'Confirm Password is required',
     match: 'Passwords do not match',
   },
+  newPassword: {
+    required: 'Confirm Password is required'
+  },
   phoneNumber: {
     required: 'Phone Number is required.',
     minLength: 'Phone Number must be at least 10 digit.',
@@ -51,6 +54,13 @@ export const errors = {
   duplicateFields:{
     vinExits:'Duplicate vehicle Identification number!',
     licensePlateExists:'Duplicate License Plate!'
+  },
+  scheduleTimeValidation:{
+    pastTimeNotAllowed:'Past time cannot be selected.'
   }
   
+}
+export const TripMessage ={
+    Cancelled:'Scheduled time is over. You cannot start this trip.',
+    EarlyStart:'Early to start trip, you can start trip 5 mins. before only!'
 }

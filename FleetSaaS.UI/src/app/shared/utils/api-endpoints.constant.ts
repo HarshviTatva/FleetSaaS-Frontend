@@ -2,7 +2,11 @@
 export const apiEndPoints = {
   auth:{
       signup:'Company/register-company',
-      login:'Auth/login'
+      login:'Auth/login',
+      logout:'Auth/logout',
+      refreshToken:'Auth/refresh-token',
+      forgotPassword:'Auth/forgot-password/',
+      resetPassword:'Auth/reset-password'
     },
   driver:{
     addEditUser:'Driver/driver',
@@ -21,18 +25,25 @@ export const apiEndPoints = {
     vehicleList:'Vehicle/all-vehicles',
     assignVehicle:'Vehicle/vehicle-assignment',
     reAssignVehicle:'Vehicle/vehicle-assignments',
-    unAssignVehicle:'Vehicle/vehicle-unassign'
+    unAssignVehicle:'Vehicle/vehicle-unassign',
+    downloadVehicleCsv:'Vehicle/export/vehicles'
   },
   trip:{
     addEditTrip:'Trip/trip',
-    cancelTrip:'trip',
+    cancelTrip:'Trip/cancel-trip',
     getAll:'Trip/trips',
     assignDriver:'Trip/assign-driver',
     unAssignDriver:'Trip/unassign-driver',
-    assignedTrips:'Driver/assigned-trips'
+    assignedTrips:'Driver/assigned-trips',
+    tripStatus:'Trip/trip-status',
+    downloadTripCsv:'Trip/export/trips',
+    downloadReport:'Trip/report/pdf/'
   },
   dashboard:{
-    assignedVehicle:'Driver/assigned-vehicle'
+    assignedVehicle:'Driver/assigned-vehicle',
+    companyUserDashboard:'Dashboard/company-user-dashboard',
+    dispatcherDashboard:'Dashboard/dispatcher-dashboard',
+    driverDashboard:'Dashboard/driver-dashboard'
   },
   common:{
     vehicleDriverList:'Common/assignedDriverVehicles'

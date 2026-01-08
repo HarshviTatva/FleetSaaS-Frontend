@@ -7,7 +7,11 @@ export interface TableColumn<T = object> {
   canEdit?: (row: T) => boolean;
   canDelete?: (row: T) => boolean;
   canAssignVehicle?:(row:T)=>boolean;
-  canCancel?:boolean;
+  canCancel?:(row:T)=>boolean;
+  canAccept?:(row:T)=>boolean;
+  canStart?:(row:T)=>boolean;
+  canComplete?:(row:T)=>boolean;
+  canDownload?:(row:T)=>boolean;
   isLabel?:boolean;
-  role?:UserRole[]
+  roles?:UserRole[];
 }

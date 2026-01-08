@@ -1,3 +1,8 @@
+const SELECT_ALL_OPTION = {
+  label: 'Select All',
+  value: 0
+};
+
 export enum UserRole {
     Admin = 1,
     CompanyOwner = 2,
@@ -24,9 +29,28 @@ export enum AuditAction {
     Unassigned = 7
 }
 
-export const StatusList = Object.keys(TripStatus)
-  .filter(key => isNaN(Number(key)))
-  .map(key => ({
-    label: key,
-    value: TripStatus[key as keyof typeof TripStatus]
-  }));
+export const TripStatusLabelMap: Record<TripStatus, string> = {
+  [TripStatus.Planned]: 'Planned',
+  [TripStatus.Assigned]: 'Assigned',
+  [TripStatus.Accepted]: 'Accepted',
+  [TripStatus.Started]: 'Started',
+  [TripStatus.Completed]: 'Completed',
+  [TripStatus.Cancelled]: 'Cancelled'
+};
+
+export const StatusList = [
+  SELECT_ALL_OPTION,
+  ...Object.values(TripStatus)
+    .filter(v => typeof v === 'number')
+    .map(status => ({
+      label: TripStatusLabelMap[status as TripStatus],
+      value: status
+    }))
+];
+
+export const TripNextStatusMap: Partial<Record<TripStatus, string>> = {
+  [TripStatus.Planned]: 'Assign',
+  [TripStatus.Assigned]: 'Accept',
+  [TripStatus.Accepted]: 'Start',
+  [TripStatus.Started]: 'Complete'
+};

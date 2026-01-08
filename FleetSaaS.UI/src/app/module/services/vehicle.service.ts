@@ -62,4 +62,11 @@ export class VehicleService {
         null
       );
     }
+
+    downloadVehicleCsv(request: PagedRequest) {
+    return this.httpService.download(
+      apiEndPoints.vehicle.downloadVehicleCsv,
+      request
+    );
+  }
 }

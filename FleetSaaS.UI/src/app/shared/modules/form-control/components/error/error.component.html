@@ -1,7 +1,7 @@
-@if (control && control.invalid && (control.touched || control.dirty)) {
+@if (control()! && control()!.invalid && (control()!.touched || control()!.dirty)) {
 <mat-error [ngClass]="{
-      error: showErrorSpacing
+      error: showErrorSpacing()
     }">
-  {{ validationService.getValidationMessage(control.errors, customMessageList) }}
+  {{ validationService.getValidationMessage(control()!.errors, customMessageList()) }}
 </mat-error>
 }

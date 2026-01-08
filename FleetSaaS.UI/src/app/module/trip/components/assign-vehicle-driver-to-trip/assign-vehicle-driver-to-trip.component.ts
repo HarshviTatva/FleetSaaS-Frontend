@@ -1,16 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
-import { TripService } from '../../../services/trip.service';
-import { Trip, TripAssignmentRequest } from '../../interface/trip.interface';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SuccessResponse } from '../../../../shared/interfaces/common.interface';
 import { DropdownOption } from '../../../../shared/modules/form-control/interface/select.interface';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
-import { reAssignLabel, assignLabel } from '../../../../shared/utils/constant.static';
-import { Driver, VehicleAssignmentRequest } from '../../../company-owner/interfaces/driver.interface';
-import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
 import { SharedModule } from '../../../../shared/modules/shared.module';
+import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { assignLabel, reAssignLabel } from '../../../../shared/utils/constant.static';
+import { MATERIAL_IMPORTS } from '../../../../shared/utils/material.static';
 import { CommonService } from '../../../services/common.service';
+import { TripService } from '../../../services/trip.service';
+import { Trip, TripAssignmentRequest } from '../../interface/trip.interface';
 
 @Component({
   selector: 'app-assign-vehicle-driver-to-trip',
@@ -18,7 +17,7 @@ import { CommonService } from '../../../services/common.service';
   templateUrl: './assign-vehicle-driver-to-trip.component.html',
   styleUrl: './assign-vehicle-driver-to-trip.component.scss',
 })
-export class AssignVehicleDriverToTripComponent {
+export class AssignVehicleDriverToTripComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly tripService = inject(TripService);
   private readonly snackBarService = inject(SnackbarService);
@@ -30,6 +29,7 @@ export class AssignVehicleDriverToTripComponent {
   driverList = signal<DropdownOption[]>([]);
   tripData = signal<Trip | null>(null);
   btnLabel = signal('Assign');
+  isListEmpty = signal<boolean>(true);
 
   constructor() {
     this.assignForm = this.formBuilder.group({
@@ -57,6 +57,7 @@ export class AssignVehicleDriverToTripComponent {
         else {
           this.driverList.set(response.data ?? []);
         }
+        this.isListEmpty.set(this.driverList().length > 0);
       },
       error: () => {
         this.driverList.set([]);

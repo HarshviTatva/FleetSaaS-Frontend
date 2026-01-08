@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-import { LAYOUT, ROUTE_PATH } from './shared/utils/route-path.static';
 import { authGuard } from './core/guards/auth.guard';
-import { UserRole } from './shared/utils/enums/common.enum';
+import { LAYOUT, ROUTE_PATH } from './shared/utils/route-path.static';
 
 const authRoutes: Routes = [
   {
@@ -28,11 +27,21 @@ const authRoutes: Routes = [
 
   //forgot-password
   {
-    path: 'forgot-password',
+    path: ROUTE_PATH.AUTH.FORGOT_PASSWORD,
     loadComponent: () =>
       import('./core/auth/components/forgot-password/forgot-password.component')
         .then(m => m.ForgotPasswordComponent)
   },
+
+  //reset-password
+  {
+    path: ROUTE_PATH.AUTH.RESET_PASSWORD,
+    loadComponent: () =>
+      import('./core/auth/components/reset-password/reset-password.component')
+        .then(m => m.ResetPasswordComponent)
+  },
+
+
 ];
 
 const menuRoutes: Routes = [
@@ -91,6 +100,7 @@ const menuRoutes: Routes = [
       },
       {
         path: ROUTE_PATH.VEHICLES,
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./module/vehicle/components/vehicle/vehicle.component')
             .then(m => m.VehicleComponent),
@@ -98,24 +108,39 @@ const menuRoutes: Routes = [
       },
       {
         path: ROUTE_PATH.TRIPS,
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./module/trip/components/trip/trip.component')
             .then(m => m.TripComponent),
         data: { title: 'Trips' },
       },
       {
-          path: ROUTE_PATH.ASSIGNED_TRIPS,
-          // canActivate:[authGuard],
-          loadComponent: () =>
-            import('./module/trip/components/driver-assigned-trips/driver-assigned-trips.component')
-              .then(m => m.DriverAssignedTripsComponent),
-            data: { title: 'Assigned Trips' }
-          }
-
+        path: ROUTE_PATH.ASSIGNED_TRIPS,
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./module/trip/components/driver-assigned-trips/driver-assigned-trips.component')
+            .then(m => m.DriverAssignedTripsComponent),
+        data: { title: 'Assigned Trips (Today)' }
+      },
+      {
+        path: ROUTE_PATH.TRIP_HISTORY,
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./module/trip/components/driver-assigned-trips/trip-history/trip-history.component')
+            .then(m => m.TripHistoryComponent),
+        data: { title: 'Trip History' }
+      },
+      //user-profile
+      {
+        path: ROUTE_PATH.USER_PROFILE,
+        loadComponent: () =>
+          import('./module/user-profile/user-profile.component')
+            .then(m => m.UserProfileComponent),
+        data: { title: 'User Profile' }
+      },
     ]
   }
 ];
-
 
 export const routes: Routes = [
   { path: '', redirectTo: ROUTE_PATH.AUTH.LOGIN, pathMatch: 'full' },

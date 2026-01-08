@@ -16,7 +16,7 @@ export class ValidationService {
 
     const errorKeys = Object.keys(formErrors);
 
-    if (customMessageList?.hasOwnProperty.call(errorKeys[0],errorKeys[0])) {
+    if (customMessageList?.hasOwnProperty(errorKeys[0])) {
       return customMessageList[errorKeys[0]];
     }
     switch (errorKeys[0]) {

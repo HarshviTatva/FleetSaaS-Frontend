@@ -3,49 +3,54 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { TokenService } from '../../../core/auth/services/token.service';
 import { MATERIAL_IMPORTS } from '../../utils/material.static';
+import { LAYOUT, ROUTE_PATH } from '../../utils/route-path.static';
 @Component({
   selector: 'app-header',
-  imports: 
-  [
-    ...MATERIAL_IMPORTS
-  ],
+  imports:
+    [
+      ...MATERIAL_IMPORTS
+    ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  standalone:true
+  standalone: true
 })
 
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  userName!:string;
+  userName!: string;
 
   pageTitle = signal('Dashboard');
 
-sidebarOpen = input<WritableSignal<boolean>>();
+  sidebarOpen = input<WritableSignal<boolean>>();
 
-  constructor(){
+  constructor() {
     this.router.events
-    .pipe(filter(e => e instanceof NavigationEnd))
-    .subscribe(() => {
-      this.pageTitle.set(this.route.snapshot.firstChild?.data['title'] ?? 'Dashboard');
-    });
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.pageTitle.set(this.route.snapshot.firstChild?.data['title'] ?? 'Dashboard');
+      });
   }
 
   ngOnInit(): void {
     this.getUserDetail();
   }
 
-  getUserDetail(){
+  getUserDetail() {
     this.userName = this.tokenService.getUserNameFromToken();
   }
 
-  logout(){
+  logout() {
     this.tokenService.logout();
   }
 
   toggleSidebar() {
-   this.sidebarOpen()?.update(v => !v);
+    this.sidebarOpen()?.update(v => !v);
+  }
+
+  redirectToUserProfile() {
+  this.router.navigate([LAYOUT, ROUTE_PATH.USER_PROFILE]);
   }
 
 }

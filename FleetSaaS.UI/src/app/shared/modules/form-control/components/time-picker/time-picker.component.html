@@ -1,0 +1,18 @@
+<mat-form-field class="w-100">
+  <mat-label>{{ label() }}</mat-label>
+
+  <input
+    matInput
+    [matTimepicker]="picker"
+    [formControl]="control()"
+    [disabled]="disabled()"
+  />
+
+  <mat-timepicker #picker />
+
+  <mat-timepicker-toggle
+    matSuffix
+    [for]="picker"
+    [disabled]="disabled()"
+  />
+</mat-form-field>

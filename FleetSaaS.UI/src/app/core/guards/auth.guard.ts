@@ -4,7 +4,7 @@ import { TokenService } from "../auth/services/token.service";
 import { ROUTE_PATH } from "../../shared/utils/route-path.static";
 
 export const authGuard: CanActivateFn = () => {
- const authService = inject(TokenService);
+  const authService = inject(TokenService);
   const router = inject(Router);
 
   if (!authService.isLoggedIn()) {

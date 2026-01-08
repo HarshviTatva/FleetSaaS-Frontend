@@ -55,7 +55,7 @@ export class SignupComponent {
   phoneNumberInputConfig: InputConfig = {
     key: 'phoneNumber',
     label: 'Phone Number',
-    type: 'number',
+    type: 'text',
     placeholder: 'Enter Phone number',
     width: '100%',
     height: '45px',
@@ -67,7 +67,7 @@ export class SignupComponent {
   ownerPhoneNumberInputConfig: InputConfig = {
     key: 'ownerPhoneNumber',
     label: 'Owner Phone Number',
-    type: 'number',
+    type: 'text',
     placeholder: 'Enter Phone number',
     width: '100%',
     height: '45px',
@@ -152,7 +152,7 @@ export class SignupComponent {
 
   confirmPasswordValidationMessages: ValidationMessages = {
     required: errors.confirmPassword.required,
-    mismatch: errors.confirmPassword.match,
+    mismatch: errors.confirmPassword.match
   };
 
   phoneNumberValidationMessages: ValidationMessages = {

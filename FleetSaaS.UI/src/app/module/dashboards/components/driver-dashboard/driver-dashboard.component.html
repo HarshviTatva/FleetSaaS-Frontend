@@ -1,46 +1,200 @@
-<div class="vehicle-card" >
+<div class="dashboard">
 
-  <div class="card-header">
-    <span class="title">Assigned Vehicle</span>
+  <!-- TODAY'S ASSIGNED TRIP -->
+  <h2 class="section-title">
+    <mat-icon>local_shipping</mat-icon>
+    Today's Assigned Trip
+  </h2>
+
+  <div class="card">
+    <div class="assigned-trip-list">
+
+      @if (driverData()?.todayTrips?.length) {
+
+        @for (trip of driverData()!.todayTrips; track trip.tripCode) {
+
+          <div class="trip-item active" (click)="redirectPagetoTrips()">
+            <div class="trip-icon">
+              <mat-icon color="primary">place</mat-icon>
+            </div>
+
+            <div class="trip-info">
+              <div class="trip-title">
+                {{ trip.origin }} → {{ trip.destination }}
+              </div>
+
+              <div class="trip-desc">
+                Trip ID: {{ trip.tripCode }}
+                •
+                {{ trip.scheduledAt | date:'shortTime' }}
+              </div>
+            </div>
+
+            <span class="trip-status success">
+              {{ getTripStatusLabel(trip.status) }}
+            </span>
+          </div>
+
+        }
+
+      } @else {
+        <p class="no-alerts">
+          <mat-icon color="primary">check_circle</mat-icon>
+          No trip assigned for today
+        </p>
+      }
+
+    </div>
   </div>
 
-  <div class="card-body">
+  <!-- TRIP HISTORY -->
+  <h2 class="section-title">
+    <mat-icon>history</mat-icon>
+    Trip History
+  </h2>
 
-    <div class="vehicle-info">
-      <div class="info-item">
-        <span>Make: {{ vehicleDetails()?.make }} </span>
+  <div class="card">
+    <div class="trip-list">
+
+      @if (driverData()?.completedTrips?.length) {
+
+        @for (trip of driverData()!.completedTrips; track trip.id) {
+
+          <div class="trip-item">
+            <div class="trip-icon">
+              <mat-icon color="primary">check_circle</mat-icon>
+            </div>
+
+            <div class="trip-info">
+              <div class="trip-title">
+                {{ trip.origin }} → {{ trip.destination }}
+              </div>
+
+              <div class="trip-desc">
+                Completed on
+                {{ trip.completedAt | date:'mediumDate' }}
+              </div>
+            </div>
+
+            <span class="trip-status success">
+              Completed
+            </span>
+          </div>
+
+        }
+
+      } @else {
+        <p class="no-alerts">
+          <mat-icon>info</mat-icon>
+          No completed trips yet
+        </p>
+      }
+
+    </div>
+  </div>
+
+  <!-- PERSONAL STATISTICS -->
+  <h2 class="section-title">
+    <mat-icon>bar_chart</mat-icon>
+    Personal Statistics
+  </h2>
+
+  <div class="trip-stats">
+
+    <div class="trip-stat-item completed">
+      <div class="trip-stat-header">
+        <h3>Completed</h3>
+      </div>
+      <div class="trip-stat-value">
+        {{ driverData()?.completedTripsCount ?? 0 }}
       </div>
     </div>
 
-     <div class="vehicle-info">
-      <div class="info-item">
-        <span>Model: {{ vehicleDetails()?.model }} </span>
+    <div class="trip-stat-item in-progress">
+      <div class="trip-stat-header">
+        <h3>Accepted</h3>
+      </div>
+      <div class="trip-stat-value">
+        {{ driverData()?.acceptedTripsCount ?? 0 }}
       </div>
     </div>
 
-     <div class="vehicle-info">
-      <div class="info-item">
-        <span>Year: {{ vehicleDetails()?.year }} </span>
+    <div class="trip-stat-item cancelled">
+      <div class="trip-stat-header">
+        <h3>Cancelled</h3>
+      </div>
+      <div class="trip-stat-value">
+        {{ driverData()?.cancelledTripsCount ?? 0 }}
       </div>
     </div>
 
-     <div class="vehicle-info">
-      <div class="info-item">
-        <span>Vehicle Identification Number: {{ vehicleDetails()?.vin }} </span>
+    <div class="trip-stat-item planned">
+      <div class="trip-stat-header">
+        <h3>Total</h3>
+      </div>
+      <div class="trip-stat-value">
+        {{ driverData()?.totalTrips ?? 0 }}
       </div>
     </div>
 
-     <div class="vehicle-info">
-      <div class="info-item">
-        <span>Insurance Expiry Date: {{ vehicleDetails()?.insuranceExpiryDate | date:'dd-MM-yyyy' }} </span>
-      </div>
-    </div>
+  </div>
 
-     <div class="vehicle-info">
-      <div class="info-item">
-        <span>LicensePlate: {{ vehicleDetails()?.licensePlate }} </span>
+  <!-- ASSIGNED VEHICLE -->
+  <h2 class="section-title">
+    <mat-icon>directions_car</mat-icon>
+    Assigned Vehicle
+  </h2>
+
+  <div class="card assigned-vehicle-card">
+
+    @if (vehicleDetails()) {
+
+      <div class="vehicle-grid">
+
+        <div class="vehicle-row">
+          <span class="label">Make</span>
+          <span class="value">{{ vehicleDetails()?.make }}</span>
+        </div>
+
+        <div class="vehicle-row">
+          <span class="label">Model</span>
+          <span class="value">{{ vehicleDetails()?.model }}</span>
+        </div>
+
+        <div class="vehicle-row">
+          <span class="label">Year</span>
+          <span class="value">{{ vehicleDetails()?.year }}</span>
+        </div>
+
+        <div class="vehicle-row">
+          <span class="label">Vehicle Identification Number</span>
+          <span class="value mono">{{ vehicleDetails()?.vin }}</span>
+        </div>
+
+        <div class="vehicle-row">
+          <span class="label">License Plate</span>
+          <span class="value">
+            <span class="badge primary">
+              {{ vehicleDetails()?.licensePlate }}
+            </span>
+          </span>
+        </div>
+
+        <div class="vehicle-row">
+          <span class="label">Insurance Expiry</span>
+          <span class="value">
+            {{ vehicleDetails()?.insuranceExpiryDate | date:'dd-MM-yyyy' }}
+          </span>
+        </div>
+
       </div>
-    </div>
+
+    } @else {
+      <p class="no-alerts">
+        <mat-icon color="warn">block</mat-icon>
+        No vehicle assigned
+      </p>
+    }
 
   </div>
 

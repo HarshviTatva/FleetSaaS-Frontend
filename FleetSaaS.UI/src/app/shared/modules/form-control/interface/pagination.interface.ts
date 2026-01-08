@@ -4,5 +4,7 @@ export interface PagedRequest {
     search?: string;
     sortBy?: string;
     sortDirection?: 'asc' | 'desc';
-     status?: number | null;
+    status?: number | null;
+    date?:string|null;
+    showCompletedRecords?:boolean
 }

@@ -70,7 +70,7 @@ export class AddEditDriverComponent implements OnInit {
   phoneNumberInputConfig: InputConfig = {
     key: 'phoneNumber',
     label: 'Phone Number',
-    type: 'number',
+    type: 'text',
     placeholder: 'Enter Phone number',
     width: '100%',
     height: '45px',

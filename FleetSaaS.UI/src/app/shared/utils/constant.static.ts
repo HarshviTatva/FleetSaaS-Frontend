@@ -41,8 +41,11 @@ export const DRIVERS_MENU: MenuItem = {
 export const DRIVER_TRIPS_MENU: MenuItem = {
   label: 'Trips',
   icon: 'travel_luggage_and_bags',
-  children: [
-    { label: 'Assigned Trips', icon:'local_taxi', route: ROUTE_PATH.ASSIGNED_TRIPS },
-    { label: 'Trip History', icon:'history', route: ROUTE_PATH.TRIP_HISTORY }
-  ]
+  route: ROUTE_PATH.ASSIGNED_TRIPS
+};
+
+export const DRIVER_TRIP_HISTORY_MENU: MenuItem = {
+  label: 'Trip History',
+  icon: 'your_trips',
+  route: ROUTE_PATH.TRIP_HISTORY
 };

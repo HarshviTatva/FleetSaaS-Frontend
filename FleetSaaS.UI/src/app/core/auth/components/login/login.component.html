@@ -18,10 +18,13 @@
                 <!-- <mat-checkbox class="remember-me" formControlName="rememberMe">Remember me!</mat-checkbox> -->
                 <app-button label="Login" [color]="buttonColor" type="submit" [disabled]="loginForm.invalid">
                 </app-button>
+                   <a routerLink="/forgot-password" class="primary-link">Forgot Password?</a>
+
                 <p class="login-link">
                     Didn't have an account?
                     <a routerLink="/signup" class="primary-link">Create an account</a>
                 </p>
+             
             </form>
         </div>
     </mat-card>

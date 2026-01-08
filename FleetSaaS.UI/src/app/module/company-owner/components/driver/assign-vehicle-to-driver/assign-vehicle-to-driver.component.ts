@@ -29,6 +29,7 @@ export class AssignVehicleToDriverComponent implements OnInit {
   vehicleList = signal<DropdownOption[]>([]);
   driverData = signal<Driver | null>(null);
   btnLabel = signal('Assign');
+  isListEmpty = signal(false);
 
   constructor() {
     this.assignForm = this.formBuilder.group({
@@ -52,9 +53,11 @@ export class AssignVehicleToDriverComponent implements OnInit {
     this.vehicleService.getVehicleList().subscribe({
       next: (response: SuccessResponse<DropdownOption[]>) => {
         this.vehicleList.set(response.data ?? []);
+        this.isListEmpty.set(this.vehicleList().length > 0);
       },
       error: () => {
         this.vehicleList.set([]);
+        this.isListEmpty.set(true);
       }
     });
   }

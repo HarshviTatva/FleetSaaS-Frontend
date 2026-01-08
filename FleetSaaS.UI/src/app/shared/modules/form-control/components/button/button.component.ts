@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { ButtonColor, ButtonType } from '../../common-type/buttontype';
 import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 
@@ -12,11 +12,10 @@ import { MATERIAL_IMPORTS } from '../../../../utils/material.static';
 })
 export class ButtonComponent {
 
-  @Input() label = 'Submit';
-  @Input() color: ButtonColor = 'primary';
-  @Input() type: ButtonType = 'button';
-  @Input() disabled  = false;
-
+  label = input<string>('Submit');
+  color = input<ButtonColor>('primary');
+  type = input<ButtonType>('button');
+  disabled = input<boolean>(false);
   icon = input<string>('');
   width = input<string>('100%');
   tooltipText = input<string>('');

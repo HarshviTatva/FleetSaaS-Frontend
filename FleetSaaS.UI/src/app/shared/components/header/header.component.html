@@ -21,13 +21,15 @@
         alt="Profile"
         class="profile-img"
       />
-      <span class="username">{{ userName }}</span>
+      <span class="username">{{ userName }}
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </span>
     </span>
   </button>
 </div>
 
   <mat-menu #profileMenu="matMenu" xPosition="before">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="redirectToUserProfile()">
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>

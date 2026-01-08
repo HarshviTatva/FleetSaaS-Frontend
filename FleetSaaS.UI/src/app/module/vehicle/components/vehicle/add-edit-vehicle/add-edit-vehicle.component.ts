@@ -17,6 +17,7 @@ import { MATERIAL_IMPORTS } from '../../../../../shared/utils/material.static';
   imports: [...MATERIAL_IMPORTS, SharedModule],
   templateUrl: './add-edit-vehicle.component.html',
   styleUrl: './add-edit-vehicle.component.scss',
+  standalone:true
 })
 
 export class AddEditVehicleComponent implements OnInit {
@@ -27,7 +28,7 @@ export class AddEditVehicleComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef<Vehicle>);
 
   vehicleForm!: FormGroup;
-  minLicenseExpiryDate = signal<Date>(this.calculateMinDate());
+  minLicenseExpiryDate = signal<Date|null>(this.calculateMinDate());
 
   constructor() {
     this.vehicleForm = this.formBuilder.group({

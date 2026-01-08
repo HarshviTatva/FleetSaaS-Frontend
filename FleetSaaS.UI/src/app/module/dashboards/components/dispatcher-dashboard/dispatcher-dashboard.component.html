@@ -1,1 +1,156 @@
-<p>dispatcher-dashboard works!</p>
+<div class="dashboard">
+
+  @if (dashboardData()) {
+
+    <div class="stats-grid">
+
+      <!-- ACTIVE TRIPS -->
+      <div class="stat-card">
+        <div class="stat-card-content">
+          <div class="stat-info">
+            <div class="stat-label">Active Trips</div>
+            <div class="stat-value">
+              {{ dashboardData()!.activeTrips }}
+            </div>
+          </div>
+          <div class="stat-icon">
+            <div class="icon-wrapper primary">
+              <mat-icon class="mirror">local_shipping</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPCOMING TRIPS -->
+      <div class="stat-card">
+        <div class="stat-card-content">
+          <div class="stat-info">
+            <div class="stat-label">Upcoming Trips</div>
+            <div class="stat-value">
+              {{ dashboardData()!.upcomingTrips }}
+            </div>
+          </div>
+          <div class="stat-icon">
+            <div class="icon-wrapper warning">
+              <mat-icon>event</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DRIVER AVAILABILITY -->
+      <div class="stat-card" (click)="redirectToDriverPage()">
+        <div class="stat-card-content">
+          <div class="stat-info">
+            <div class="stat-label">Driver Availability</div>
+            <div class="stat-value">
+              {{ dashboardData()!.drivers.available }}/{{ dashboardData()!.drivers.total }}
+            </div>
+          </div>
+          <div class="stat-icon">
+            <div class="icon-wrapper success">
+              <mat-icon>person</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">
+      <mat-icon>local_shipping</mat-icon>
+      Active Trips
+    </h2>
+
+    <div class="card list-card">
+      <div class="trip-list">
+
+        @if (dashboardData()!.trips.length) {
+
+          @for (trip of dashboardData()!.trips; track trip.tripNo) {
+            <div class="trip-item active" (click)="redirectToTripsPage()">
+
+              <div class="trip-icon">
+                <mat-icon color="primary">bolt</mat-icon>
+              </div>
+
+              <div class="trip-info">
+                <div class="trip-title">
+                  {{ trip.tripNo }}
+                </div>
+                <div class="trip-desc">
+                  {{ trip.driverName }} → {{ trip.vehicle }}
+                </div>
+              </div>
+
+              <div class="trip-status success">
+                Active
+              </div>
+
+            </div>
+          }
+
+        } @else {
+          <p class="no-data">
+            No active trips
+          </p>
+        }
+
+      </div>
+    </div>
+
+    <h2 class="section-title">
+      <mat-icon>place</mat-icon>
+      Upcoming Scheduled Trips
+    </h2>
+
+    <div class="card list-card">
+      <div class="trip-list">
+
+        @if (dashboardData()!.upcoming.length) {
+
+          @for (up of dashboardData()!.upcoming; track up.tripNo) {
+            <div class="trip-item upcoming">
+
+              <div class="trip-icon">
+                <mat-icon color="warn">schedule</mat-icon>
+              </div>
+
+              <div class="trip-info">
+                <div class="trip-title">
+                  {{ up.tripNo }}
+                </div>
+                <div class="trip-desc">
+                  {{ up.route }}
+                </div>
+              </div>
+
+              <div class="trip-status warning">
+                {{ up.time }}
+              </div>
+
+              <div class="trip-status">
+                  <app-button type="button" label="Assign Trip" (click)="onAssignVehicleDriver(up)" ></app-button>
+              </div>
+            </div>
+          }
+
+        } @else {
+          <p class="no-data">
+            No upcoming trips
+          </p>
+        }
+
+      </div>
+    </div>
+
+  } @else {
+
+    <div class="loading-state">
+      <mat-icon>hourglass_empty</mat-icon>
+      Loading dashboard...
+    </div>
+
+  }
+
+</div>
